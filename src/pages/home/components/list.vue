@@ -1,7 +1,7 @@
 <!--
  * @Description: 列表视图
  * @Date: 2022-01-18 17:46:02
- * @LastEditTime: 2022-01-19 13:59:17
+ * @LastEditTime: 2022-01-19 15:41:20
 -->
 <template>
   <div class="list">
@@ -133,12 +133,20 @@ export default {
      * @description: 查看看板
      * @param {Object} row 行信息
      */
-    onViewBoard(row) {},
+    onViewBoard(row) {
+      const { dashboardId } = row
+
+      this.$router.push({ path: '/board/dashboard', query: { dashboardId, viewType: 'read' }})
+    },
     /**
      * @description: 编辑看板
      * @param {Object} row 行信息
      */
-    onEditBoard(row) {},
+    onEditBoard(row) {
+      const { dashboardId } = row
+
+      this.$router.push({ path: '/board/dashboard', query: { dashboardId, viewType: 'edit' }})
+    },
     /**
      * @description: 删除看板
      * @param {Object} row 行信息
