@@ -1,0 +1,95 @@
+@import '~ant-design-vue/dist/antd.less';
+@import "default/index";
+@import "antd/index";
+
+.menu_top {
+  width: 100%;
+}
+.menu {
+  width: 100%;
+}
+
+.editable-row-operations {
+  display: flex;
+  flex-wrap: nowrap;
+  width: 100%;
+}
+
+.menu_top .menu_content .ant-table-body {
+  min-height: 600px;
+  background: #ffffff;
+}
+
+.grid {
+  width: 3px;
+  height: 32px;
+  background: #1f1f1f;
+}
+
+.item_info {
+  margin-left: 15px;
+  width: 90%;
+  height: 32px;
+  line-height: 32px;
+}
+
+.btn {
+  line-height: 5px;
+}
+
+.item_describe {
+  margin: 30px;
+  background: #ffffff;
+}
+.search-container {
+  margin-bottom: 10px;
+  .ant-form-item {
+    margin-right: 10px;
+  }
+  .search-container__item {
+    height: 36px;
+    border-radius: 6px;
+    vertical-align: top;
+    .ant-input,
+    .ant-select-selection,
+    .ant-select-selection__rendered {
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: #ffffff;
+      filter: blur(0px);
+    }
+  }
+}
+
+.page__container {
+  padding: 15px 20px 20px 20px;
+  background-color: #f4f5f7;
+}
+
+.page__title {
+  position: relative;
+  margin-bottom: 15px;
+  width: 80px;
+  height: 22px;
+  line-height: 22px;
+}
+
+.page__title-lable {
+  position: absolute;
+  top: 50%;
+  width: 3px;
+  height: 16px;
+  border-radius: 1px;
+  background: linear-gradient(180deg, #f69c66 0%, #ffb572 100%) #f36f4e;
+  transform: translateY(-50%);
+}
+
+.page__title-name {
+  float: right;
+  color: #000000;
+  font-weight: 500;
+  font-size: 16px;
+  font-family: PingFangSC-Medium, PingFang SC;
+}
+@border-radius-base: 3px; // 组件/浮层圆角

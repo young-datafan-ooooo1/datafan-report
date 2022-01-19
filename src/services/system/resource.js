@@ -1,0 +1,13 @@
+/*
+ * @Description:
+ * @Date: 2021-07-07 16:05:37
+ * @LastEditTime: 2021-07-15 14:38:51
+ */
+import { SYSTEM_MANAGER } from '@/services/api'
+import { request, METHOD } from '@sense70/common-component-vue'
+
+const BASE_URL = SYSTEM_MANAGER + '/permission'
+
+export async function getMyResourceTree(params, config) {
+  return request(BASE_URL + '/myListTree/' + params, METHOD.GET, config)
+}

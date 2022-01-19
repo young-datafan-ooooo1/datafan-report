@@ -1,0 +1,109 @@
+.admin-header{
+  padding: 0;
+  z-index: 2;
+  box-shadow: @shadow-down;
+  position: relative;
+  color: #ffffff;
+  background: #2C2E31;
+  .admin-header__title {
+    display: inline-block;
+    font-size:1rem;
+    color: #D8D8D8;
+    user-select: none
+  }
+  .admin-header__all-btn {
+    width: 60px;
+    height: 60px;
+    background: #F36F4E;
+    border-radius: 0px 6px 6px 0px;
+    text-align: center;
+    font-size: 1rem;
+  }
+  .admin-heaer__logo {
+    margin: 0 20px;
+  }
+  .head-menu{
+    height: 56px;
+    line-height: 56px;
+    vertical-align: middle;
+    box-shadow: none;
+  }
+  &.dark{
+    background: @header-bg-color-dark;
+    color: white;
+  }
+  &.night{
+    .head-menu{
+      background: @base-bg-color;
+    }
+  }
+  .admin-header__wide{
+    &.head.fixed{
+      max-width: 1400px;
+      margin: auto;
+      padding-left: 0;
+    }
+    .logo {
+      // height: 64px;
+      line-height: 58px;
+      vertical-align: top;
+      display: inline-block;
+      padding: 0 12px 0 24px;
+      cursor: pointer;
+      font-size: 20px;
+      color: inherit;
+      &.pc{
+        padding: 0 12px 0 0;
+      }
+      img {
+        vertical-align: middle;
+      }
+      h1{
+        color: inherit;
+        display: inline-block;
+        font-size: 16px;
+      }
+    }
+    .trigger {
+      font-size: 20px;
+      padding: 0 24px;
+      cursor: pointer;
+      transition: color .3s;
+      &:hover{
+        color: @primary-color;
+      }
+    }
+    .admin-header__menu{
+      display: inline-block;
+    }
+    .admin-header__right{
+      float: right;
+      display: flex;
+      color: inherit;
+      padding-right: 30px;
+      .header-right__btn {
+        font-size: 1rem;
+      }
+      .header-item{
+        color: inherit;
+        padding: 0 25px;
+        cursor: pointer;
+        align-self: center;
+        a{
+          color: inherit;
+          i{
+            font-size: 16px;
+          }
+        }
+      }
+      each(@theme-list, {
+        &.@{value} .header-item{
+          &:hover{
+            @class: ~'hover-bg-color-@{value}';
+            background-color: @@class;
+          }
+        }
+      })
+    }
+  }
+}

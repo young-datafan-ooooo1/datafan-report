@@ -1,0 +1,50 @@
+.week-mode {
+  overflow: hidden;
+  filter: invert(80%);
+}
+
+.beauty-scroll {
+  position: relative;
+  overflow: hidden;
+  // background: #f4f5f7;
+
+  scrollbar-width: thin;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    // width: 4px;
+    width: 8px;
+    height: 4px;
+    border-radius: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #f1ddd9;
+    border-radius: 8px;
+    // background: #F06E4D;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    border-radius: 8px;
+    // background-color: #f1ddd9;
+    background: #ff794a;
+  }
+
+  &::-webkit-scrollbar-thumb:active {
+    border-radius: 8px;
+    // background-color: #f1ddd9;
+    background: #ff794a;
+  }
+}
+
+.split-right {
+  &:not(:last-child) {
+    border-right: 1px solid rgba(98, 98, 98, 0.2);
+  }
+}
+
+.disabled {
+  color: @disabled-color;
+  cursor: not-allowed;
+  pointer-events: none;
+}

@@ -1,0 +1,95 @@
+@font-face {
+  font-family: "iconfont"; /* Project id 2921533 */
+  src: url('iconfont.woff2?t=1636368745430') format('woff2'),
+       url('iconfont.woff?t=1636368745430') format('woff'),
+       url('iconfont.ttf?t=1636368745430') format('truetype');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-qiapian:before {
+  content: "\e731";
+}
+
+.icon-liebiao:before {
+  content: "\e779";
+}
+
+.icon-guanbi:before {
+  content: "\e60e";
+}
+
+.icon-24gf-tags3:before {
+  content: "\e886";
+}
+
+.icon-shuaxin:before {
+  content: "\e67c";
+}
+
+.icon-biaoqian:before {
+  content: "\e681";
+}
+
+.icon-shuaxin1:before {
+  content: "\e683";
+}
+
+.icon-xiangxia:before {
+  content: "\e600";
+}
+
+.icon-dingzi:before {
+  content: "\e601";
+}
+
+.icon-shoucangxuanzhong:before {
+  content: "\e602";
+}
+
+.icon-shouquanguanli:before {
+  content: "\e60b";
+}
+
+.icon-xiangzuo:before {
+  content: "\e626";
+}
+
+.icon-24gl-tags3:before {
+  content: "\e87d";
+}
+
+.icon-zhankai:before {
+  content: "\e627";
+}
+
+.icon-jurassic_admin:before {
+  content: "\e696";
+}
+
+.icon-jichupeizhi:before {
+  content: "\e62d";
+}
+
+.icon-moxingku:before {
+  content: "\e628";
+}
+
+.icon-shuxing:before {
+  content: "\e66e";
+}
+
+.icon-shuxing1:before {
+  content: "\e666";
+}
+
+.icon-logo-slack:before {
+  content: "\e9e4";
+}
+
