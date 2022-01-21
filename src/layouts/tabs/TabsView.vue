@@ -346,6 +346,9 @@ export default {
       width: 100%;
     }
   }
+  /deep/.common-move {
+    cursor: move;
+  }
   /deep/ .ant-tabs-card.common-tabs {
     /* 选项卡区域 */
     .ant-tabs-bar {

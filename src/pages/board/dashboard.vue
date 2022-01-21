@@ -1,7 +1,7 @@
 <!--
  * @Description: 新建编辑看板
  * @Date: 2022-01-19 15:21:06
- * @LastEditTime: 2022-01-19 17:21:24
+ * @LastEditTime: 2022-01-21 15:15:17
 -->
 <template>
   <div class="dashboard">
@@ -15,7 +15,9 @@
         </a-tab-pane>
         <a-tab-pane key="chart">
           <span slot="tab"><a-icon type="bar-chart" />图表</span>
-          <div class="tab-content">chart</div>
+          <div class="tab-content">
+            <Chart />
+          </div>
         </a-tab-pane>
       </a-tabs>
     </div>
@@ -24,13 +26,14 @@
 </template>
 
 <script>
-import { Layout } from './components'
+import { Layout, Chart } from './components'
 
 export default {
   name: 'Dashboard',
 
   components: {
-    Layout
+    Layout,
+    Chart
   },
 
   data() {
