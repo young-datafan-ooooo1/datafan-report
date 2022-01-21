@@ -1,14 +1,14 @@
 <!--
  * @Description: 新增/编辑看板布局
  * @Date: 2022-01-19 16:40:06
- * @LastEditTime: 2022-01-19 18:46:46
+ * @LastEditTime: 2022-01-21 15:49:58
 -->
 <template>
   <div class="dashborad-layout">
     <div class="dashborad-grid flex-box-row">
       <span class="block-title flex-box-row">行列布局</span>
       <Draggable class="grid-box flex-box-row" :list="gridData" :options="draggableOption" @start="handleDragRow" @end="hanDragRowEnd">
-        <a-row v-for="(grid, gridIndex) in gridData" :key="gridIndex" class="grid-item flex-box-row">
+        <a-row v-for="(grid, gridIndex) in gridData" :key="gridIndex" class="grid-item flex-box-row common-move">
           <template v-for="(item, itemIndex) in grid.items">
             <a-col :key="itemIndex" :span="item.width">
               <div class="dashborad-grid--full" />
@@ -21,7 +21,7 @@
       <span class="block-title flex-box-row">分割线</span>
       <Draggable class="border-box flex-box-row" :list="borderData" :options="draggableOption" @start="handleDragRow" @end="hanDragRowEnd">
         <template v-for="(border, borderIndex) in borderData">
-          <div :key="borderIndex" :class="['border-item', `${border.type}-type`]" />
+          <div :key="borderIndex" :class="['border-item', 'common-move', `${border.type}-type`]" />
         </template>
       </Draggable>
     </div>
@@ -29,7 +29,7 @@
       <span class="block-title">标题</span>
       <Draggable class="title-box" :list="titleData" :options="draggableOption" @start="handleDragRow" @end="hanDragRowEnd">
         <template v-for="(title, titleIndex) in titleData">
-          <div :key="titleIndex" :class="['title-item']" :style="getTitleStyle(title)">ABCDEF...</div>
+          <div :key="titleIndex" :class="['title-item', 'common-move']" :style="getTitleStyle(title)">ABCDEF...</div>
         </template>
       </Draggable>
     </div>
@@ -150,7 +150,6 @@ export default {
   .dashborad-grid {
     .grid-box {
       .grid-item {
-        cursor: pointer;
         .dashborad-grid--full {
           height: 33px;
           border: 1px solid #eee;
@@ -168,7 +167,6 @@ export default {
         height: 2px;
         border-width: 2px 0 0;
         border-color: #dcdcdc;
-        cursor: pointer;
         &.solid-type {
           border-style: solid;
         }
