@@ -1,15 +1,7 @@
 /*
- * @Description:
- * @Date: 2021-06-17 10:02:05
-<<<<<<< HEAD
-<<<<<<< HEAD
- * @LastEditTime: 2022-01-18 14:51:15
-=======
- * @LastEditTime: 2021-11-22 14:11:50
->>>>>>> f03a805d33ddc0b2edb1904dbe408925c1f2ae37
-=======
- * @LastEditTime: 2021-11-22 14:11:50
->>>>>>> 87bcbe973c6d223cea46120b9d8d4b6e6ded2398
+ * @Description: 主配置
+ * @Date: 2022-01-21 14:48:10
+ * @LastEditTime: 2022-01-24 16:38:02
  */
 import Vue from 'vue'
 import App from './App.vue'
@@ -42,6 +34,8 @@ Vue.component('ABaseModal', ABaseModal)
 // Vue.component('SenseTable', SenseTable)
 const i18n = initI18n('CN', 'US')
 Vue.use(Antd)
+import vcolorpicker from 'vcolorpicker'
+Vue.use(vcolorpicker)
 
 import Empty from '@/components/common/empty'
 // 设置VXETable空内容模板

@@ -1,13 +1,18 @@
 <!--
  * @Description: 新增/编辑看板布局
  * @Date: 2022-01-19 16:40:06
- * @LastEditTime: 2022-01-21 15:49:58
+ * @LastEditTime: 2022-01-24 16:30:54
 -->
 <template>
   <div class="dashborad-layout">
     <div class="dashborad-grid flex-box-row">
       <span class="block-title flex-box-row">行列布局</span>
-      <Draggable class="grid-box flex-box-row" :list="gridData" :options="draggableOption" @start="handleDragRow" @end="hanDragRowEnd">
+      <Draggable
+        class="grid-box flex-box-row"
+        :list="gridData"
+        :options="draggableOption"
+        :clone="original => JSON.parse(JSON.stringify(original))"
+      >
         <a-row v-for="(grid, gridIndex) in gridData" :key="gridIndex" class="grid-item flex-box-row common-move">
           <template v-for="(item, itemIndex) in grid.items">
             <a-col :key="itemIndex" :span="item.width">
@@ -19,15 +24,20 @@
     </div>
     <div class="dashborad-border flex-box-row">
       <span class="block-title flex-box-row">分割线</span>
-      <Draggable class="border-box flex-box-row" :list="borderData" :options="draggableOption" @start="handleDragRow" @end="hanDragRowEnd">
+      <Draggable class="border-box flex-box-row" :list="borderData" :options="draggableOption">
         <template v-for="(border, borderIndex) in borderData">
-          <div :key="borderIndex" :class="['border-item', 'common-move', `${border.type}-type`]" />
+          <div :key="borderIndex" :class="['border-item', 'common-move', `${border.value}-type`]" />
         </template>
       </Draggable>
     </div>
     <div class="dashborad-title flex-box-row">
       <span class="block-title">标题</span>
-      <Draggable class="title-box" :list="titleData" :options="draggableOption" @start="handleDragRow" @end="hanDragRowEnd">
+      <Draggable
+        class="title-box"
+        :list="titleData"
+        :options="draggableOption"
+        :clone="original => JSON.parse(JSON.stringify(original))"
+      >
         <template v-for="(title, titleIndex) in titleData">
           <div :key="titleIndex" :class="['title-item', 'common-move']" :style="getTitleStyle(title)">ABCDEF...</div>
         </template>
@@ -66,32 +76,32 @@ export default {
   data() {
     return {
       draggableOption: {
-        group: { name: 'article', pull: 'clone', put: false },
+        group: { name: 'layout', pull: 'clone', put: false },
         filter: '.undraggable',
         sort: false
       },
       gridData: [
         {
           type: 'grid',
-          items: [{ width: 16 }, { width: 8 }]
+          items: [{ width: 16, content: [] }, { width: 8, content: [] }]
         },
         {
           type: 'grid',
-          items: [{ width: 12 }, { width: 12 }]
+          items: [{ width: 12, content: [] }, { width: 12, content: [] }]
         },
         {
           type: 'grid',
-          items: [{ width: 8 }, { width: 8 }, { width: 8 }]
+          items: [{ width: 8, content: [] }, { width: 8, content: [] }, { width: 8, content: [] }]
         },
         {
           type: 'grid',
-          items: [{ width: 24 }]
+          items: [{ width: 24, content: [] }]
         }
       ],
       borderData: [
-        { type: 'solid' },
-        { type: 'dashed' },
-        { type: 'dotted' }
+        { type: 'border', value: 'solid' },
+        { type: 'border', value: 'dashed' },
+        { type: 'border', value: 'dotted' }
       ],
       titleData: [
         {
@@ -128,16 +138,6 @@ export default {
         fontSize: `${fontSize}px`,
         fontWeight
       }
-    },
-    handleDragRow(event, row) {
-      // this.$emit("drag-row-start", event, row);
-    },
-    hanDragRowEnd(event, row) {
-
-    },
-
-    getColorBlock() {
-      return `<div class="color-item" style="background: red" />`
     }
   }
 }

@@ -1,7 +1,7 @@
 <!--
  * @Description: 图表
  * @Date: 2022-01-21 15:00:14
- * @LastEditTime: 2022-01-21 15:53:17
+ * @LastEditTime: 2022-01-24 13:37:27
 -->
 <template>
   <div class="dashborad-chart">
@@ -46,7 +46,7 @@ export default {
     return {
       // 拖拽配置
       draggableOption: {
-        group: { name: 'article', pull: 'clone', put: false },
+        group: { name: 'chart', pull: 'clone', put: false },
         filter: '.undraggable',
         sort: false
       },
@@ -94,20 +94,20 @@ export default {
 
 <style lang="less" scoped>
 .dashborad-chart {
-  height: 100%;
   padding: 0 10px;
+  height: 100%;
   /deep/.ant-spin-container {
     height: 100%;
   }
   .chart-content {
-    height: 100%;
     display: flex;
     flex-direction: column;
     padding-bottom: 10px;
+    height: 100%;
     .chart-list {
+      overflow: auto;
       flex: 1;
       height: 0;
-      overflow: auto;
       .chart-item {
         padding: 10px 10px;
         border: 1px solid #cfd8dc;
@@ -119,8 +119,8 @@ export default {
           font-size: 12px;
         }
         .msg {
-          font-size: 12px;
           color: #2c3e50;
+          font-size: 12px;
         }
       }
     }

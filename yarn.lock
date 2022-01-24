@@ -1159,9 +1159,9 @@
   integrity sha1-K1o6s/kYzKSKjHVMCBaOPwPrphs=
 
 "@sense70/common-component-vue@~1.3.0":
-  version "1.3.187"
-  resolved "http://mvn.senses-ai.com:8081/repository/npm-group/@sense70/common-component-vue/-/common-component-vue-1.3.187.tgz#ff4e3ef375d95323004f3744948b2cc542b5af1a"
-  integrity sha512-gYgPyZEoryVvcNXCWSKNb1+dBxWYko39lSdBn44Gq1+XyO7ju/TayZSwTu6Rds69IfYxu8zlfXuLsb7sGByJWg==
+  version "1.3.189"
+  resolved "http://mvn.senses-ai.com:8081/repository/npm-group/@sense70/common-component-vue/-/common-component-vue-1.3.189.tgz#d538de05669ae9f31fe1c490a4630ea3f6b373d4"
+  integrity sha512-MZjFZrAaHOWbnP91qhpBP0aZO+QMt61qgU9PJcodkLhK0D2KXzogZ5ZLDn68T4Kd0b3qLWPquup+Ahb1K0vRCA==
   dependencies:
     axios "^0.19.2"
     clipboard "^2.0.6"
@@ -5742,6 +5742,11 @@ highlight.js@^10.2.1, highlight.js@^10.7.1:
   version "10.7.3"
   resolved "http://mvn.senses-ai.com:8081/repository/npm-group/highlight.js/-/highlight.js-10.7.3.tgz"
   integrity sha1-aXJy45kTVuQMPKxWanTu9oF1ZTE=
+
+highlight.js@^9.12.0:
+  version "9.18.5"
+  resolved "http://mvn.senses-ai.com:8081/repository/npm-group/highlight.js/-/highlight.js-9.18.5.tgz#d18a359867f378c138d6819edfc2a8acd5f29825"
+  integrity sha1-0Yo1mGfzeME41oGe38KorNXymCU=
 
 hmac-drbg@^1.0.1:
   version "1.0.1"
@@ -10862,6 +10867,14 @@ vary@~1.1.2:
   resolved "http://mvn.senses-ai.com:8081/repository/npm-group/vary/-/vary-1.1.2.tgz"
   integrity sha1-IpnwLG3tMNSllhsLn3RSShj2NPw=
 
+vcolorpicker@^0.1.8:
+  version "0.1.8"
+  resolved "http://mvn.senses-ai.com:8081/repository/npm-group/vcolorpicker/-/vcolorpicker-0.1.8.tgz#43f6f96aeded5cbcbb7fc591ab8e4324c994e758"
+  integrity sha512-23YFGiIQnwTOsuXL8Ydm+FvrqmAD4F+wDxOYjooH1U4vWadIIcumavBMFNFhI79tJ7ZmhFy2hWHlBU/xGu85yA==
+  dependencies:
+    highlight.js "^9.12.0"
+    vue "^2.5.17"
+
 vendors@^1.0.0:
   version "1.0.4"
   resolved "http://mvn.senses-ai.com:8081/repository/npm-group/vendors/-/vendors-1.0.4.tgz"
@@ -11018,7 +11031,7 @@ vue-template-es2015-compiler@^1.9.0:
   resolved "http://mvn.senses-ai.com:8081/repository/npm-group/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz"
   integrity sha1-HuO8mhbsv1EYvjNLsV+cRvgvWCU=
 
-vue@^2.5.3, vue@^2.6.10, vue@^2.6.11, vue@^2.6.12:
+vue@^2.5.17, vue@^2.5.3, vue@^2.6.10, vue@^2.6.11, vue@^2.6.12:
   version "2.6.14"
   resolved "http://mvn.senses-ai.com:8081/repository/npm-group/vue/-/vue-2.6.14.tgz"
   integrity sha1-5RqlJQJQ1Wmj+606ilpofWA24jU=
