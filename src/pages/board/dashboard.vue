@@ -1,7 +1,7 @@
 <!--
  * @Description: 新建编辑看板
  * @Date: 2022-01-19 15:21:06
- * @LastEditTime: 2022-01-21 15:15:17
+ * @LastEditTime: 2022-01-21 16:44:29
 -->
 <template>
   <div class="dashboard">
@@ -21,40 +21,41 @@
         </a-tab-pane>
       </a-tabs>
     </div>
-    <div class="dashboard-content">content</div>
+    <div class="dashboard-content">
+      <Content />
+    </div>
   </div>
 </template>
 
 <script>
-import { Layout, Chart } from './components'
+import { Layout, Chart, Content } from './components'
 
 export default {
   name: 'Dashboard',
 
   components: {
     Layout,
-    Chart
+    Chart,
+    Content
+  },
+
+  provide() {
+    return {
+      dashboardId: this.$route.query.dashboardId,
+      viewType: this.$route.query.viewType
+    }
   },
 
   data() {
     return {
-      dashboardId: '',
-      viewType: '',
       activeNavTab: 'layout'
     }
   },
 
   computed: {
-    isAddDashboard() {
-      return !this.dashboardId
-    }
   },
 
   mounted() {
-    const { dashboardId, viewType } = this.$route.query
-
-    this.dashboardId = dashboardId
-    this.viewType = viewType
   }
 }
 </script>
@@ -86,7 +87,9 @@ export default {
     }
   }
   &-content {
-    padding: 10px;
+    padding: 0 10px;
+    flex: 1;
+    width: 0;
   }
 }
 </style>
