@@ -1,7 +1,7 @@
 <!--
  * @Description: 新建编辑看板
  * @Date: 2022-01-19 15:21:06
- * @LastEditTime: 2022-01-21 16:44:29
+ * @LastEditTime: 2022-02-09 16:52:22
 -->
 <template>
   <div class="dashboard">
@@ -10,7 +10,7 @@
         <a-tab-pane key="layout">
           <span slot="tab"><a-icon type="layout" />布局</span>
           <div class="tab-content">
-            <Layout />
+            <Layout @onChangeColor="onColorChange" />
           </div>
         </a-tab-pane>
         <a-tab-pane key="chart">
@@ -22,7 +22,7 @@
       </a-tabs>
     </div>
     <div class="dashboard-content">
-      <Content />
+      <Content :theme-colors="themeColors" />
     </div>
   </div>
 </template>
@@ -42,13 +42,15 @@ export default {
   provide() {
     return {
       dashboardId: this.$route.query.dashboardId,
-      viewType: this.$route.query.viewType
+      viewType: this.$route.query.viewType,
+      themeColors: this.themeColors
     }
   },
 
   data() {
     return {
-      activeNavTab: 'layout'
+      activeNavTab: 'layout',
+      themeColors: ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c3', '#7f7f7f', '#bdbd22', '#17bdcf']
     }
   },
 
@@ -56,6 +58,12 @@ export default {
   },
 
   mounted() {
+  },
+
+  methods: {
+    onColorChange(themeColors) {
+      this.themeColors = [...themeColors]
+    }
   }
 }
 </script>

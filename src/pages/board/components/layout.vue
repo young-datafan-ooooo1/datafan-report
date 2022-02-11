@@ -1,7 +1,7 @@
 <!--
  * @Description: 新增/编辑看板布局
  * @Date: 2022-01-19 16:40:06
- * @LastEditTime: 2022-01-24 16:30:54
+ * @LastEditTime: 2022-02-09 16:51:00
 -->
 <template>
   <div class="dashborad-layout">
@@ -55,7 +55,7 @@
                 </template>
               </div>
             </template>
-            <div :key="themeIndex" :class="['theme-item', 'flex-box-col-small', theme.theme, {active: colorType === theme.theme}]" @click="colorType = theme.theme" />
+            <div :key="themeIndex" :class="['theme-item', 'flex-box-col-small', theme.theme, {active: colorType === theme.theme}]" @click="onChangeColor(theme.theme, theme.colors)" />
           </a-popover>
         </template>
       </div>
@@ -138,6 +138,10 @@ export default {
         fontSize: `${fontSize}px`,
         fontWeight
       }
+    },
+    onChangeColor(colorType, colorList) {
+      this.colorType = colorType
+      this.$emit('onChangeColor', colorList)
     }
   }
 }

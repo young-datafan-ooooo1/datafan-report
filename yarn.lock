@@ -1159,9 +1159,9 @@
   integrity sha1-K1o6s/kYzKSKjHVMCBaOPwPrphs=
 
 "@sense70/common-component-vue@~1.3.0":
-  version "1.3.189"
-  resolved "http://mvn.senses-ai.com:8081/repository/npm-group/@sense70/common-component-vue/-/common-component-vue-1.3.189.tgz#d538de05669ae9f31fe1c490a4630ea3f6b373d4"
-  integrity sha512-MZjFZrAaHOWbnP91qhpBP0aZO+QMt61qgU9PJcodkLhK0D2KXzogZ5ZLDn68T4Kd0b3qLWPquup+Ahb1K0vRCA==
+  version "1.3.193"
+  resolved "http://mvn.senses-ai.com:8081/repository/npm-group/@sense70/common-component-vue/-/common-component-vue-1.3.193.tgz#9ada41e739adcf270c5ec86883176bc3a1299bd0"
+  integrity sha512-5WH/YMLZFqdj8yD2qkzHmjRgu+c5EaJ2ge265O6OvTxc1OzSAoow2ck+D67ngXjBvDRS8zozYBVzKpdhnq82OQ==
   dependencies:
     axios "^0.19.2"
     clipboard "^2.0.6"
@@ -4445,13 +4445,27 @@ ecc-jsbn@~0.1.1:
     jsbn "~0.1.0"
     safer-buffer "^2.1.0"
 
-echarts@^5.2.1:
-  version "5.2.1"
-  resolved "http://mvn.senses-ai.com:8081/repository/npm-group/echarts/-/echarts-5.2.1.tgz"
-  integrity sha512-OJ79b22eqRfbSV8vYmDKmA+XWfNbr0Uk/OafWcFNIGDWti2Uw9A6eVCiJLmqPa9Sk+EWL+t5v26aak0z3gxiZw==
+echarts-amap@1.0.0-rc.6:
+  version "1.0.0-rc.6"
+  resolved "http://mvn.senses-ai.com:8081/repository/npm-group/echarts-amap/-/echarts-amap-1.0.0-rc.6.tgz#5782a74daee52ed44ce3f8f62577561783f09e16"
+  integrity sha1-V4KnTa7lLtRM4/j2JXdWF4PwnhY=
+
+echarts-liquidfill@^2.0.2:
+  version "2.0.6"
+  resolved "http://mvn.senses-ai.com:8081/repository/npm-group/echarts-liquidfill/-/echarts-liquidfill-2.0.6.tgz#0668dc61d87a6262003090bd32c55aa8108c252e"
+  integrity sha1-BmjcYdh6YmIAMJC9MsVaqBCMJS4=
+
+echarts-wordcloud@^1.1.3:
+  version "1.1.3"
+  resolved "http://mvn.senses-ai.com:8081/repository/npm-group/echarts-wordcloud/-/echarts-wordcloud-1.1.3.tgz#07b140c8ba76b19c317b43c310f3d5dc99289ff2"
+  integrity sha1-B7FAyLp2sZwxe0PDEPPV3Jkon/I=
+
+echarts@^4.7.0:
+  version "4.9.0"
+  resolved "http://mvn.senses-ai.com:8081/repository/npm-group/echarts/-/echarts-4.9.0.tgz#a9b9baa03f03a2a731e6340c55befb57a9e1347d"
+  integrity sha1-qbm6oD8Doqcx5jQMVb77V6nhNH0=
   dependencies:
-    tslib "2.3.0"
-    zrender "5.2.1"
+    zrender "4.3.2"
 
 ee-first@1.1.1:
   version "1.1.1"
@@ -7788,6 +7802,11 @@ number-is-nan@^1.0.0:
   resolved "http://mvn.senses-ai.com:8081/repository/npm-group/number-is-nan/-/number-is-nan-1.0.1.tgz"
   integrity sha1-CXtgK1NCKlIsGvuHkDGDNpQaAR0=
 
+numerify@1.2.9:
+  version "1.2.9"
+  resolved "http://mvn.senses-ai.com:8081/repository/npm-group/numerify/-/numerify-1.2.9.tgz#af4696bb1d57f8d3970a615d8b0cd53d932bd559"
+  integrity sha1-r0aWux1X+NOXCmFdiwzVPZMr1Vk=
+
 oauth-sign@~0.9.0:
   version "0.9.0"
   resolved "http://mvn.senses-ai.com:8081/repository/npm-group/oauth-sign/-/oauth-sign-0.9.0.tgz"
@@ -10501,11 +10520,6 @@ ts-pnp@^1.1.6:
   resolved "http://mvn.senses-ai.com:8081/repository/npm-group/ts-pnp/-/ts-pnp-1.2.0.tgz"
   integrity sha1-pQCtCEsHmPHDBxrzkeZZEshrypI=
 
-tslib@2.3.0:
-  version "2.3.0"
-  resolved "http://mvn.senses-ai.com:8081/repository/npm-group/tslib/-/tslib-2.3.0.tgz"
-  integrity sha1-gDuM2rPhK6WBpMpByIObuw2ssJ4=
-
 tslib@^1.10.0, tslib@^1.9.0:
   version "1.14.1"
   resolved "http://mvn.senses-ai.com:8081/repository/npm-group/tslib/-/tslib-1.14.1.tgz"
@@ -10839,6 +10853,11 @@ utila@~0.4:
   resolved "http://mvn.senses-ai.com:8081/repository/npm-group/utila/-/utila-0.4.0.tgz"
   integrity sha1-ihagXURWV6Oupe7MWxKk+lN5dyw=
 
+utils-lite@0.1.10:
+  version "0.1.10"
+  resolved "http://mvn.senses-ai.com:8081/repository/npm-group/utils-lite/-/utils-lite-0.1.10.tgz#d2908c0482e23c31e6b082558540e7134ffad7d7"
+  integrity sha1-0pCMBILiPDHmsIJVhUDnE0/619c=
+
 utils-merge@1.0.1:
   version "1.0.1"
   resolved "http://mvn.senses-ai.com:8081/repository/npm-group/utils-merge/-/utils-merge-1.0.1.tgz"
@@ -10848,6 +10867,17 @@ uuid@^3.3.2, uuid@^3.4.0:
   version "3.4.0"
   resolved "http://mvn.senses-ai.com:8081/repository/npm-group/uuid/-/uuid-3.4.0.tgz"
   integrity sha1-sj5DWK+oogL+ehAK8fX4g/AgB+4=
+
+v-charts@^1.19.0:
+  version "1.19.0"
+  resolved "http://mvn.senses-ai.com:8081/repository/npm-group/v-charts/-/v-charts-1.19.0.tgz#07b701800b159bd514264ffc8bf12b0405142da3"
+  integrity sha1-B7cBgAsVm9UUJk/8i/ErBAUULaM=
+  dependencies:
+    echarts-amap "1.0.0-rc.6"
+    echarts-liquidfill "^2.0.2"
+    echarts-wordcloud "^1.1.3"
+    numerify "1.2.9"
+    utils-lite "0.1.10"
 
 v8-compile-cache@^2.0.3:
   version "2.3.0"
@@ -11556,9 +11586,7 @@ zepto@^1.2.0:
   resolved "http://mvn.senses-ai.com:8081/repository/npm-group/zepto/-/zepto-1.2.0.tgz"
   integrity sha1-4Se9nmb9hGvl6rSME5SIL3wOT5g=
 
-zrender@5.2.1:
-  version "5.2.1"
-  resolved "http://mvn.senses-ai.com:8081/repository/npm-group/zrender/-/zrender-5.2.1.tgz"
-  integrity sha512-M3bPGZuyLTNBC6LiNKXJwSCtglMp8XUEqEBG+2MdICDI3d1s500Y4P0CzldQGsqpRVB7fkvf3BKQQRxsEaTlsw==
-  dependencies:
-    tslib "2.3.0"
+zrender@4.3.2:
+  version "4.3.2"
+  resolved "http://mvn.senses-ai.com:8081/repository/npm-group/zrender/-/zrender-4.3.2.tgz#ec7432f9415c82c73584b6b7b8c47e1b016209c6"
+  integrity sha1-7HQy+UFcgsc1hLa3uMR+GwFiCcY=

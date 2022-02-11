@@ -1,7 +1,7 @@
 <!--
  * @Description: 内容
  * @Date: 2022-01-21 16:27:42
- * @LastEditTime: 2022-01-24 15:52:34
+ * @LastEditTime: 2022-02-11 15:08:57
 -->
 <template>
   <div class="content-container">
@@ -25,12 +25,20 @@
             <a-icon type="delete" @click="onDelectContent(index)" />
           </div>
           <a-row class="flex-box__flex flex-box-row common-move">
-            <template v-for="(item, itemIndex) in item.items">
-              <a-col :key="itemIndex" :span="item.width">
-                <Draggable :list="item.content" :options="{ group: 'chart' }" class="dashborad-grid--full" @add="onAddChart(item)">
-                  <template v-for="(chartItem, chartIndex) in item.content">
-                    <div :key="chartIndex">
-                      {{ chartItem.reportTitle }}
+            <template v-for="(gridItem, gridItemIndex) in item.items">
+              <a-col :key="gridItemIndex" :span="gridItem.width">
+                <!-- 当内容长度为1时，不能再更新 -->
+                <Draggable :list="gridItem.content" :options="{ group: { name: 'chart', put: gridItem.content.length === 1 ? false : true }}" class="dashborad-grid--full" @add="getVeChartData(gridItem)">
+                  <template v-for="(chartItem, chartIndex) in gridItem.content">
+                    <div :key="chartIndex" class="chart-box flex-box flex-box--column">
+                      <div class="chart-title flex-box flex-box--between-justify">
+                        <div class="title-msg"> {{ chartItem.reportTitle }}</div>
+                        <div class="title-handle">
+                          <a-icon type="sync" @click="onRefresh(chartItem)" />
+                          <a-icon type="delete" @click="onDelectChart(gridItem)" />
+                        </div>
+                      </div>
+                      <ve-chart :colors="themeColors" :settings="getVeChartSettings(chartItem)" :data="chartItem.chartData" />
                     </div>
                   </template>
                 </Draggable>
@@ -75,12 +83,20 @@ export default {
 
   inject: ['dashboardId', 'viewType'],
 
+  props: {
+    themeColors: {
+      type: Array,
+      default: () => []
+    }
+  },
+
   data() {
     return {
       loading: false,
       contentData: [],
       dashboardInfo: {},
-      disabled: false
+      disabled: false,
+      chartData: []
     }
   },
   computed: {
@@ -94,10 +110,15 @@ export default {
   },
 
   methods: {
+    /**
+     * @description: 初始化页面
+     */
     initPage() {
       this.dashboardId && this.getDashboardDetail()
     },
-
+    /**
+     * @description: 获取详情
+     */
     getDashboardDetail() {
       const payload = {
         dashboardId: this.dashboardId
@@ -110,10 +131,18 @@ export default {
         this.loading = false
       })
     },
-
+    /**
+     * @description: 删除内容
+     * @param {number} index 内容下标
+     */
     onDelectContent(index) {
       this.contentData.splice(index, 1)
     },
+    /**
+     * @description: 标题样式
+     * @param {Object} title 标题信息
+     * @return {Object} 标题样式
+     */
     getTitleStyle(title) {
       const { color, fontSize, fontWeight } = title
 
@@ -123,20 +152,76 @@ export default {
         fontWeight
       }
     },
-    onAddChart(item) {
-      const { content: [chart] } = item
+    /**
+     * @description: 刷新图表
+     * @param {Object} chart 图表信息
+     */
+    onRefresh(chart) {
+      this.getChartData(chart)
+    },
+    /**
+     * @description: 删除图表
+     */
+    onDelectChart(gridItem) {
+      gridItem.content = []
+    },
+    /**
+     * @description: 获取图标设置
+     * @param {Object} chart 图表信息
+     * @return {Object} 图表配置信息 type-类型 metrics-指标 dimension-维度
+     */
+    getVeChartSettings(chart) {
+      const { chartId: chartType, charact: [{ columnChinsesName: metrics }], column: [{ columnChinsesName: dimension }] } = chart
+
+      return {
+        type: chartType,
+        metrics: [metrics],
+        dimension: [dimension]
+      }
+    },
+
+    /**
+     * @description: 获取vechart格式的数据
+     * @param {Object} chart 图表信息
+     * @return {Object} vechart格式的数据
+     */
+    getVeChartData(gridItem) {
+      const { content: [chart] } = gridItem
+
+      this.getChartData(chart)
+    },
+
+    getChartData(chart) {
+      const payload = this.getChartPaylod(chart)
+      const { charact: [{ columnChinsesName: metrics }], column: [{ columnChinsesName: dimension }] } = chart
+
+      chart.chartData = {}
+      ChartApiServices.getChartDetailInfo(payload).then(response => {
+        const { data: { content: [chartData] }} = response
+        const { list: rows } = chartData
+
+        chart.chartData = {
+          columns: [dimension, metrics],
+          rows
+        }
+      })
+    },
+
+    /**
+     * @description: 获取图表数据的参数
+     * @param {Object} chart 图表信息
+     * @return {Object} 参数
+     */
+    getChartPaylod(chart) {
       const { charact: charater, datasourceId, querySql, row: rowList, column } = chart
-      const payload = {
+
+      return {
         charater,
         datasourceId,
         querySql,
         rowList,
         column
       }
-
-      ChartApiServices.getChartDetailInfo(payload).then(res => {
-        // debugger
-      })
     }
   }
 }
@@ -182,6 +267,15 @@ export default {
           height: 420px;
           border: dashed #eee;
           border-width: 2px 1px;
+          .chart-box {
+            height: 100%;
+            .chart-title {
+              .title-msg {
+                font-size: 16px;
+                font-weight: bold;
+              }
+            }
+          }
         }
       }
       .border-box {
