@@ -1,7 +1,7 @@
 <!--
  * @Description: 新建编辑看板
  * @Date: 2022-01-19 15:21:06
- * @LastEditTime: 2022-02-09 16:52:22
+ * @LastEditTime: 2022-02-11 18:45:15
 -->
 <template>
   <div class="dashboard">
@@ -72,11 +72,14 @@ export default {
 .dashboard {
   display: flex;
   height: 100%;
-  background-color: #fff;
   border-radius: 6px;
   &-nav {
-    border-right: 1px solid #dcdcdc;
+    background-color: #fff;
     width: 350px;
+    margin-right: 20px;
+    border: 1px solid #EAEFF0;
+    border-radius: 6px;
+    box-shadow: 0 23px 44px 0 rgb(176 183 195 / 14%);
     /deep/ .ant-tabs {
       height: 100%;
       .ant-tabs-nav {
@@ -95,9 +98,13 @@ export default {
     }
   }
   &-content {
+    background-color: #fff;
     padding: 0 10px;
     flex: 1;
     width: 0;
+    border: 1px solid #EAEFF0;
+    border-radius: 6px;
+    box-shadow: 0 23px 44px 0 rgb(176 183 195 / 14%);
   }
 }
 </style>

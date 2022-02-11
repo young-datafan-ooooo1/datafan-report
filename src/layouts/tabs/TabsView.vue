@@ -315,7 +315,7 @@ export default {
   }
   .tabs-view-content{
     position: relative;
-    padding: 15px 20px;
+    padding: 20px;
     height: 100% ;
     background-color: #f4f5f7;
     &.head.fixed{
