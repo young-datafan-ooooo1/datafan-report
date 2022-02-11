@@ -1,7 +1,7 @@
 /*
  * @Description: 主配置
  * @Date: 2022-01-21 14:48:10
- * @LastEditTime: 2022-01-24 16:38:02
+ * @LastEditTime: 2022-02-09 16:57:29
  */
 import Vue from 'vue'
 import App from './App.vue'
@@ -36,6 +36,8 @@ const i18n = initI18n('CN', 'US')
 Vue.use(Antd)
 import vcolorpicker from 'vcolorpicker'
 Vue.use(vcolorpicker)
+import VCharts from 'v-charts'
+Vue.use(VCharts)
 
 import Empty from '@/components/common/empty'
 // 设置VXETable空内容模板
