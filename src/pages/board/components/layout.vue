@@ -1,7 +1,7 @@
 <!--
  * @Description: 新增/编辑看板布局
  * @Date: 2022-01-19 16:40:06
- * @LastEditTime: 2022-02-09 16:51:00
+ * @LastEditTime: 2022-02-11 19:01:09
 -->
 <template>
   <div class="dashborad-layout">
@@ -83,19 +83,19 @@ export default {
       gridData: [
         {
           type: 'grid',
-          items: [{ width: 16, content: [] }, { width: 8, content: [] }]
+          items: [{ width: 16, chartContent: [], chartData: {}, loading: false }, { width: 8, chartContent: [], chartData: {}, loading: false }]
         },
         {
           type: 'grid',
-          items: [{ width: 12, content: [] }, { width: 12, content: [] }]
+          items: [{ width: 12, chartContent: [], chartData: {}, loading: false }, { width: 12, chartContent: [], chartData: {}, loading: false }]
         },
         {
           type: 'grid',
-          items: [{ width: 8, content: [] }, { width: 8, content: [] }, { width: 8, content: [] }]
+          items: [{ width: 8, chartContent: [], chartData: {}, loading: false }, { width: 8, chartContent: [], chartData: {}, loading: false }, { width: 8, chartContent: [], chartData: {}, loading: false }]
         },
         {
           type: 'grid',
-          items: [{ width: 24, content: [] }]
+          items: [{ width: 24, chartContent: [], chartData: {}, loading: false }]
         }
       ],
       borderData: [
@@ -191,6 +191,7 @@ export default {
         width: 26px;
         height: 26px;
         border-radius: 2px;
+        cursor: pointer;
         &.one {
           background: linear-gradient(135deg, #1f77b4 0%, #1f77b4 50%, #ff7f0e 51%, #ff7f0e 100%);
         }

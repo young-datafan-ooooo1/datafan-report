@@ -1,7 +1,7 @@
 <!--
  * @Description: 内容
  * @Date: 2022-01-21 16:27:42
- * @LastEditTime: 2022-02-11 15:08:57
+ * @LastEditTime: 2022-02-11 19:16:39
 -->
 <template>
   <div class="content-container">
@@ -28,17 +28,21 @@
             <template v-for="(gridItem, gridItemIndex) in item.items">
               <a-col :key="gridItemIndex" :span="gridItem.width">
                 <!-- 当内容长度为1时，不能再更新 -->
-                <Draggable :list="gridItem.content" :options="{ group: { name: 'chart', put: gridItem.content.length === 1 ? false : true }}" class="dashborad-grid--full" @add="getVeChartData(gridItem)">
-                  <template v-for="(chartItem, chartIndex) in gridItem.content">
+                <Draggable :list="gridItem.chartContent" :options="{ group: { name: 'chart', put: gridItem.chartContent.length === 1 ? false : true }}" class="dashborad-grid--full" @add="getVeChartData(gridItem)">
+                  <template v-for="(chartItem, chartIndex) in gridItem.chartContent">
                     <div :key="chartIndex" class="chart-box flex-box flex-box--column">
-                      <div class="chart-title flex-box flex-box--between-justify">
-                        <div class="title-msg"> {{ chartItem.reportTitle }}</div>
-                        <div class="title-handle">
-                          <a-icon type="sync" @click="onRefresh(chartItem)" />
-                          <a-icon type="delete" @click="onDelectChart(gridItem)" />
+                      <a-spin :spinning="gridItem.loading">
+                        <div class="chart-title flex-box flex-box--between-justify">
+                          <div class="title-msg"> {{ chartItem.reportTitle }}</div>
+                          <div class="title-handle">
+                            <a-icon class="flex-box-col-small" type="sync" @click="onRefresh(gridItem)" />
+                            <a-icon class="flex-box-col-small" type="delete" @click="onDelectChart(gridItem)" />
+                          </div>
                         </div>
-                      </div>
-                      <ve-chart :colors="themeColors" :settings="getVeChartSettings(chartItem)" :data="chartItem.chartData" />
+                        <div v-if="chartItem.chartId === 'twoDimensionalTable'">二维</div>
+                        <div v-if="chartItem.chartId === 'Multidimensional'">多维</div>
+                        <ve-chart v-else :colors="themeColors" :settings="getVeChartSettings(chartItem)" :data="gridItem.chartData" />
+                      </a-spin>
                     </div>
                   </template>
                 </Draggable>
@@ -154,16 +158,16 @@ export default {
     },
     /**
      * @description: 刷新图表
-     * @param {Object} chart 图表信息
+     * @param {Object} gridItem 图表信息
      */
-    onRefresh(chart) {
-      this.getChartData(chart)
+    onRefresh(gridItem) {
+      this.getChartData(gridItem)
     },
     /**
      * @description: 删除图表
      */
     onDelectChart(gridItem) {
-      gridItem.content = []
+      gridItem.chartContent = []
     },
     /**
      * @description: 获取图标设置
@@ -179,31 +183,37 @@ export default {
         dimension: [dimension]
       }
     },
-
     /**
      * @description: 获取vechart格式的数据
-     * @param {Object} chart 图表信息
-     * @return {Object} vechart格式的数据
+     * @param {Object} gridItem 图表信息
      */
     getVeChartData(gridItem) {
-      const { content: [chart] } = gridItem
-
-      this.getChartData(chart)
+      this.getChartData(gridItem)
     },
+    /**
+     * @description: 获取表格信息
+     * @param {Object} gridItem 图表信息
+     */
+    getChartData(gridItem) {
+      const { chartContent: [chart] } = gridItem
 
-    getChartData(chart) {
       const payload = this.getChartPaylod(chart)
-      const { charact: [{ columnChinsesName: metrics }], column: [{ columnChinsesName: dimension }] } = chart
+      const { chartId: chartType, charact: [{ columnChinsesName: metrics }], column: [{ columnChinsesName: dimension }] } = chart
 
-      chart.chartData = {}
+      gridItem.loading = true
       ChartApiServices.getChartDetailInfo(payload).then(response => {
         const { data: { content: [chartData] }} = response
         const { list: rows } = chartData
+        // 是不是瀑布图类型
+        const isWaterfall = ['waterfall'].includes(chartType)
 
-        chart.chartData = {
-          columns: [dimension, metrics],
+        gridItem.chartData = {
+          // 瀑布图类型与其他不同，需要反转维度和指标 后续完善
+          columns: isWaterfall ? [metrics, dimension] : [dimension, metrics],
           rows
         }
+      }).finally(() => {
+        gridItem.loading = false
       })
     },
 
@@ -267,12 +277,22 @@ export default {
           height: 420px;
           border: dashed #eee;
           border-width: 2px 1px;
+          padding: 10px;
           .chart-box {
             height: 100%;
             .chart-title {
               .title-msg {
                 font-size: 16px;
                 font-weight: bold;
+              }
+              .title-handle {
+                display: none;
+              }
+            }
+            &:hover {
+              .title-handle {
+                display: flex;
+                color: #869399;
               }
             }
           }
