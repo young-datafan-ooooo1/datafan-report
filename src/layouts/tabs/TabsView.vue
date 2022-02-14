@@ -403,4 +403,13 @@ export default {
       }
     }
   }
+  /deep/ .common-loading {
+    width: 100%;
+    height: 100%;
+    .ant-spin-container {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+  }
 </style>
