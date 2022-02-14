@@ -1,7 +1,7 @@
 <!--
  * @Description: 内容
  * @Date: 2022-01-21 16:27:42
- * @LastEditTime: 2022-02-11 19:16:39
+ * @LastEditTime: 2022-02-14 15:52:42
 -->
 <template>
   <div class="content-container">
@@ -28,10 +28,15 @@
             <template v-for="(gridItem, gridItemIndex) in item.items">
               <a-col :key="gridItemIndex" :span="gridItem.width">
                 <!-- 当内容长度为1时，不能再更新 -->
-                <Draggable :list="gridItem.chartContent" :options="{ group: { name: 'chart', put: gridItem.chartContent.length === 1 ? false : true }}" class="dashborad-grid--full" @add="getVeChartData(gridItem)">
+                <Draggable
+                  :list="gridItem.chartContent"
+                  :options="{ group: { name: 'chart', put: gridItem.chartContent.length === 1 ? false : true }}"
+                  class="dashborad-grid--full"
+                  @add="getVeChartData(gridItem)"
+                >
                   <template v-for="(chartItem, chartIndex) in gridItem.chartContent">
                     <div :key="chartIndex" class="chart-box flex-box flex-box--column">
-                      <a-spin :spinning="gridItem.loading">
+                      <a-spin :spinning="gridItem.loading" class="common-loading">
                         <div class="chart-title flex-box flex-box--between-justify">
                           <div class="title-msg"> {{ chartItem.reportTitle }}</div>
                           <div class="title-handle">
@@ -39,9 +44,20 @@
                             <a-icon class="flex-box-col-small" type="delete" @click="onDelectChart(gridItem)" />
                           </div>
                         </div>
-                        <div v-if="chartItem.chartId === 'twoDimensionalTable'">二维</div>
-                        <div v-if="chartItem.chartId === 'Multidimensional'">多维</div>
-                        <ve-chart v-else :colors="themeColors" :settings="getVeChartSettings(chartItem)" :data="gridItem.chartData" />
+                        <div v-if="chartItem.chartId === 'twoDimensionalTable'" class="chart-view table">
+                          <SenseTable
+                            :columns="getTwoDimensionalColumn(chartItem)"
+                            :data="getTwoDimensionalData(gridItem.chartData)"
+                            border
+                            size="small"
+                            hide-pager
+                            height="auto"
+                          />
+                        </div>
+                        <div v-else-if="chartItem.chartId === 'Multidimensional'" class="chart-view multi-table">多维</div>
+                        <div v-else class="chart-view chart">
+                          <ve-chart :colors="themeColors" :settings="getVeChartSettings(chartItem)" :data="gridItem.chartData" />
+                        </div>
                       </a-spin>
                     </div>
                   </template>
@@ -175,12 +191,14 @@ export default {
      * @return {Object} 图表配置信息 type-类型 metrics-指标 dimension-维度
      */
     getVeChartSettings(chart) {
-      const { chartId: chartType, charact: [{ columnChinsesName: metrics }], column: [{ columnChinsesName: dimension }] } = chart
+      const { chartId: chartType, charact, column } = chart
+      const metrics = charact.map(item => item.columnChinsesName)
+      const dimension = column.map(item => item.columnChinsesName)
 
       return {
         type: chartType,
-        metrics: [metrics],
-        dimension: [dimension]
+        metrics: [...metrics],
+        dimension: [...dimension]
       }
     },
     /**
@@ -196,9 +214,10 @@ export default {
      */
     getChartData(gridItem) {
       const { chartContent: [chart] } = gridItem
-
+      const { chartId: chartType, charact, column } = chart
+      const metrics = charact.map(item => item.columnChinsesName)
+      const dimension = column.map(item => item.columnChinsesName)
       const payload = this.getChartPaylod(chart)
-      const { chartId: chartType, charact: [{ columnChinsesName: metrics }], column: [{ columnChinsesName: dimension }] } = chart
 
       gridItem.loading = true
       ChartApiServices.getChartDetailInfo(payload).then(response => {
@@ -209,7 +228,7 @@ export default {
 
         gridItem.chartData = {
           // 瀑布图类型与其他不同，需要反转维度和指标 后续完善
-          columns: isWaterfall ? [metrics, dimension] : [dimension, metrics],
+          columns: isWaterfall ? [...metrics, ...dimension] : [...dimension, ...metrics],
           rows
         }
       }).finally(() => {
@@ -231,6 +250,34 @@ export default {
         querySql,
         rowList,
         column
+      }
+    },
+    /**
+     * @description: 获取二维表格配置
+     * @param {Object} chart 图表信息
+     * @return {arry} 表格配置
+     */
+    getTwoDimensionalColumn(chart) {
+      const { charact: metrics, column } = chart
+      const columnList = [... metrics, ...column]
+
+      return columnList.map(item => {
+        const { columnChinsesName: title, columnChinsesName: field } = item
+
+        return {
+          title,
+          field
+        }
+      })
+    },
+    /**
+     * @description: 二维表格数据
+     * @param {Object} data 图表数据
+     * @return {arry} 表格数据格式
+     */
+    getTwoDimensionalData(data) {
+      if (data && data.rows) {
+        return data.rows
       }
     }
   }
@@ -281,6 +328,7 @@ export default {
           .chart-box {
             height: 100%;
             .chart-title {
+              height: 30px;
               .title-msg {
                 font-size: 16px;
                 font-weight: bold;
@@ -288,6 +336,10 @@ export default {
               .title-handle {
                 display: none;
               }
+            }
+            .chart-view {
+              flex: 1;
+              height: 0;
             }
             &:hover {
               .title-handle {
