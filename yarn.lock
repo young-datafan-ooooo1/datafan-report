@@ -1075,6 +1075,15 @@
     "@babel/helper-validator-identifier" "^7.14.9"
     to-fast-properties "^2.0.0"
 
+"@click2buy/vue-pivot-table@^1.1.6":
+  version "1.1.6"
+  resolved "https://registry.npmjs.org/@click2buy/vue-pivot-table/-/vue-pivot-table-1.1.6.tgz#9f7c10236bbee97bc720e66d64bac7c000ad86ca"
+  integrity sha512-utvyc1nGgzs1BYO4pEFesdT45Kyj3JWlUVjnVv0Vj1r7Ot/o++1BIzS4vRZSVGGShBUweGJB5hntZOM9eZBI9Q==
+  dependencies:
+    core-js "^3.6.5"
+    vue "^2.6.11"
+    vuedraggable "^2.24.3"
+
 "@eslint/eslintrc@^0.4.3":
   version "0.4.3"
   resolved "http://mvn.senses-ai.com:8081/repository/npm-group/@eslint/eslintrc/-/eslintrc-0.4.3.tgz"
@@ -1159,9 +1168,9 @@
   integrity sha1-K1o6s/kYzKSKjHVMCBaOPwPrphs=
 
 "@sense70/common-component-vue@~1.3.0":
-  version "1.3.193"
-  resolved "http://mvn.senses-ai.com:8081/repository/npm-group/@sense70/common-component-vue/-/common-component-vue-1.3.193.tgz#9ada41e739adcf270c5ec86883176bc3a1299bd0"
-  integrity sha512-5WH/YMLZFqdj8yD2qkzHmjRgu+c5EaJ2ge265O6OvTxc1OzSAoow2ck+D67ngXjBvDRS8zozYBVzKpdhnq82OQ==
+  version "1.3.199"
+  resolved "http://mvn.senses-ai.com:8081/repository/npm-group/@sense70/common-component-vue/-/common-component-vue-1.3.199.tgz#8db0d854b22eab70d43c700ebb53cdce72c80020"
+  integrity sha512-CSW3u7D6khVZ75fSsecvh1O9r4QP8JQyJQknTQAwkOTJevJsDV0dDdJJ1rd2P23awWcPvXkOcp3shy7sCsqH3Q==
   dependencies:
     axios "^0.19.2"
     clipboard "^2.0.6"
@@ -2594,6 +2603,11 @@ boolbase@^1.0.0, boolbase@~1.0.0:
   version "1.0.0"
   resolved "http://mvn.senses-ai.com:8081/repository/npm-group/boolbase/-/boolbase-1.0.0.tgz"
   integrity sha1-aN/1++YMUes3cl6p4+0xDcwed24=
+
+bootstrap3@^3.3.5:
+  version "3.3.5"
+  resolved "https://registry.npmjs.org/bootstrap3/-/bootstrap3-3.3.5.tgz#496a4ef6c087214fa96838196d60de645e82591a"
+  integrity sha1-SWpO9sCHIU+paDgZbWDeZF6CWRo=
 
 boxen@^4.2.0:
   version "4.2.0"
@@ -11066,10 +11080,10 @@ vue@^2.5.17, vue@^2.5.3, vue@^2.6.10, vue@^2.6.11, vue@^2.6.12:
   resolved "http://mvn.senses-ai.com:8081/repository/npm-group/vue/-/vue-2.6.14.tgz"
   integrity sha1-5RqlJQJQ1Wmj+606ilpofWA24jU=
 
-vuedraggable@^2.23.2:
+vuedraggable@^2.23.2, vuedraggable@^2.24.3:
   version "2.24.3"
-  resolved "http://mvn.senses-ai.com:8081/repository/npm-group/vuedraggable/-/vuedraggable-2.24.3.tgz"
-  integrity sha1-Q8k4SbdGokzlA+Ej1bJZxwG6DRk=
+  resolved "https://registry.npmjs.org/vuedraggable/-/vuedraggable-2.24.3.tgz#43c93849b746a24ce503e123d5b259c701ba0d19"
+  integrity sha512-6/HDXi92GzB+Hcs9fC6PAAozK1RLt1ewPTLjK0anTYguXLAeySDmcnqE8IC0xa7shvSzRjQXq3/+dsZ7ETGF3g==
   dependencies:
     sortablejs "1.10.2"
 
