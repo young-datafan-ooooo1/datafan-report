@@ -1,7 +1,7 @@
 <!--
  * @Description: 内容
  * @Date: 2022-01-21 16:27:42
- * @LastEditTime: 2022-02-14 15:52:42
+ * @LastEditTime: 2022-02-16 18:22:29
 -->
 <template>
   <div class="content-container">
@@ -11,22 +11,22 @@
       <a-icon type="fullscreen" />
     </div>
     <Draggable
+      v-model="contentData"
       class="container flex-box-row"
-      :list="contentData"
-      :options="{group:'layout', disabled: disabled}"
+      :options="{group:'layout', disabled: false}"
     >
       <div
-        v-for="(item, index) in contentData"
-        :key="index"
+        v-for="(contentItem, contentIndex) in contentData"
+        :key="contentIndex"
         class="container-item flex-box-row"
       >
-        <div v-if="item.type === 'grid'" class="grid-box flex-box flex-box--center-items flex-box-row">
+        <div v-if="contentItem.type === 'grid'" class="grid-box flex-box flex-box--center-items flex-box-row">
           <div class="delete-icon">
-            <a-icon type="delete" @click="onDelectContent(index)" />
+            <a-icon type="delete" @click="onDelectContent(contentIndex)" />
           </div>
           <a-row class="flex-box__flex flex-box-row common-move">
-            <template v-for="(gridItem, gridItemIndex) in item.items">
-              <a-col :key="gridItemIndex" :span="gridItem.width">
+            <template v-for="gridItem in contentItem.items">
+              <a-col :key="gridItem.id" :span="gridItem.width">
                 <!-- 当内容长度为1时，不能再更新 -->
                 <Draggable
                   :list="gridItem.chartContent"
@@ -34,8 +34,8 @@
                   class="dashborad-grid--full"
                   @add="getVeChartData(gridItem)"
                 >
-                  <template v-for="(chartItem, chartIndex) in gridItem.chartContent">
-                    <div :key="chartIndex" class="chart-box flex-box flex-box--column">
+                  <template v-for="chartItem in gridItem.chartContent">
+                    <div :key="chartItem.reportId" class="chart-box flex-box flex-box--column">
                       <a-spin :spinning="gridItem.loading" class="common-loading">
                         <div class="chart-title flex-box flex-box--between-justify">
                           <div class="title-msg"> {{ chartItem.reportTitle }}</div>
@@ -46,15 +46,26 @@
                         </div>
                         <div v-if="chartItem.chartId === 'twoDimensionalTable'" class="chart-view table">
                           <SenseTable
+                            class="flex-box-row"
                             :columns="getTwoDimensionalColumn(chartItem)"
-                            :data="getTwoDimensionalData(gridItem.chartData)"
+                            :data="getTableData(gridItem.chartData)"
                             border
                             size="small"
                             hide-pager
                             height="auto"
                           />
                         </div>
-                        <div v-else-if="chartItem.chartId === 'Multidimensional'" class="chart-view multi-table">多维</div>
+                        <div v-else-if="chartItem.chartId === 'Multidimensional'" class="chart-view multi-table pivot-table-contain">
+                          <template v-for="(metrics, metricsIndex) in chartItem.charact">
+                            <PivotTable
+                              :key="metricsIndex"
+                              :data="[]"
+                              :row-fields="getRowFields(chartItem)"
+                              :col-fields="getColFields(chartItem)"
+                              :reducer="getReducer(metrics)"
+                            />
+                          </template>
+                        </div>
                         <div v-else class="chart-view chart">
                           <ve-chart :colors="themeColors" :settings="getVeChartSettings(chartItem)" :data="gridItem.chartData" />
                         </div>
@@ -67,21 +78,21 @@
           </a-row>
         </div>
 
-        <div v-if="item.type === 'border'" class="border-box flex-box flex-box--center-items flex-box-row">
+        <div v-if="contentItem.type === 'border'" class="border-box flex-box flex-box--center-items flex-box-row">
           <div class="delete-icon">
-            <a-icon type="delete" @click="onDelectContent(index)" />
+            <a-icon type="delete" @click="onDelectContent(contentIndex)" />
           </div>
-          <div :class="['border-item', 'common-move', `${item.value}-type`]" />
+          <div :class="['border-item', 'common-move', `${contentItem.value}-type`]" />
         </div>
 
-        <div v-if="item.type === 'title'" class="title-box flex-box flex-box--center-items flex-box-row">
+        <div v-if="contentItem.type === 'title'" class="title-box flex-box flex-box--center-items flex-box-row">
           <div class="delete-icon">
-            <a-icon type="delete" @click="onDelectContent(index)" />
+            <a-icon type="delete" @click="onDelectContent(contentIndex)" />
           </div>
           <div class="title-content">
             <span class="msg flex-box-col-small" :style="getTitleStyle(item)">新标题</span>
-            <colorPicker v-model="item.color" class="color flex-box-col-small" />
-            <a-input-number v-model="item.fontSize" class="size flex-box-col-small" />
+            <colorPicker v-model="contentItem.color" class="color flex-box-col-small" />
+            <a-input-number v-model="contentItem.fontSize" class="size flex-box-col-small" />
           </div>
         </div>
       </div>
@@ -93,12 +104,14 @@
 import Draggable from 'vuedraggable'
 import DashboardApiServices from '@/services/dashboard'
 import ChartApiServices from '@/services/chart'
+import { PivotTable } from '@click2buy/vue-pivot-table'
 
 export default {
   name: 'Content',
 
   components: {
-    Draggable
+    Draggable,
+    PivotTable
   },
 
   inject: ['dashboardId', 'viewType'],
@@ -113,10 +126,65 @@ export default {
   data() {
     return {
       loading: false,
-      contentData: [],
-      dashboardInfo: {},
-      disabled: false,
-      chartData: []
+      contentData: [
+        {
+          'type': 'grid',
+          'items': [
+            {
+              'width': 16,
+              'chartContent': [
+                {
+                  'reportId': '8089712b-8c6e-4df9-b81c-acf435682be2',
+                  'datasourceId': 'ENGINE_CLICKHOUSE',
+                  'querySql': 'Encrypted 73656c656374206e616d652c636f756e74286e616d65292066726f6d202873656c656374202a2066726f6d20746d702e7374656c6c615f6465695f32303232303230385f666e376b30736f7339667a642920776865726520313d31202067726f75702060c7b8c1a907c2d288a214a7649ec0ff8a',
+                  'reportTitle': '饼图',
+                  'createUser': 'admin',
+                  'createUserId': '1',
+                  'createTime': '2022-02-11 16:04:02',
+                  'chartId': 'pie',
+                  'stepProjectId': null,
+                  'stepName': '表输入',
+                  'reportTable': 'select * from tmp.stella_dei_20220208_fn7k0sos9fzd',
+                  'steProjectId': '860118572a7541e1b3953bc8f0844559',
+                  'chartName': '饼图',
+                  'loading': true,
+                  'showTittle': false,
+                  'datasourceVO': null,
+                  'row': [],
+                  'column': [
+                    {
+                      'columnName': 'name',
+                      'columnChinsesName': 'name',
+                      'statisticsType': '',
+                      'columnType': 'column',
+                      'dataType': 'String'
+                    }
+                  ],
+                  'charact': [
+                    {
+                      'columnName': 'count(name)',
+                      'columnChinsesName': '计数(name)',
+                      'statisticsType': 'count',
+                      'columnType': 'charact',
+                      'dataType': 'String'
+                    }
+                  ]
+                }
+              ],
+              'loading': false,
+              'id': '1-1',
+              'chartData': {}
+            },
+            {
+              'width': 8,
+              'chartContent': [],
+              'loading': false,
+              'id': '1-2'
+            }
+          ]
+        }
+      ],
+      dashboardInfo: {}
     }
   },
   computed: {
@@ -221,8 +289,8 @@ export default {
 
       gridItem.loading = true
       ChartApiServices.getChartDetailInfo(payload).then(response => {
-        const { data: { content: [chartData] }} = response
-        const { list: rows } = chartData
+        const { data: { content: chartData }} = response
+        const rows = chartData.map(item => item.list).flat()
         // 是不是瀑布图类型
         const isWaterfall = ['waterfall'].includes(chartType)
 
@@ -275,15 +343,44 @@ export default {
      * @param {Object} data 图表数据
      * @return {arry} 表格数据格式
      */
-    getTwoDimensionalData(data) {
+    getTableData(data) {
       if (data && data.rows) {
         return data.rows
       }
+    },
+
+    getRowFields(chart) {
+      console.log('getRowFields')
+      const { row } = chart
+
+      return row.map(item => {
+        const { columnChinsesName: label } = item
+        return {
+          label,
+          getter: item => item[label]
+        }
+      })
+    },
+    getColFields(chart) {
+      const { column } = chart
+
+      return column.map(item => {
+        const { columnChinsesName: label } = item
+
+        return {
+          label,
+          getter: item => item[label]
+        }
+      })
+    },
+    getReducer(metrics) {
+      return (sum, items) => items[metrics.columnChinsesName]
     }
   }
 }
 </script>
 <style lang="less" scoped>
+@import '../css/bootstrap.css';
 .content-container {
   display: flex;
   flex-direction: column;
@@ -321,17 +418,17 @@ export default {
       }
       .grid-box {
         .dashborad-grid--full {
+          padding: 10px;
           height: 420px;
           border: dashed #eee;
           border-width: 2px 1px;
-          padding: 10px;
           .chart-box {
             height: 100%;
             .chart-title {
               height: 30px;
               .title-msg {
-                font-size: 16px;
                 font-weight: bold;
+                font-size: 16px;
               }
               .title-handle {
                 display: none;
@@ -340,6 +437,16 @@ export default {
             .chart-view {
               flex: 1;
               height: 0;
+
+              &.pivot-table-contain {
+                /*overflow-y: scroll;*/
+                overflow: auto;
+                /*padding: 70px 52px 0px 52px;*/
+                font-size: 12px;
+                .position-relative + .position-relative {
+                  margin-top: 10px;
+                }
+              }
             }
             &:hover {
               .title-handle {

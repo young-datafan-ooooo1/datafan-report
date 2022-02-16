@@ -1,7 +1,7 @@
 <!--
  * @Description: 新增/编辑看板布局
  * @Date: 2022-01-19 16:40:06
- * @LastEditTime: 2022-02-11 19:01:09
+ * @LastEditTime: 2022-02-16 11:08:21
 -->
 <template>
   <div class="dashborad-layout">
@@ -83,19 +83,29 @@ export default {
       gridData: [
         {
           type: 'grid',
-          items: [{ width: 16, chartContent: [], chartData: {}, loading: false }, { width: 8, chartContent: [], chartData: {}, loading: false }]
+          items: [
+            { width: 16, chartContent: [], loading: false, id: '1-1' },
+            { width: 8, chartContent: [], loading: false, id: '1-2' }
+          ]
         },
         {
           type: 'grid',
-          items: [{ width: 12, chartContent: [], chartData: {}, loading: false }, { width: 12, chartContent: [], chartData: {}, loading: false }]
+          items: [
+            { width: 12, chartContent: [], loading: false, id: '2-1' },
+            { width: 12, chartContent: [], loading: false, id: '2-2' }
+          ]
         },
         {
           type: 'grid',
-          items: [{ width: 8, chartContent: [], chartData: {}, loading: false }, { width: 8, chartContent: [], chartData: {}, loading: false }, { width: 8, chartContent: [], chartData: {}, loading: false }]
+          items: [
+            { width: 8, chartContent: [], loading: false, id: '3-1' },
+            { width: 8, chartContent: [], loading: false, id: '3-2' },
+            { width: 8, chartContent: [], loading: false, id: '3-3' }
+          ]
         },
         {
           type: 'grid',
-          items: [{ width: 24, chartContent: [], chartData: {}, loading: false }]
+          items: [{ width: 24, chartContent: [], loading: false, id: '4-1' }]
         }
       ],
       borderData: [

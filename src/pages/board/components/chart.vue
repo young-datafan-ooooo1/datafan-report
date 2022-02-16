@@ -1,7 +1,7 @@
 <!--
  * @Description: 图表
  * @Date: 2022-01-21 15:00:14
- * @LastEditTime: 2022-01-24 13:37:27
+ * @LastEditTime: 2022-02-15 14:14:55
 -->
 <template>
   <div class="dashborad-chart">
@@ -13,15 +13,15 @@
             <div :key="chart.reportId" class="chart-item flex-box-row-small common-move">
               <span class="title">{{ chart.reportTitle }}</span>
               <div class="flex-box flex-box--center-items">
-                <div class="label flex-box-col-small">创建人:</div>
+                <div class="item-label flex-box-col-small">创建人:</div>
                 <div class="msg flex-box-col-small">{{ chart.createUser }}</div>
               </div>
               <div class="flex-box flex-box--center-items">
-                <div class="label flex-box-col-small">创建时间:</div>
+                <div class="item-label flex-box-col-small">创建时间:</div>
                 <div class="msg flex-box-col-small">{{ chart.createTime }}</div>
               </div>
               <div class="flex-box flex-box--center-items">
-                <div class="label flex-box-col-small">图表类型:</div>
+                <div class="item-label flex-box-col-small">图表类型:</div>
                 <div class="msg flex-box-col-small">{{ chart.chartName }}</div>
               </div>
             </div>
@@ -115,7 +115,7 @@ export default {
         .title {
           font-weight: bold;
         }
-        .label {
+        .item-label {
           font-size: 12px;
         }
         .msg {
