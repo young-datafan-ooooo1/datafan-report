@@ -1,7 +1,7 @@
 <!--
  * @Description: 内容
  * @Date: 2022-01-21 16:27:42
- * @LastEditTime: 2022-02-16 18:22:29
+ * @LastEditTime: 2022-02-16 19:28:06
 -->
 <template>
   <div class="content-container">
@@ -32,7 +32,7 @@
                   :list="gridItem.chartContent"
                   :options="{ group: { name: 'chart', put: gridItem.chartContent.length === 1 ? false : true }}"
                   class="dashborad-grid--full"
-                  @add="getVeChartData(gridItem)"
+                  @add="drawChart(gridItem)"
                 >
                   <template v-for="chartItem in gridItem.chartContent">
                     <div :key="chartItem.reportId" class="chart-box flex-box flex-box--column">
@@ -47,8 +47,10 @@
                         <div v-if="chartItem.chartId === 'twoDimensionalTable'" class="chart-view table">
                           <SenseTable
                             class="flex-box-row"
-                            :columns="getTwoDimensionalColumn(chartItem)"
-                            :data="getTableData(gridItem.chartData)"
+                            v-bind="{
+                              ...chartItem.config
+                            }"
+                            :data="chartItem.chartData"
                             border
                             size="small"
                             hide-pager
@@ -59,15 +61,22 @@
                           <template v-for="(metrics, metricsIndex) in chartItem.charact">
                             <PivotTable
                               :key="metricsIndex"
-                              :data="[]"
-                              :row-fields="getRowFields(chartItem)"
-                              :col-fields="getColFields(chartItem)"
+                              :data="chartItem.chartData"
+                              v-bind="{
+                                ...chartItem.config
+                              }"
                               :reducer="getReducer(metrics)"
                             />
                           </template>
                         </div>
                         <div v-else class="chart-view chart">
-                          <ve-chart :colors="themeColors" :settings="getVeChartSettings(chartItem)" :data="gridItem.chartData" />
+                          <ve-chart
+                            :colors="themeColors"
+                            :data="chartItem.chartData"
+                            v-bind="{
+                              ...chartItem.config
+                            }"
+                          />
                         </div>
                       </a-spin>
                     </div>
@@ -126,64 +135,7 @@ export default {
   data() {
     return {
       loading: false,
-      contentData: [
-        {
-          'type': 'grid',
-          'items': [
-            {
-              'width': 16,
-              'chartContent': [
-                {
-                  'reportId': '8089712b-8c6e-4df9-b81c-acf435682be2',
-                  'datasourceId': 'ENGINE_CLICKHOUSE',
-                  'querySql': 'Encrypted 73656c656374206e616d652c636f756e74286e616d65292066726f6d202873656c656374202a2066726f6d20746d702e7374656c6c615f6465695f32303232303230385f666e376b30736f7339667a642920776865726520313d31202067726f75702060c7b8c1a907c2d288a214a7649ec0ff8a',
-                  'reportTitle': '饼图',
-                  'createUser': 'admin',
-                  'createUserId': '1',
-                  'createTime': '2022-02-11 16:04:02',
-                  'chartId': 'pie',
-                  'stepProjectId': null,
-                  'stepName': '表输入',
-                  'reportTable': 'select * from tmp.stella_dei_20220208_fn7k0sos9fzd',
-                  'steProjectId': '860118572a7541e1b3953bc8f0844559',
-                  'chartName': '饼图',
-                  'loading': true,
-                  'showTittle': false,
-                  'datasourceVO': null,
-                  'row': [],
-                  'column': [
-                    {
-                      'columnName': 'name',
-                      'columnChinsesName': 'name',
-                      'statisticsType': '',
-                      'columnType': 'column',
-                      'dataType': 'String'
-                    }
-                  ],
-                  'charact': [
-                    {
-                      'columnName': 'count(name)',
-                      'columnChinsesName': '计数(name)',
-                      'statisticsType': 'count',
-                      'columnType': 'charact',
-                      'dataType': 'String'
-                    }
-                  ]
-                }
-              ],
-              'loading': false,
-              'id': '1-1',
-              'chartData': {}
-            },
-            {
-              'width': 8,
-              'chartContent': [],
-              'loading': false,
-              'id': '1-2'
-            }
-          ]
-        }
-      ],
+      contentData: [],
       dashboardInfo: {}
     }
   },
@@ -254,27 +206,90 @@ export default {
       gridItem.chartContent = []
     },
     /**
-     * @description: 获取图标设置
-     * @param {Object} chart 图表信息
-     * @return {Object} 图表配置信息 type-类型 metrics-指标 dimension-维度
+     * @description: 画图
+     * @param {Object} gridItem grid信息
      */
-    getVeChartSettings(chart) {
+    drawChart(gridItem) {
+      // 一个grid只有一个图表
+      const { chartContent: [chart] } = gridItem
+
+      this.getChartConfig(chart)
+      this.getChartData(gridItem)
+    },
+    /**
+     * @description: 获取图表配置
+     * @param {Object} chart 图表信息
+     */
+    getChartConfig(chart) {
+      const { chartId: chartType } = chart
+      const getChartConfigOption = {
+        'twoDimensionalTable': this.getTwoDimensionalTableConfig,
+        'Multidimensional': this.getMultiDimensionalTableConfig
+      }
+
+      if (getChartConfigOption[chartType]) {
+        getChartConfigOption[chartType](chart)
+      } else {
+        this.getVeChartConfig(chart)
+      }
+    },
+    /**
+     * @description: 获取二维表格配置
+     * @param {Object} chart 表格信息
+     */
+    getTwoDimensionalTableConfig(chart) {
+      const { charact: metrics, column } = chart
+      const columnList = [... metrics, ...column]
+      const columns = columnList.map(item => {
+        const { columnChinsesName: title, columnChinsesName: field } = item
+
+        return {
+          title,
+          field
+        }
+      })
+
+      chart.config = { columns }
+    },
+    /**
+     * @description: 获取多维表格配置
+     * @param {Object} chart 表格信息
+     */
+    getMultiDimensionalTableConfig(chart) {
+      const { row, column } = chart
+      const rowFields = row.map(item => {
+        const { columnChinsesName: label } = item
+        return {
+          label,
+          getter: item => item[label]
+        }
+      })
+      const colFields = column.map(item => {
+        const { columnChinsesName: label } = item
+        return {
+          label,
+          getter: item => item[label]
+        }
+      })
+
+      chart.config = { rowFields, colFields }
+    },
+    /**
+     * @description: 获取vechart配置
+     * @param {Object} chart 表格信息
+     */
+    getVeChartConfig(chart) {
       const { chartId: chartType, charact, column } = chart
       const metrics = charact.map(item => item.columnChinsesName)
       const dimension = column.map(item => item.columnChinsesName)
 
-      return {
-        type: chartType,
-        metrics: [...metrics],
-        dimension: [...dimension]
+      chart.config = {
+        settings: {
+          type: chartType,
+          metrics: [...metrics],
+          dimension: [...dimension]
+        }
       }
-    },
-    /**
-     * @description: 获取vechart格式的数据
-     * @param {Object} gridItem 图表信息
-     */
-    getVeChartData(gridItem) {
-      this.getChartData(gridItem)
     },
     /**
      * @description: 获取表格信息
@@ -282,28 +297,39 @@ export default {
      */
     getChartData(gridItem) {
       const { chartContent: [chart] } = gridItem
-      const { chartId: chartType, charact, column } = chart
-      const metrics = charact.map(item => item.columnChinsesName)
-      const dimension = column.map(item => item.columnChinsesName)
       const payload = this.getChartPaylod(chart)
 
       gridItem.loading = true
       ChartApiServices.getChartDetailInfo(payload).then(response => {
         const { data: { content: chartData }} = response
         const rows = chartData.map(item => item.list).flat()
-        // 是不是瀑布图类型
-        const isWaterfall = ['waterfall'].includes(chartType)
-
-        gridItem.chartData = {
-          // 瀑布图类型与其他不同，需要反转维度和指标 后续完善
-          columns: isWaterfall ? [...metrics, ...dimension] : [...dimension, ...metrics],
-          rows
-        }
+        this.formatChartData(chart, rows)
       }).finally(() => {
         gridItem.loading = false
       })
     },
+    /**
+     * @description: 根据不同情况整合不同图表数据
+     * @param {Object} chart 图表信息
+     * @param {array} data 后端返回数据
+     */
+    formatChartData(chart, data) {
+      const { chartId: chartType, charact, column } = chart
+      const metrics = charact.map(item => item.columnChinsesName)
+      const dimension = column.map(item => item.columnChinsesName)
+      const isTable = ['twoDimensionalTable', 'Multidimensional'].includes(chartType)
+      const isWaterfall = ['waterfall'].includes(chartType)
 
+      if (isTable) {
+        chart.chartData = data
+      } else {
+        chart.chartData = {
+          // 瀑布图类型与其他不同，需要反转维度和指标 后续完善
+          columns: isWaterfall ? [...metrics, ...dimension] : [...dimension, ...metrics],
+          rows: data
+        }
+      }
+    },
     /**
      * @description: 获取图表数据的参数
      * @param {Object} chart 图表信息
@@ -319,59 +345,6 @@ export default {
         rowList,
         column
       }
-    },
-    /**
-     * @description: 获取二维表格配置
-     * @param {Object} chart 图表信息
-     * @return {arry} 表格配置
-     */
-    getTwoDimensionalColumn(chart) {
-      const { charact: metrics, column } = chart
-      const columnList = [... metrics, ...column]
-
-      return columnList.map(item => {
-        const { columnChinsesName: title, columnChinsesName: field } = item
-
-        return {
-          title,
-          field
-        }
-      })
-    },
-    /**
-     * @description: 二维表格数据
-     * @param {Object} data 图表数据
-     * @return {arry} 表格数据格式
-     */
-    getTableData(data) {
-      if (data && data.rows) {
-        return data.rows
-      }
-    },
-
-    getRowFields(chart) {
-      console.log('getRowFields')
-      const { row } = chart
-
-      return row.map(item => {
-        const { columnChinsesName: label } = item
-        return {
-          label,
-          getter: item => item[label]
-        }
-      })
-    },
-    getColFields(chart) {
-      const { column } = chart
-
-      return column.map(item => {
-        const { columnChinsesName: label } = item
-
-        return {
-          label,
-          getter: item => item[label]
-        }
-      })
     },
     getReducer(metrics) {
       return (sum, items) => items[metrics.columnChinsesName]
