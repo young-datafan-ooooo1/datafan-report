@@ -1,7 +1,7 @@
 <!--
  * @Description: 新建编辑看板
  * @Date: 2022-01-19 15:21:06
- * @LastEditTime: 2022-02-11 18:45:15
+ * @LastEditTime: 2022-02-17 17:30:39
 -->
 <template>
   <div class="dashboard">
@@ -21,9 +21,7 @@
         </a-tab-pane>
       </a-tabs>
     </div>
-    <div class="dashboard-content">
-      <Content :theme-colors="themeColors" />
-    </div>
+    <Content class="dashboard-content" :theme-colors="themeColors" />
   </div>
 </template>
 
