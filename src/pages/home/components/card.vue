@@ -1,7 +1,7 @@
 <!--
  * @Description: 卡片
  * @Date: 2022-01-19 10:23:14
- * @LastEditTime: 2022-01-19 15:53:16
+ * @LastEditTime: 2022-02-17 18:04:38
 -->
 <template>
   <div class="home-card">
@@ -12,7 +12,7 @@
           <span>新增看板</span>
         </div>
         <template v-for="card in cardData">
-          <div :key="card.dashboardId" class="card-item">
+          <div :key="card.dashboardId" class="card-item" @click="onViewBoard(card)">
             <div class="icon flex-box--end-self" />
             <div class="name">{{ card.dashboardName }}</div>
             <div class="time">创建时间：{{ card.createTime }}</div>
@@ -58,6 +58,16 @@ export default {
 
     onAddDashboard() {
       this.$router.push({ path: '/board/dashboard' })
+    },
+
+    /**
+     * @description: 编辑看板
+     * @param {Object} row 行信息
+     */
+    onViewBoard(row) {
+      const { dashboardId } = row
+
+      this.$router.push({ path: '/board/dashboard', query: { dashboardId, viewType: 'edit' }})
     }
   }
 }

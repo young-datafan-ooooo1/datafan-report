@@ -1,14 +1,13 @@
 <!--
  * @Description: 内容
  * @Date: 2022-01-21 16:27:42
- * @LastEditTime: 2022-02-17 17:51:38
+ * @LastEditTime: 2022-02-17 20:36:29
 -->
 <template>
   <div :class="['content-container' , {full: isFull}]">
     <div class="title flex-box-row">
       <a-icon type="fullscreen" @click="toggleFull" />
-      <ModifyInput v-if="dashboardInfo.dashboardName" v-model="dashboardInfo.dashboardName" class="msg" @on-change="onModifyDashboardName" />
-      <span v-else class="msg">请输入看板名称</span>
+      <ModifyInput ref="dashboardTitle" v-model="dashboardInfo.dashboardName" class="msg" placeholder="标题" @on-change="onModifyDashboardName" />
       <div class="content-handle">
         <a-button
           type="primary"
@@ -58,7 +57,7 @@
                             <a-icon class="flex-box-col-small" type="delete" @click="onDelectChart(gridItem)" />
                           </div>
                         </div>
-                        <div v-if="chartItem.chartId === 'twoDimensionalTable'" class="chart-view table">
+                        <div v-if="chartItem.chartId === 'twoDimensionalTable'" class="chart-view gride-table">
                           <SenseTable
                             class="flex-box-row"
                             v-bind="{
@@ -159,7 +158,9 @@ export default {
     return {
       loading: false,
       contentData: [],
-      dashboardInfo: {},
+      dashboardInfo: {
+        dashboardName: undefined
+      },
       isFull: this.$route.query.viewType === 'read'
     }
   },
@@ -190,11 +191,11 @@ export default {
     },
     /**
      * @description: 修改标题
-     * @param {event} event 组件穿出的东西
+     * @param {string} value 组件传出的东西
      * @param {Object} item 修改的标题项
      */
-    onChangeTitle($event, item) {
-      item.name = $event
+    onChangeTitle(value, item) {
+      item.name = value
     },
     /**
      * @description: 修改看板名称
@@ -424,9 +425,19 @@ export default {
       const payload = this.getDashboardDetailPayload()
       // 新增
       if (this.isAddDashboard) {
+        if (!payload.dashboardName) {
+          this.$message.warn('请输入看板名称')
+
+          return
+        }
         this.loading = true
         DashboardApiServices.saveDashboard(payload).then(res => {
           this.$message.success('新增成功')
+          const { data: { content: { dashboardId }}} = res
+          this.$router.push({ path: '/board/dashboard', query: { dashboardId, viewType: 'edit' }})
+          setTimeout(() => {
+            location.reload()
+          }, 100)
         }).catch(() => {
           this.$message.error('新增失败')
         }).finally(() => {
@@ -455,7 +466,7 @@ export default {
 
       return {
         dashboardId,
-        dashboardName: dashboardName || '默认名字',
+        dashboardName,
         queryData
       }
     }
@@ -546,7 +557,6 @@ export default {
             .chart-view {
               flex: 1;
               height: 0;
-
               &.pivot-table-contain {
                 /*overflow-y: scroll;*/
                 overflow: auto;
