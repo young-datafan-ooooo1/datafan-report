@@ -1,7 +1,7 @@
 <!--
  * @Description: 新增/编辑看板布局
  * @Date: 2022-01-19 16:40:06
- * @LastEditTime: 2022-02-16 11:08:21
+ * @LastEditTime: 2022-02-17 15:51:55
 -->
 <template>
   <div class="dashborad-layout">
@@ -118,7 +118,8 @@ export default {
           type: 'title',
           fontSize: 24,
           fontWeight: 700,
-          color: '#000'
+          color: '#000',
+          name: '新标题'
         }
       ],
       colorData: [

@@ -1,13 +1,14 @@
 <!--
  * @Description: 内容
  * @Date: 2022-01-21 16:27:42
- * @LastEditTime: 2022-02-17 14:07:34
+ * @LastEditTime: 2022-02-17 17:51:38
 -->
 <template>
-  <div class="content-container">
+  <div :class="['content-container' , {full: isFull}]">
     <div class="title flex-box-row">
-      <a-icon type="fullscreen" />
-      <span class="msg">{{ dashboardInfo.dashboardName || '请输入看板名称' }}</span>
+      <a-icon type="fullscreen" @click="toggleFull" />
+      <ModifyInput v-if="dashboardInfo.dashboardName" v-model="dashboardInfo.dashboardName" class="msg" @on-change="onModifyDashboardName" />
+      <span v-else class="msg">请输入看板名称</span>
       <div class="content-handle">
         <a-button
           type="primary"
@@ -19,7 +20,7 @@
           type="primary"
           ghost
           shape="round"
-          @click="onSaveDashboard"
+          @click="onExportPdf"
         >导出pdf</a-button>
       </div>
     </div>
@@ -112,7 +113,13 @@
             <a-icon type="delete" @click="onDelectContent(contentIndex)" />
           </div>
           <div class="title-content">
-            <span class="msg flex-box-col-small" :style="getTitleStyle(contentItem)">新标题</span>
+            <ModifyInput
+              v-if="contentItem.name"
+              v-model="contentItem.name"
+              class="msg flex-box-col-small"
+              :style="getTitleStyle(contentItem)"
+              @on-change="onChangeTitle($event, contentItem)"
+            />
             <colorPicker v-model="contentItem.color" class="color flex-box-col-small" />
             <a-input-number v-model="contentItem.fontSize" class="size flex-box-col-small" />
           </div>
@@ -123,17 +130,20 @@
 </template>
 
 <script>
+import { ModifyInput } from '@/components/common'
 import Draggable from 'vuedraggable'
 import DashboardApiServices from '@/services/dashboard'
 import ChartApiServices from '@/services/chart'
 import { PivotTable } from '@click2buy/vue-pivot-table'
+import exportPdf from '@/utils/export-pdf'
 
 export default {
   name: 'Content',
 
   components: {
     Draggable,
-    PivotTable
+    PivotTable,
+    ModifyInput
   },
 
   inject: ['dashboardId', 'viewType'],
@@ -149,7 +159,8 @@ export default {
     return {
       loading: false,
       contentData: [],
-      dashboardInfo: {}
+      dashboardInfo: {},
+      isFull: this.$route.query.viewType === 'read'
     }
   },
   computed: {
@@ -163,6 +174,35 @@ export default {
   },
 
   methods: {
+    /**
+     * @description: 切换全屏
+     */
+    toggleFull() {
+      this.isFull = !this.isFull
+      // 手动触发resize，为了让图表自适应
+      window.dispatchEvent(new Event('resize'))
+    },
+    /**
+     * @description: 导出pdf
+     */
+    onExportPdf() {
+      exportPdf('.content-container', this.dashboardInfo.dashboardName)
+    },
+    /**
+     * @description: 修改标题
+     * @param {event} event 组件穿出的东西
+     * @param {Object} item 修改的标题项
+     */
+    onChangeTitle($event, item) {
+      item.name = $event
+    },
+    /**
+     * @description: 修改看板名称
+     * @param {string} value 值
+     */
+    onModifyDashboardName(value) {
+      this.dashboardInfo.dashboardName = value
+    },
     /**
      * @description: 初始化页面
      */
@@ -384,17 +424,23 @@ export default {
       const payload = this.getDashboardDetailPayload()
       // 新增
       if (this.isAddDashboard) {
+        this.loading = true
         DashboardApiServices.saveDashboard(payload).then(res => {
           this.$message.success('新增成功')
         }).catch(() => {
           this.$message.error('新增失败')
+        }).finally(() => {
+          this.loading = false
         })
       } else {
         // 修改
+        this.loading = true
         DashboardApiServices.updateDashboard(payload).then(res => {
           this.$message.success('修改成功')
         }).catch(() => {
           this.$message.error('修改失败')
+        }).finally(() => {
+          this.loading = false
         })
       }
     },
@@ -422,6 +468,16 @@ export default {
   display: flex;
   flex-direction: column;
   height: 100%;
+  &.full {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+  }
   .title {
     display: flex;
     align-items: center;
@@ -451,6 +507,8 @@ export default {
     overflow: auto;
     flex: 1;
     height: 0;
+    width: 100%;
+    overflow-x: hidden;
     .container-item {
       .delete-icon {
         width: 20px;
@@ -532,10 +590,10 @@ export default {
           display: flex;
           align-items: center;
           flex: 1;
-          padding: 10px 0;
           border-width: 1px;
           border-style: dashed;
           border-color: transparent;
+          min-height: 40px;
           .color {
             /deep/.box {
               width: 220px;
