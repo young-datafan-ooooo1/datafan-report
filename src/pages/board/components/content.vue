@@ -1,14 +1,27 @@
 <!--
  * @Description: 内容
  * @Date: 2022-01-21 16:27:42
- * @LastEditTime: 2022-02-16 19:28:06
+ * @LastEditTime: 2022-02-17 14:07:34
 -->
 <template>
   <div class="content-container">
     <div class="title flex-box-row">
       <a-icon type="fullscreen" />
       <span class="msg">{{ dashboardInfo.dashboardName || '请输入看板名称' }}</span>
-      <a-icon type="fullscreen" />
+      <div class="content-handle">
+        <a-button
+          type="primary"
+          ghost
+          shape="round"
+          @click="onSaveDashboard"
+        >保存</a-button>
+        <a-button
+          type="primary"
+          ghost
+          shape="round"
+          @click="onSaveDashboard"
+        >导出pdf</a-button>
+      </div>
     </div>
     <Draggable
       v-model="contentData"
@@ -99,7 +112,7 @@
             <a-icon type="delete" @click="onDelectContent(contentIndex)" />
           </div>
           <div class="title-content">
-            <span class="msg flex-box-col-small" :style="getTitleStyle(item)">新标题</span>
+            <span class="msg flex-box-col-small" :style="getTitleStyle(contentItem)">新标题</span>
             <colorPicker v-model="contentItem.color" class="color flex-box-col-small" />
             <a-input-number v-model="contentItem.fontSize" class="size flex-box-col-small" />
           </div>
@@ -167,6 +180,21 @@ export default {
       this.loading = true
       DashboardApiServices.getDashboardDetailInfo(payload).then(res => {
         this.dashboardInfo = res.data.content
+        this.contentData = JSON.parse(res.data.content.queryData)
+
+        this.$nextTick(() => {
+          if (this.contentData.length) {
+            this.contentData.forEach(item => {
+              if (item.type === 'grid') {
+                item.items.forEach(gridItem => {
+                  if (gridItem.chartContent.length) {
+                    this.drawChart(gridItem)
+                  }
+                })
+              }
+            })
+          }
+        })
       }).finally(() => {
         this.loading = false
       })
@@ -348,6 +376,42 @@ export default {
     },
     getReducer(metrics) {
       return (sum, items) => items[metrics.columnChinsesName]
+    },
+    /**
+     * @description: 保存
+     */
+    onSaveDashboard() {
+      const payload = this.getDashboardDetailPayload()
+      // 新增
+      if (this.isAddDashboard) {
+        DashboardApiServices.saveDashboard(payload).then(res => {
+          this.$message.success('新增成功')
+        }).catch(() => {
+          this.$message.error('新增失败')
+        })
+      } else {
+        // 修改
+        DashboardApiServices.updateDashboard(payload).then(res => {
+          this.$message.success('修改成功')
+        }).catch(() => {
+          this.$message.error('修改失败')
+        })
+      }
+    },
+    /**
+     * @description: 获取看板参数
+     * @return {Object} 看板参数
+     */
+    getDashboardDetailPayload() {
+      const { dashboardId, contentData } = this
+      const { dashboardName } = this.dashboardInfo
+      const queryData = JSON.stringify(contentData)
+
+      return {
+        dashboardId,
+        dashboardName: dashboardName || '默认名字',
+        queryData
+      }
     }
   }
 }
@@ -367,6 +431,20 @@ export default {
     .msg {
       font-weight: bold;
       font-size: 20px;
+    }
+    .content-handle {
+      & > button {
+        padding-right: 10px;
+        padding-left: 10px;
+        min-width: 70px;
+        height: 26px;
+        border-radius: 32px;
+        font-size: 13px;
+        line-height: 1 !important;
+      }
+      button + button {
+        margin-left: 10px;
+      }
     }
   }
   .container {

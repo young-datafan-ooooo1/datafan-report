@@ -1,7 +1,7 @@
 /*
  * @Description: dashboard
  * @Date: 2021-12-08 18:18:17
- * @LastEditTime: 2022-01-21 17:00:30
+ * @LastEditTime: 2022-02-17 13:51:08
  */
 import { REPORT } from '@/services/api'
 import { request, METHOD } from '@sense70/common-component-vue'
@@ -12,6 +12,18 @@ const DashboardApiServices = {
    */
   getDashboardDetailInfo(params = {}) {
     return request(`${REPORT}/dpPortalDashboard/getDashboardDetailById`, METHOD.GET, { params })
+  },
+  /**
+   * @description: 更新看板
+   */
+  updateDashboard(params) {
+    return request(`${REPORT}/dpPortalDashboard/updateDashboard`, METHOD.PUT, params)
+  },
+  /**
+   * @description: 新增看板
+   */
+  saveDashboard(params) {
+    return request(`${REPORT}/dpPortalDashboard/saveDashboard`, METHOD.POST, params)
   }
 }
 export default DashboardApiServices
