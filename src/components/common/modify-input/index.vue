@@ -32,7 +32,7 @@
       @click="stopClick"
       @dblclick="showEditInput"
     >
-      {{ value }}
+      {{ value || '请输入标题' }}
     </span>
     <div :class="[`${prefixCls}__icon-box`, 'flex-box-col-small']">
       <a-icon
@@ -101,6 +101,7 @@ export default {
     showEditInput(event) {
       event.stopPropagation()
 
+      this.inputVal = this.value
       this.isEdit = true
       this.$nextTick(() => {
         this.$refs.input.focus()
