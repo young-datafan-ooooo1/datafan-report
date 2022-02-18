@@ -1,7 +1,7 @@
 /*
  * @Description: 首页
  * @Date: 2021-12-08 18:18:17
- * @LastEditTime: 2022-01-24 15:13:16
+ * @LastEditTime: 2022-02-18 14:57:24
  */
 import { REPORT } from '@/services/api'
 import { request, METHOD } from '@sense70/common-component-vue'
@@ -13,8 +13,27 @@ const ChartApiServices = {
   getChartInfo() {
     return request(`${REPORT}/dpPortalDashboard/reportList`, METHOD.GET)
   },
+  /**
+   * @description: 获取详情
+   * @param {Object} params 参数
+   */
   getChartDetailInfo(params) {
     return request(`${REPORT}/dpPortalDashboard/queryReportData`, METHOD.POST, params)
+  },
+  /**
+   * @description: 获取列表
+   * @param {Object} params 参数
+   */
+
+  getChartList(params) {
+    return request(`${REPORT}/dpPortalReportRecord`, METHOD.GET, { params })
+  },
+  /**
+   * @description: 删除图表
+   * @param {number} chartId 图表id
+   */
+  deleteChart(chartId) {
+    return request(`${REPORT}/dpPortalReportRecord/${chartId}`, METHOD.DELETE)
   }
 }
 export default ChartApiServices
