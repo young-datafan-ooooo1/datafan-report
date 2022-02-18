@@ -1,7 +1,7 @@
 <!--
  * @Description: chart
  * @Date: 2022-01-18 15:16:24
- * @LastEditTime: 2022-02-18 15:00:49
+ * @LastEditTime: 2022-02-18 17:05:06
 -->
 <template>
   <div class="chart page-container">
@@ -43,7 +43,7 @@
             <a-icon
               class="icon-btn"
               type="edit"
-              @click="onEditBoard(row)"
+              @click="onEditChart(row)"
             />
           </a-tooltip>
           <a-tooltip title="删除">
@@ -166,7 +166,15 @@ export default {
       this.pagerConfig.pageSize = page.pageSize
       this.onGetChartData()
     },
-    onEditBoard() {},
+    /**
+     * @description: 编辑图表
+     * @param {Object} row 行信息
+     */
+    onEditChart(row) {
+      const { reportId: id } = row
+
+      this.$router.push({ path: '/chart/workspace', query: { id, type: 'edit' }})
+    },
     /**
      * @description: 删除图表
      * @param {Objcet} row 删除的行

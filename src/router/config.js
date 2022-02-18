@@ -1,7 +1,7 @@
 /*
  * @Description: 路由配置
  * @Date: 2021-11-10 10:28:08
- * @LastEditTime: 2022-01-19 15:54:20
+ * @LastEditTime: 2022-02-18 16:57:34
  */
 import TabsView from '@/layouts/tabs/TabsView'
 // import BlankView from '@/layouts/BlankView'
@@ -45,14 +45,6 @@ const options = {
             nodeEnName: 'home'
           },
           component: () => import('@/pages/home')
-        },
-        {
-          path: 'chart',
-          name: '图表',
-          meta: {
-            nodeEnName: 'chart'
-          },
-          component: () => import('@/pages/chart')
         }
       ]
     },
@@ -80,6 +72,33 @@ const options = {
             nodeEnName: 'board'
           },
           component: () => import('@/pages/board/dashboard.vue')
+        }
+      ]
+    },
+    {
+      path: '/',
+      name: '看板',
+      component: TabsView,
+      redirect: '/chart',
+      meta: {
+        nodeEnName: 'chart'
+      },
+      children: [
+        {
+          path: 'chart',
+          name: '图表列表',
+          meta: {
+            nodeEnName: 'chart'
+          },
+          component: () => import('@/pages/chart')
+        },
+        {
+          path: 'chart/workspace',
+          name: '图表',
+          meta: {
+            nodeEnName: 'chart'
+          },
+          component: () => import('@/pages/chart/workspace.vue')
         }
       ]
     }
