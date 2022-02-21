@@ -92,6 +92,9 @@
 
 
 /* row */
+.flex-box-row-mini + .flex-box-row-mini {
+  margin: 5px 0 0 0;
+}
 .flex-box-row-small + .flex-box-row-small {
   margin: 10px 0 0 0;
 }

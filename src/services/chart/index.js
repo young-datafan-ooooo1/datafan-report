@@ -1,7 +1,7 @@
 /*
  * @Description: 首页
  * @Date: 2021-12-08 18:18:17
- * @LastEditTime: 2022-02-18 18:28:21
+ * @LastEditTime: 2022-02-21 13:44:32
  */
 import { REPORT } from '@/services/api'
 import { request, METHOD } from '@sense70/common-component-vue'
@@ -41,6 +41,13 @@ const ChartApiServices = {
    */
   getChartDetail(params) {
     return request(`${REPORT}/dpPortalReportRecord/get/reportById`, METHOD.GET, { params })
+  },
+  /**
+   * @description: 获取详情
+   * @param {Object} params 参数
+   */
+  getChartData(params) {
+    return request(`${REPORT}/dpPortalReportRecord/querySql`, METHOD.POST, params)
   }
 }
 export default ChartApiServices
