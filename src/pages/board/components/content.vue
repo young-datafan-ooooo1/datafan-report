@@ -1,7 +1,7 @@
 <!--
  * @Description: 内容
  * @Date: 2022-01-21 16:27:42
- * @LastEditTime: 2022-02-17 20:36:29
+ * @LastEditTime: 2022-02-22 16:27:01
 -->
 <template>
   <div :class="['content-container' , {full: isFull}]">
@@ -481,13 +481,13 @@ export default {
   height: 100%;
   &.full {
     position: fixed;
-    left: 0;
-    right: 0;
     top: 0;
+    right: 0;
     bottom: 0;
+    left: 0;
+    z-index: 100;
     width: 100%;
     height: 100%;
-    z-index: 100;
   }
   .title {
     display: flex;
@@ -516,10 +516,10 @@ export default {
   }
   .container {
     overflow: auto;
-    flex: 1;
-    height: 0;
-    width: 100%;
     overflow-x: hidden;
+    flex: 1;
+    width: 100%;
+    height: 0;
     .container-item {
       .delete-icon {
         width: 20px;
@@ -600,10 +600,10 @@ export default {
           display: flex;
           align-items: center;
           flex: 1;
+          min-height: 40px;
           border-width: 1px;
           border-style: dashed;
           border-color: transparent;
-          min-height: 40px;
           .color {
             /deep/.box {
               width: 220px;

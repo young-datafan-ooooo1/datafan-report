@@ -1,12 +1,12 @@
 <!--
  * @Description: 数据预览弹窗
  * @Date: 2022-02-21 11:18:32
- * @LastEditTime: 2022-02-21 14:07:34
+ * @LastEditTime: 2022-02-22 11:23:17
 -->
 <template>
   <a-base-modal
     v-model="isModalShow"
-    class="filter-modal"
+    class="data-preview-modal"
     :title="'数据预览'"
     width="900px"
     :footer="null"

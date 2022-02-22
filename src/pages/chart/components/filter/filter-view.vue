@@ -1,7 +1,7 @@
 <!--
  * @Description: 筛选
  * @Date: 2022-02-18 17:43:01
- * @LastEditTime: 2022-02-21 15:41:48
+ * @LastEditTime: 2022-02-22 11:21:16
 -->
 <template>
   <div class="filter-view">
@@ -13,6 +13,9 @@
     </div>
     <div class="filter-item">
       <div class="block-title">筛选器</div>
+      <div class="filter-content">
+        <FilterFilter />
+      </div>
     </div>
     <div class="filter-item">
       <div class="block-title">页面</div>
@@ -22,12 +25,14 @@
 
 <script>
 import FilterIndex from './filter-index.vue'
+import FilterFilter from './filter-filter.vue'
 
 export default {
   name: 'FilterView',
 
   components: {
-    FilterIndex
+    FilterIndex,
+    FilterFilter
   }
 }
 </script>
