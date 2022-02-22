@@ -1,7 +1,7 @@
 <!--
  * @Description: 筛选指标
  * @Date: 2022-02-21 14:45:04
- * @LastEditTime: 2022-02-22 10:38:30
+ * @LastEditTime: 2022-02-22 10:46:18
 -->
 <template>
   <Draggable
@@ -10,7 +10,7 @@
     :options="{group:'workspace', disabled: false}"
     @add="onAddFilterIndex($event)"
   >
-    <div v-for="(item, index) in indexList" :key="item.id" class="flex-box-row-mini">
+    <div v-for="(item, index) in indexList" :key="`${item.id}-${index}`" class="flex-box-row-mini">
       <a-dropdown :trigger="['click']">
         <a-tag closable :color="getTagColorByType(item.type)" @close="onClose(index)">{{ item.showName }}</a-tag>
         <a-menu slot="overlay">
