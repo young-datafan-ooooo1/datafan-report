@@ -1,7 +1,7 @@
 <!--
  * @Description: 图表工作台
  * @Date: 2022-02-18 16:47:33
- * @LastEditTime: 2022-02-18 18:16:07
+ * @LastEditTime: 2022-02-22 18:22:38
 -->
 <template>
   <div class="workspace flex-box flex-box--column">
@@ -25,6 +25,7 @@ import {
   FilterView,
   ChartView
 } from './components'
+import ChartApiServices from '@/services/chart'
 
 export default {
   name: 'Workspace',
@@ -37,19 +38,41 @@ export default {
 
   provide() {
     return {
-      id: this.$route.query.id,
-      type: this.$route.query.type
+      chartInfo: this.chartInfo
     }
   },
 
   data() {
     return {
-
+      chartInfo: {
+        data: {}
+      }
     }
   },
 
-  methods: {
+  created() {
+    this.initPage()
+  },
 
+  methods: {
+    /**
+     * @description: 初始化页面
+     */
+    initPage() {
+      this.getChartDetail()
+    },
+    /**
+     * @description: 获取图表数据
+     */
+    getChartDetail() {
+      const payload = {
+        reportId: this.$route.query.id
+      }
+
+      ChartApiServices.getChartDetail(payload).then(res => {
+        this.chartInfo.data = res.data.content
+      })
+    }
   }
 }
 </script>
