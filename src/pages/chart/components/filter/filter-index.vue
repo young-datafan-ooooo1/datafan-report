@@ -1,7 +1,7 @@
 <!--
  * @Description: 筛选指标
  * @Date: 2022-02-21 14:45:04
- * @LastEditTime: 2022-02-22 10:46:18
+ * @LastEditTime: 2022-02-22 18:48:38
 -->
 <template>
   <Draggable
@@ -12,7 +12,7 @@
   >
     <div v-for="(item, index) in indexList" :key="`${item.id}-${index}`" class="flex-box-row-mini">
       <a-dropdown :trigger="['click']">
-        <a-tag closable :color="getTagColorByType(item.type)" @close="onClose(index)">{{ item.showName }}</a-tag>
+        <a-tag closable :color="getTagColorByType(item.type)" @close="onClose(index)">{{ item.showName || item.name }}</a-tag>
         <a-menu slot="overlay">
           <template v-for="menuItem in item.setting">
             <a-sub-menu :key="menuItem.value">
@@ -36,6 +36,8 @@ export default {
   components: {
     Draggable
   },
+
+  inject: ['chartInfo'],
 
   data() {
     return {
@@ -87,6 +89,33 @@ export default {
       })
 
       return setting
+    }
+  },
+
+  watch: {
+    'chartInfo.data'(value) {
+      const { dataJson } = value
+      const data = JSON.parse(dataJson)
+
+      this.indexList = data.characts.map(item => {
+        const { statisticsType, radio, name, sort } = item
+        const type = this.getType(item.dateType)
+        const nameLabel = this.getNameLabel(statisticsType)
+
+        let sortMsg = 'asc'
+        if (radio) {
+          sortMsg = radio
+        }
+        if (sort) {
+          sortMsg = sort
+        }
+
+        return {
+          ...item,
+          setting: this.indexInfo[type].setting,
+          showName: `${nameLabel}(${name} | ${sortMsg})`
+        }
+      })
     }
   },
 
@@ -146,7 +175,7 @@ export default {
       return type
     },
     /**
-     * @description: 获取label 拼接名字
+     * @description: 获取label 拼接名字  todo 目前存在问题（会有多个方法名字拼接）
      * @param {string} statisticsType 类型
      * @return {string} 中文名字
      */
