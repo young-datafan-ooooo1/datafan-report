@@ -1,7 +1,7 @@
 <!--
  * @Description: 图表工作台
  * @Date: 2022-02-18 16:47:33
- * @LastEditTime: 2022-02-22 18:22:38
+ * @LastEditTime: 2022-02-22 19:47:26
 -->
 <template>
   <div class="workspace flex-box flex-box--column">
@@ -14,7 +14,7 @@
     <div class="workspace-content flex-box flex-box-row-small">
       <DataView class="workspace-content-data workspace-block flex-box-col-small" />
       <FilterView class="workspace-content-filter workspace-block flex-box-col-small" />
-      <ChartView class="workspace-content-chart workspace-block flex-box-col-small" />
+      <ChartView class="workspace-content-chart flex-box-col-small" />
     </div>
   </div>
 </template>
