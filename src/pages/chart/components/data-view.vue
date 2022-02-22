@@ -1,7 +1,7 @@
 <!--
  * @Description: 数据
  * @Date: 2022-02-18 17:42:32
- * @LastEditTime: 2022-02-21 13:39:33
+ * @LastEditTime: 2022-02-21 15:12:51
 -->
 <template>
   <div class="data-view">
@@ -16,6 +16,7 @@
         class="data-content"
         :list="dimension"
         :options="draggableOption"
+        :clone="original => JSON.parse(JSON.stringify(original))"
       >
         <div v-for="item in dimension" :key="item.id" class="flex-box-row-mini">
           <a-tag color="#5b90a5"><a-icon :type="getIncoType(item.dateType)" /> {{ item.columnChinsesName }}</a-tag>
@@ -28,6 +29,7 @@
         class="data-content"
         :list="mertric"
         :options="draggableOption"
+        :clone="original => JSON.parse(JSON.stringify(original))"
       >
         <div v-for="item in mertric" :key="item.id" class="flex-box-row-mini">
           <a-tag color="#54ac87"><a-icon type="number" /> {{ item.columnChinsesName }}</a-tag>
