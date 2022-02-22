@@ -1,7 +1,7 @@
 <!--
  * @Description: 筛选器
  * @Date: 2022-02-21 14:45:04
- * @LastEditTime: 2022-02-22 17:16:21
+ * @LastEditTime: 2022-02-22 18:55:28
 -->
 <template>
   <div class="filter-box">
@@ -44,6 +44,8 @@ export default {
     Draggable,
     FilterModal
   },
+
+  inject: ['chartInfo'],
 
   data() {
     return {
@@ -101,6 +103,15 @@ export default {
       })
 
       return setting
+    }
+  },
+
+  watch: {
+    'chartInfo.data'(value) {
+      const { dataJson } = value
+      const data = JSON.parse(dataJson)
+
+      this.filterList = data.filterListVO
     }
   },
 
@@ -168,14 +179,23 @@ export default {
 
       return setting.label
     },
-
+    /**
+     * @description: 打开筛选弹窗
+     * @param {Object} item 筛选的项
+     * @param {number} index 筛选的下标
+     */
     onShowFilterModal(item, index) {
       this.isFilterModalShow = true
       this.filterModalItem = item
       this.filterModalIndex = index
     },
+    /**
+     * @description: 修改筛选信息
+     * @param {Object} value 筛选后的信息
+     */
     onModifyFilter(value) {
       const { data, index } = value
+
       this.filterList[index].filters = data
     }
   }
