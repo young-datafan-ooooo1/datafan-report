@@ -1,7 +1,7 @@
 <!--
  * @Description: 筛选指标
  * @Date: 2022-02-21 14:45:04
- * @LastEditTime: 2022-02-22 18:48:38
+ * @LastEditTime: 2022-02-22 19:15:40
 -->
 <template>
   <Draggable
@@ -98,7 +98,7 @@ export default {
       const data = JSON.parse(dataJson)
 
       this.indexList = data.characts.map(item => {
-        const { statisticsType, radio, name, sort } = item
+        const { statisticsType, radio, columnChinsesName: name, sort } = item
         const type = this.getType(item.dateType)
         const nameLabel = this.getNameLabel(statisticsType)
 
@@ -147,7 +147,7 @@ export default {
       this.$set(handleItem, 'setting', this.indexInfo[type].setting)
       this.$set(handleItem, 'sort', 'asc')
       this.$set(handleItem, 'statisticsType', statisticsType)
-      this.$set(handleItem, 'showName', `${nameLabel}(${handleItem.name} | ${handleItem.sort})`)
+      this.$set(handleItem, 'showName', `${nameLabel}(${handleItem.columnChinsesName} | ${handleItem.sort})`)
     },
     /**
      * @description: 删除标签
@@ -194,7 +194,7 @@ export default {
 
       this.$set(item, 'statisticsType', value)
       this.$set(item, 'sort', sort)
-      this.$set(item, 'showName', `${nameLabel}(${item.name} | ${sort})`)
+      this.$set(item, 'showName', `${nameLabel}(${item.columnChinsesName} | ${sort})`)
     }
   }
 }
