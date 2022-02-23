@@ -1,7 +1,7 @@
 <!--
  * @Description: 筛选指标
  * @Date: 2022-02-21 14:45:04
- * @LastEditTime: 2022-02-22 19:15:40
+ * @LastEditTime: 2022-02-23 14:06:33
 -->
 <template>
   <Draggable
@@ -14,11 +14,15 @@
       <a-dropdown :trigger="['click']">
         <a-tag closable :color="getTagColorByType(item.type)" @close="onClose(index)">{{ item.showName || item.name }}</a-tag>
         <a-menu slot="overlay">
+
           <template v-for="menuItem in item.setting">
             <a-sub-menu :key="menuItem.value">
               <span slot="title">{{ menuItem.label }}</span>
-              <a-menu-item key="asc" @click="onChangeStatisticsType(item, menuItem.value, 'asc')">升序</a-menu-item>
-              <a-menu-item key="desc" @click="onChangeStatisticsType(item, menuItem.value, 'desc')">降序</a-menu-item>
+              <a-menu-item
+                v-for="children in menuItem.children"
+                :key="children.value"
+                @click="onChangeStatisticsType(item, menuItem.value, children.value)"
+              >{{ children.label }}</a-menu-item>
             </a-sub-menu>
           </template>
         </a-menu>
@@ -40,38 +44,44 @@ export default {
   inject: ['chartInfo'],
 
   data() {
+    const sortList = [
+      { label: '无序', value: '' },
+      { label: '升序', value: 'asc' },
+      { label: '降序', value: 'desc' }
+    ]
     return {
       typeOptin: {
         number: ['number', 'bignumber', 'integer'],
         string: ['string'],
         date: ['date', 'datetime', 'datestamp', 'timestamp']
       },
+      sortSetting: sortList,
       indexInfo: {
         number: {
           statisticsType: 'sum',
           setting: [
-            { label: '最大值', value: 'max' },
-            { label: '最小值', value: 'min' },
-            { label: '计数', value: 'count' },
-            { label: '总和', value: 'sum' },
-            { label: '平均值', value: 'avg' }
+            { label: '最大值', value: 'max', children: sortList },
+            { label: '最小值', value: 'min', children: sortList },
+            { label: '计数', value: 'count', children: sortList },
+            { label: '总和', value: 'sum', children: sortList },
+            { label: '平均值', value: 'avg', children: sortList }
           ]
         },
         string: {
           statisticsType: 'count',
           setting: [
-            { label: '最大值', value: 'max' },
-            { label: '最小值', value: 'min' },
-            { label: '计数', value: 'count' }
+            { label: '最大值', value: 'max', children: sortList },
+            { label: '最小值', value: 'min', children: sortList },
+            { label: '计数', value: 'count', children: sortList }
           ]
         },
         date: {
           statisticsType: 'toISOYear',
           setting: [
-            { label: '年', value: 'toISOYear' },
-            { label: '月', value: 'toMonth' },
-            { label: '周', value: 'toISOWeek' },
-            { label: '天', value: 'toDate' }
+            { label: '年', value: 'toISOYear', children: sortList },
+            { label: '月', value: 'toMonth', children: sortList },
+            { label: '周', value: 'toISOWeek', children: sortList },
+            { label: '天', value: 'toDate', children: sortList }
           ]
         }
       },
@@ -98,22 +108,20 @@ export default {
       const data = JSON.parse(dataJson)
 
       this.indexList = data.characts.map(item => {
-        const { statisticsType, radio, columnChinsesName: name, sort } = item
+        const { statisticsType, columnChinsesName: name, sort } = item
         const type = this.getType(item.dateType)
         const nameLabel = this.getNameLabel(statisticsType)
-
-        let sortMsg = 'asc'
-        if (radio) {
-          sortMsg = radio
-        }
-        if (sort) {
-          sortMsg = sort
+        const sortIcon = {
+          'asc': ' | ↑ ',
+          'desc': ' | ↓ ',
+          '': '',
+          undefined: ''
         }
 
         return {
           ...item,
           setting: this.indexInfo[type].setting,
-          showName: `${nameLabel}(${name} | ${sortMsg})`
+          showName: `${nameLabel}(${name}${sortIcon[sort]})`
         }
       })
     }
@@ -143,11 +151,16 @@ export default {
       const type = this.getType(handleItem.dateType)
       const statisticsType = this.indexInfo[type].statisticsType
       const nameLabel = this.getNameLabel(statisticsType)
+      const sortIcon = {
+        'asc': ' | ↑ ',
+        'desc': ' | ↓ ',
+        '': ''
+      }
 
       this.$set(handleItem, 'setting', this.indexInfo[type].setting)
-      this.$set(handleItem, 'sort', 'asc')
+      this.$set(handleItem, 'sort', '')
       this.$set(handleItem, 'statisticsType', statisticsType)
-      this.$set(handleItem, 'showName', `${nameLabel}(${handleItem.columnChinsesName} | ${handleItem.sort})`)
+      this.$set(handleItem, 'showName', `${nameLabel}(${handleItem.columnChinsesName}${sortIcon[handleItem.sort]})`)
     },
     /**
      * @description: 删除标签
@@ -191,10 +204,15 @@ export default {
      */
     onChangeStatisticsType(item, value, sort) {
       const nameLabel = this.getNameLabel(value)
+      const sortIcon = {
+        'asc': ' | ↑ ',
+        'desc': ' | ↓ ',
+        '': ''
+      }
 
       this.$set(item, 'statisticsType', value)
       this.$set(item, 'sort', sort)
-      this.$set(item, 'showName', `${nameLabel}(${item.columnChinsesName} | ${sort})`)
+      this.$set(item, 'showName', `${nameLabel}(${item.columnChinsesName}${sortIcon[sort]})`)
     }
   }
 }
