@@ -1,14 +1,18 @@
 <!--
  * @Description: 图表工作台
  * @Date: 2022-02-18 16:47:33
- * @LastEditTime: 2022-02-22 19:47:26
+ * @LastEditTime: 2022-02-23 19:22:35
 -->
 <template>
   <div class="workspace flex-box flex-box--column">
     <div class="workspace-title workspace-block flex-box flex-box--center-items flex-box--between-justify flex-box-row-small">
       <div class="block-title">报表分析工具</div>
-      <div class="chart-switch-box">
-        <a-icon type="fullscreen" />
+      <div class="chart-switch-box flex-box">
+        <template v-for="item in chartOption">
+          <div :key="item.value" @click="onChangeChartType(item.value)">
+            {{ item.name }}-
+          </div>
+        </template>
       </div>
     </div>
     <div class="workspace-content flex-box flex-box-row-small">
@@ -45,8 +49,127 @@ export default {
   data() {
     return {
       chartInfo: {
-        data: {}
+        data: {},
+        type: ''
+      },
+      chartOption: [{
+        id: 0,
+        name: '二维表',
+        value: 'twoDimensionalTable',
+        metrics: 16,
+        dimension: 16,
+        rowCount: 100,
+        rowCountDes: '0个或多个',
+        columnCountDes: '0个或多个',
+        characterCountDes: '0个或多个',
+        disable: false,
+        className: '#icon-erweibiaoshujuji'
+      },
+      {
+        id: 1,
+        name: '透视表',
+        value: 'Multidimensional',
+        metrics: 16,
+        dimension: 100,
+        rowCount: 100,
+        rowCountDes: '1个或多个',
+        columnCountDes: '1个或多个',
+        characterCountDes: '1个或多个',
+        disable: false,
+        className: '#icon-pivot'
+      },
+      {
+        id: 2,
+        name: '折线图',
+        value: 'line',
+        metrics: 4,
+        dimension: 1,
+        rowCount: 1,
+        rowCountDes: '1个',
+        columnCountDes: '1个',
+        characterCountDes: '1个或多个数值',
+        disable: false,
+        className: '#icon-zhexiantu3'
+      }, {
+        id: 3,
+        name: '柱状图',
+        value: 'histogram',
+        metrics: 4,
+        dimension: 1,
+        rowCount: 1,
+        rowCountDes: '1个',
+        columnCountDes: '1个',
+        characterCountDes: '1个或多个数值',
+        disable: false,
+        className: '#icon-zhuzhuangtu'
+      }, {
+        id: 4,
+        name: '饼图',
+        value: 'pie',
+        metrics: 1,
+        dimension: 1,
+        rowCount: 1,
+        rowCountDes: '1个',
+        columnCountDes: '1个',
+        characterCountDes: '1个或多个',
+        disable: false,
+        className: '#icon-bingtu1',
+        selected: {}
+      },
+      {
+        id: 5,
+        name: '条形图',
+        value: 'bar',
+        metrics: 2,
+        dimension: 1,
+        rowCount: 1,
+        rowCountDes: '1个',
+        columnCountDes: '1个',
+        characterCountDes: '1个或多个',
+        disable: false,
+        className: '#icon-tiaoxingtu2',
+        selected: {}
+      },
+      {
+        id: 6,
+        name: '环图',
+        value: 'ring',
+        metrics: 1,
+        dimension: 1,
+        rowCount: 1,
+        rowCountDes: '1个',
+        columnCountDes: '1个',
+        characterCountDes: '1个或多个',
+        disable: false,
+        className: '#icon-yuanhuantu'
+      },
+      {
+        id: 7,
+        name: '瀑布图',
+        value: 'waterfall',
+        metrics: 1,
+        dimension: 1,
+        rowCount: 0,
+        rowCountDes: '0个',
+        columnCountDes: '1个',
+        characterCountDes: '1个或多个',
+        disable: false,
+        className: '#icon-BI_tubiaoICON_pubutu_S'
+      },
+      {
+        id: 8,
+        name: '漏斗图',
+        value: 'funnel',
+        metrics: 2,
+        dimension: 1,
+        rowCount: 1,
+        rowCountDes: '1个',
+        columnCountDes: '1个',
+        characterCountDes: '1个或多个',
+        disable: false,
+        className: '#icon-BI_tubiaoICON_loudoutu_S'
       }
+      ]
     }
   },
 
@@ -71,13 +194,18 @@ export default {
 
       ChartApiServices.getChartDetail(payload).then(res => {
         this.chartInfo.data = res.data.content
+        this.chartInfo.type = res.data.content.chartId
       })
+    },
+    onChangeChartType(type) {
+      this.chartInfo.type = type
+      console.log(type)
     }
   }
 }
 </script>
 
-<style lang="less" scoped>
+<style lang='less' scoped>
   .workspace {
     padding: 0;
     height: 100%;

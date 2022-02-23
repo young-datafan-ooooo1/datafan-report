@@ -1,7 +1,7 @@
 <!--
  * @Description: 筛选指标
  * @Date: 2022-02-21 14:45:04
- * @LastEditTime: 2022-02-23 14:06:33
+ * @LastEditTime: 2022-02-23 17:38:21
 -->
 <template>
   <Draggable
@@ -33,6 +33,7 @@
 
 <script>
 import Draggable from 'vuedraggable'
+import { eventBus, eventBusType } from '@/utils/event-bus'
 
 export default {
   name: 'FilterIndex',
@@ -124,6 +125,9 @@ export default {
           showName: `${nameLabel}(${name}${sortIcon[sort]})`
         }
       })
+    },
+    indexList(value) {
+      eventBus.$emit(eventBusType.WORKSPACE_PAYLOAD, 'index', value)
     }
   },
 

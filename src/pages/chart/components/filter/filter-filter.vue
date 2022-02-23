@@ -1,7 +1,7 @@
 <!--
  * @Description: 筛选器
  * @Date: 2022-02-21 14:45:04
- * @LastEditTime: 2022-02-22 18:55:28
+ * @LastEditTime: 2022-02-23 17:40:37
 -->
 <template>
   <div class="filter-box">
@@ -36,6 +36,7 @@
 <script>
 import Draggable from 'vuedraggable'
 import FilterModal from './filter-modal.vue'
+import { eventBus, eventBusType } from '@/utils/event-bus'
 
 export default {
   name: 'FilterFilter',
@@ -112,6 +113,9 @@ export default {
       const data = JSON.parse(dataJson)
 
       this.filterList = data.filterListVO
+    },
+    filterList(value) {
+      eventBus.$emit(eventBusType.WORKSPACE_PAYLOAD, 'filter', value)
     }
   },
 

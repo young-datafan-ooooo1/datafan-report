@@ -1,22 +1,24 @@
 <!--
  * @Description: 图表视图
  * @Date: 2022-02-18 17:43:33
- * @LastEditTime: 2022-02-22 19:49:09
+ * @LastEditTime: 2022-02-23 14:43:07
 -->
 <template>
   <div class="chart-view flex-box flex-box--column">
-    <Axis class="flex-box-row-small" />
-    <div class="chart-view-content flex-box-row-small" />
+    <ChartAxis class="flex-box-row-small" />
+    <ChartContent class="chart-view-content flex-box-row-small" />
   </div>
 </template>
 <script>
-import Axis from './chart-axis.vue'
+import ChartAxis from './chart-axis.vue'
+import ChartContent from './chart-content.vue'
 
 export default {
   name: 'ChartView',
 
   components: {
-    Axis
+    ChartAxis,
+    ChartContent
   }
 }
 </script>
