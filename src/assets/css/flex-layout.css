@@ -108,6 +108,10 @@
 }
 
 /* col */
+.flex-box-col-mini + .flex-box-col-mini {
+  margin: 0 0 0 5px;
+}
+
 .flex-box-col-small + .flex-box-col-small {
   margin: 0 0 0 10px;
 }
