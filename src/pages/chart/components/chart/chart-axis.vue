@@ -1,7 +1,7 @@
 <!--
  * @Description: 图表轴
  * @Date: 2022-02-22 19:20:19
- * @LastEditTime: 2022-02-23 14:34:48
+ * @LastEditTime: 2022-02-23 19:03:13
 -->
 <template>
   <div class="axis-box">
@@ -26,7 +26,7 @@
       >
         <div v-for="(item, index) in columnList" :key="`${item.id}-${index}`" class="axis-tag">
           <a-dropdown :trigger="['click']">
-            <a-tag closable :color="getTagColorByType(item.type)" @close="onClose(index)">{{ item.showName || item.name }}</a-tag>
+            <a-tag closable :color="getTagColorByType(item.type)" @close="onClose(index, 'column')">{{ item.showName || item.name }}</a-tag>
             <a-menu slot="overlay">
               <template v-for="menuItem in item.setting">
                 <a-sub-menu v-if="menuItem.children" :key="menuItem.value">
@@ -70,7 +70,7 @@
       >
         <div v-for="(item, index) in rowList" :key="`${item.id}-${index}`" class="axis-tag">
           <a-dropdown :trigger="['click']">
-            <a-tag closable :color="getTagColorByType(item.type)" @close="onClose(index)">{{ item.showName || item.name }}</a-tag>
+            <a-tag closable :color="getTagColorByType(item.type)" @close="onClose(index, 'row')">{{ item.showName || item.name }}</a-tag>
             <a-menu slot="overlay">
               <template v-for="menuItem in item.setting">
                 <a-sub-menu v-if="menuItem.children" :key="menuItem.value">
@@ -97,9 +97,10 @@
 
 <script>
 import Draggable from 'vuedraggable'
+import { eventBus, eventBusType } from '@/utils/event-bus'
 
 export default {
-  name: 'Axis',
+  name: 'ChartAxis',
 
   components: {
     Draggable
@@ -154,6 +155,12 @@ export default {
           setting
         }
       })
+    },
+    columnList(value) {
+      eventBus.$emit(eventBusType.WORKSPACE_PAYLOAD, 'column', value)
+    },
+    rowList(value) {
+      eventBus.$emit(eventBusType.WORKSPACE_PAYLOAD, 'row', value)
     }
   },
 
@@ -216,7 +223,15 @@ export default {
 
       this.$set(handleItem, 'setting', setting)
     },
-    onClose() {},
+
+    onClose(index, type) {
+      const typeOption = {
+        column: 'columnList',
+        row: 'rowList'
+      }
+
+      this[typeOption[type]].splice(index, 1)
+    },
 
     /**
      * @description: 修改统计类型
