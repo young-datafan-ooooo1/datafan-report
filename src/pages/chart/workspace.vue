@@ -1,7 +1,7 @@
 <!--
  * @Description: 图表工作台
  * @Date: 2022-02-18 16:47:33
- * @LastEditTime: 2022-02-28 14:10:22
+ * @LastEditTime: 2022-02-28 16:38:24
 -->
 <template>
   <div class="workspace flex-box flex-box--column">
@@ -9,7 +9,17 @@
       <div class="block-title">报表分析工具</div>
       <div class="chart-switch-box flex-box">
         <template v-for="item in chartOption">
-          <i :key="item.value" :class="['chart-icon', 'flex-box-col-small', `${item.className}_chart`]" @click="onChangeChartType(item.value)" />
+          <i
+            :key="item.value"
+            :class="[
+              'chart-icon',
+              'flex-box-col-small',
+              `${item.className}_chart`,
+              { disabled: disabledList.includes(item.value) },
+              { actived: chartInfo.type === item.value }
+            ]"
+            @click="onChangeChartType(item.value)"
+          />
         </template>
       </div>
     </div>
@@ -28,6 +38,8 @@ import {
   ChartView
 } from './components'
 import ChartApiServices from '@/services/chart'
+import { eventBus, eventBusType } from '@/utils/event-bus'
+import { CHART_OPTION } from './workspace.data'
 
 export default {
   name: 'Workspace',
@@ -50,129 +62,51 @@ export default {
         data: {},
         type: ''
       },
-      chartOption: [{
-        id: 0,
-        name: '二维表',
-        value: 'twoDimensionalTable',
-        metrics: 16,
-        dimension: 16,
-        rowCount: 100,
-        rowCountDes: '0个或多个',
-        columnCountDes: '0个或多个',
-        characterCountDes: '0个或多个',
-        disable: false,
-        className: 'twoDimensionalTable'
+      chartConfig: {
+        index: [],
+        column: [],
+        row: []
       },
-      {
-        id: 1,
-        name: '透视表',
-        value: 'Multidimensional',
-        metrics: 16,
-        dimension: 100,
-        rowCount: 100,
-        rowCountDes: '1个或多个',
-        columnCountDes: '1个或多个',
-        characterCountDes: '1个或多个',
-        disable: false,
-        className: 'multidimensional'
-      },
-      {
-        id: 2,
-        name: '折线图',
-        value: 'line',
-        metrics: 4,
-        dimension: 1,
-        rowCount: 1,
-        rowCountDes: '1个',
-        columnCountDes: '1个',
-        characterCountDes: '1个或多个数值',
-        disable: false,
-        className: 'line'
-      }, {
-        id: 3,
-        name: '柱状图',
-        value: 'histogram',
-        metrics: 4,
-        dimension: 1,
-        rowCount: 1,
-        rowCountDes: '1个',
-        columnCountDes: '1个',
-        characterCountDes: '1个或多个数值',
-        disable: false,
-        className: 'histogram'
-      }, {
-        id: 4,
-        name: '饼图',
-        value: 'pie',
-        metrics: 1,
-        dimension: 1,
-        rowCount: 1,
-        rowCountDes: '1个',
-        columnCountDes: '1个',
-        characterCountDes: '1个或多个',
-        disable: false,
-        className: 'pie',
-        selected: {}
-      },
-      {
-        id: 5,
-        name: '条形图',
-        value: 'bar',
-        metrics: 2,
-        dimension: 1,
-        rowCount: 1,
-        rowCountDes: '1个',
-        columnCountDes: '1个',
-        characterCountDes: '1个或多个',
-        disable: false,
-        className: 'bar',
-        selected: {}
-      },
-      {
-        id: 6,
-        name: '环图',
-        value: 'ring',
-        metrics: 1,
-        dimension: 1,
-        rowCount: 1,
-        rowCountDes: '1个',
-        columnCountDes: '1个',
-        characterCountDes: '1个或多个',
-        disable: false,
-        className: 'ring'
-      },
-      {
-        id: 7,
-        name: '瀑布图',
-        value: 'waterfall',
-        metrics: 1,
-        dimension: 1,
-        rowCount: 0,
-        rowCountDes: '0个',
-        columnCountDes: '1个',
-        characterCountDes: '1个或多个',
-        disable: false,
-        className: 'waterfall'
-      },
-      {
-        id: 8,
-        name: '漏斗图',
-        value: 'funnel',
-        metrics: 2,
-        dimension: 1,
-        rowCount: 1,
-        rowCountDes: '1个',
-        columnCountDes: '1个',
-        characterCountDes: '1个或多个',
-        disable: false,
-        className: 'funnel'
+      chartOption: CHART_OPTION
+    }
+  },
+  computed: {
+    // 指标个数
+    metricsNumber() {
+      return this.chartConfig?.index?.length || 0
+    },
+    // 维度个数
+    dimensionNumber() {
+      return [...this?.chartConfig?.column, ...this?.chartConfig?.row]?.length || 0
+    },
+    // 禁用列表
+    disabledList() {
+      const list = []
+
+      if (this.metricsNumber || this.dimensionNumber) {
+        this?.chartOption.forEach(item => {
+          if (this?.metricsNumber > item.metrics || this?.dimensionNumber > item.dimension) {
+            list.push(item.value)
+          }
+        })
       }
-      ]
+
+      return list
     }
   },
 
   created() {
     this.initPage()
+  },
+
+  mounted() {
+    // 挂载eventbus
+    eventBus.$on(eventBusType.WORKSPACE_PAYLOAD, this.getWorkSpacePayload)
+  },
+
+  beforeDestroy() {
+    // 卸载eventbus
+    eventBus.$off(eventBusType.WORKSPACE_PAYLOAD, this.getWorkSpacePayload)
   },
 
   methods: {
@@ -195,9 +129,23 @@ export default {
         this.chartInfo.type = res.data.content.chartId
       })
     },
+    /**
+     * @description: 修改图表类型
+     * @param {sting} type 图表类型
+     */
     onChangeChartType(type) {
       this.chartInfo.type = type
-      console.log(type)
+      // 修改类型时，触发其他组件查询事件
+      eventBus.$emit(eventBusType.WORKSPACE_CHANGE_CHART_TYPE)
+    },
+
+    /**
+     * @description: 修改配置
+     * @param {string} type 类型
+     * @param {Object} value 值
+     */
+    getWorkSpacePayload(type, value) {
+      this.$set(this.chartConfig, type, value)
     }
   }
 }
@@ -217,6 +165,9 @@ export default {
           height: 20px;
           background-size: 100% 100%;
           cursor: pointer;
+          &.actived {
+            border: 1px solid yellowgreen;
+          }
           &.twoDimensionalTable_chart {
             background-image: url('~@/assets/svg/twoDimensionalTable.svg');
             &.disabled {

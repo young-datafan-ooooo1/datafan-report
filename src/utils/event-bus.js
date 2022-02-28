@@ -15,6 +15,8 @@ const eventBus = new VUE();
 
 const eventBusType = {
   WORKSPACE_PAYLOAD: 'WORKSPACE_PAYLOAD',
+  WORKSPACE_THEME: 'WORKSPACE_THEME',
+  WORKSPACE_CHANGE_CHART_TYPE: 'WORKSPACE_CHANGE_CHART_TYPE',
 };
 
 export { eventBus, eventBusType };
