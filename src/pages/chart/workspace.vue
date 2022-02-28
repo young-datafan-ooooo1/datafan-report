@@ -1,7 +1,7 @@
 <!--
  * @Description: 图表工作台
  * @Date: 2022-02-18 16:47:33
- * @LastEditTime: 2022-02-28 16:38:24
+ * @LastEditTime: 2022-02-28 18:30:22
 -->
 <template>
   <div class="workspace flex-box flex-box--column">
@@ -127,6 +127,10 @@ export default {
       ChartApiServices.getChartDetail(payload).then(res => {
         this.chartInfo.data = res.data.content
         this.chartInfo.type = res.data.content.chartId
+
+        setTimeout(() => {
+          eventBus.$emit(eventBusType.WORKSPACE_CHANGE_CHART_TYPE)
+        }, 0)
       })
     },
     /**
@@ -165,62 +169,35 @@ export default {
           height: 20px;
           background-size: 100% 100%;
           cursor: pointer;
-          &.actived {
-            border: 1px solid yellowgreen;
+          &.disabled {
+            filter: grayscale(100%);
           }
           &.twoDimensionalTable_chart {
             background-image: url('~@/assets/svg/twoDimensionalTable.svg');
-            &.disabled {
-              background-image: url('~@/assets/svg/twoDimensionalTable-disabled.svg');
-            }
           }
           &.multidimensional_chart {
             background-image: url('~@/assets/svg/multidimensional.svg');
-            &.disabled {
-              background-image: url('~@/assets/svg/multidimensional-disabled.svg');
-            }
           }
           &.line_chart {
             background-image: url('~@/assets/svg/line.svg');
-            &.disabled {
-              background-image: url('~@/assets/svg/line-disabled.svg');
-            }
           }
           &.histogram_chart {
             background-image: url('~@/assets/svg/histogram.svg');
-            &.disabled {
-              background-image: url('~@/assets/svg/histogram-disabled.svg');
-            }
           }
           &.pie_chart {
             background-image: url('~@/assets/svg/pie.svg');
-            &.disabled {
-              background-image: url('~@/assets/svg/pie-disabled.svg');
-            }
           }
           &.bar_chart {
             background-image: url('~@/assets/svg/bar.svg');
-            &.disabled {
-              background-image: url('~@/assets/svg/bar-disabled.svg');
-            }
           }
           &.ring_chart {
             background-image: url('~@/assets/svg/ring.svg');
-            &.disabled {
-              background-image: url('~@/assets/svg/ring-disabled.svg');
-            }
           }
           &.waterfall_chart {
             background-image: url('~@/assets/svg/waterfall.svg');
-            &.disabled {
-              background-image: url('~@/assets/svg/waterfall-disabled.svg');
-            }
           }
           &.funnel_chart {
             background-image: url('~@/assets/svg/funnel.svg');
-            &.disabled {
-              background-image: url('~@/assets/svg/funnel-disabled.svg');
-            }
           }
         }
       }

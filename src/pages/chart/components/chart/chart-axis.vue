@@ -1,7 +1,7 @@
 <!--
  * @Description: 图表轴
  * @Date: 2022-02-22 19:20:19
- * @LastEditTime: 2022-02-23 19:03:13
+ * @LastEditTime: 2022-02-28 18:17:22
 -->
 <template>
   <div class="axis-box">
@@ -288,6 +288,7 @@ export default {
     .axis-content {
       display: flex;
       flex: 1;
+      flex-wrap: wrap;
       padding: 5px;
       width: 0;
       height: 100%;
