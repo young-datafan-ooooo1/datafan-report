@@ -1,7 +1,7 @@
 <!--
  * @Description: 图表工作台
  * @Date: 2022-02-18 16:47:33
- * @LastEditTime: 2022-02-23 19:22:35
+ * @LastEditTime: 2022-02-28 14:10:22
 -->
 <template>
   <div class="workspace flex-box flex-box--column">
@@ -9,9 +9,7 @@
       <div class="block-title">报表分析工具</div>
       <div class="chart-switch-box flex-box">
         <template v-for="item in chartOption">
-          <div :key="item.value" @click="onChangeChartType(item.value)">
-            {{ item.name }}-
-          </div>
+          <i :key="item.value" :class="['chart-icon', 'flex-box-col-small', `${item.className}_chart`]" @click="onChangeChartType(item.value)" />
         </template>
       </div>
     </div>
@@ -63,7 +61,7 @@ export default {
         columnCountDes: '0个或多个',
         characterCountDes: '0个或多个',
         disable: false,
-        className: '#icon-erweibiaoshujuji'
+        className: 'twoDimensionalTable'
       },
       {
         id: 1,
@@ -76,7 +74,7 @@ export default {
         columnCountDes: '1个或多个',
         characterCountDes: '1个或多个',
         disable: false,
-        className: '#icon-pivot'
+        className: 'multidimensional'
       },
       {
         id: 2,
@@ -89,7 +87,7 @@ export default {
         columnCountDes: '1个',
         characterCountDes: '1个或多个数值',
         disable: false,
-        className: '#icon-zhexiantu3'
+        className: 'line'
       }, {
         id: 3,
         name: '柱状图',
@@ -101,7 +99,7 @@ export default {
         columnCountDes: '1个',
         characterCountDes: '1个或多个数值',
         disable: false,
-        className: '#icon-zhuzhuangtu'
+        className: 'histogram'
       }, {
         id: 4,
         name: '饼图',
@@ -113,7 +111,7 @@ export default {
         columnCountDes: '1个',
         characterCountDes: '1个或多个',
         disable: false,
-        className: '#icon-bingtu1',
+        className: 'pie',
         selected: {}
       },
       {
@@ -127,7 +125,7 @@ export default {
         columnCountDes: '1个',
         characterCountDes: '1个或多个',
         disable: false,
-        className: '#icon-tiaoxingtu2',
+        className: 'bar',
         selected: {}
       },
       {
@@ -141,7 +139,7 @@ export default {
         columnCountDes: '1个',
         characterCountDes: '1个或多个',
         disable: false,
-        className: '#icon-yuanhuantu'
+        className: 'ring'
       },
       {
         id: 7,
@@ -154,7 +152,7 @@ export default {
         columnCountDes: '1个',
         characterCountDes: '1个或多个',
         disable: false,
-        className: '#icon-BI_tubiaoICON_pubutu_S'
+        className: 'waterfall'
       },
       {
         id: 8,
@@ -167,7 +165,7 @@ export default {
         columnCountDes: '1个',
         characterCountDes: '1个或多个',
         disable: false,
-        className: '#icon-BI_tubiaoICON_loudoutu_S'
+        className: 'funnel'
       }
       ]
     }
@@ -213,6 +211,68 @@ export default {
       padding: 0 10px;
       height: 40px;
       border-bottom: 1px solid #E9E9E9;
+      .chart-switch-box {
+        .chart-icon {
+          width: 20px;
+          height: 20px;
+          background-size: 100% 100%;
+          cursor: pointer;
+          &.twoDimensionalTable_chart {
+            background-image: url('~@/assets/svg/twoDimensionalTable.svg');
+            &.disabled {
+              background-image: url('~@/assets/svg/twoDimensionalTable-disabled.svg');
+            }
+          }
+          &.multidimensional_chart {
+            background-image: url('~@/assets/svg/multidimensional.svg');
+            &.disabled {
+              background-image: url('~@/assets/svg/multidimensional-disabled.svg');
+            }
+          }
+          &.line_chart {
+            background-image: url('~@/assets/svg/line.svg');
+            &.disabled {
+              background-image: url('~@/assets/svg/line-disabled.svg');
+            }
+          }
+          &.histogram_chart {
+            background-image: url('~@/assets/svg/histogram.svg');
+            &.disabled {
+              background-image: url('~@/assets/svg/histogram-disabled.svg');
+            }
+          }
+          &.pie_chart {
+            background-image: url('~@/assets/svg/pie.svg');
+            &.disabled {
+              background-image: url('~@/assets/svg/pie-disabled.svg');
+            }
+          }
+          &.bar_chart {
+            background-image: url('~@/assets/svg/bar.svg');
+            &.disabled {
+              background-image: url('~@/assets/svg/bar-disabled.svg');
+            }
+          }
+          &.ring_chart {
+            background-image: url('~@/assets/svg/ring.svg');
+            &.disabled {
+              background-image: url('~@/assets/svg/ring-disabled.svg');
+            }
+          }
+          &.waterfall_chart {
+            background-image: url('~@/assets/svg/waterfall.svg');
+            &.disabled {
+              background-image: url('~@/assets/svg/waterfall-disabled.svg');
+            }
+          }
+          &.funnel_chart {
+            background-image: url('~@/assets/svg/funnel.svg');
+            &.disabled {
+              background-image: url('~@/assets/svg/funnel-disabled.svg');
+            }
+          }
+        }
+      }
     }
     &-content {
       flex: 1;
