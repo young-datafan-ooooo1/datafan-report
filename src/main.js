@@ -1,7 +1,7 @@
 /*
  * @Description: 主配置
  * @Date: 2022-01-21 14:48:10
- * @LastEditTime: 2022-02-15 14:07:27
+ * @LastEditTime: 2022-02-24 10:40:27
  */
 import Vue from 'vue'
 import App from './App.vue'
@@ -17,12 +17,10 @@ import SSComponent from '@sense70/common-component-vue'
 import { bootstrap, initialRouter, patchComponent } from '@sense70/common-component-vue'
 const router = initialRouter(require('@/router/config').default)
 import '@sense70/common-sysmanage-vue/fonts/iconfont.css'
-import './static/iconfont/iconfont.css'
 import './static/css/utilities.min.css'
 import './theme/index.less'
 import './theme/common.less'
 import './components/menu/index.less'
-import '@/assets/font/iconfont.css'
 import 'xe-utils'
 import VXETable from 'vxe-table'
 import '@sense70/common-component-vue/assets/commonCss.less'
