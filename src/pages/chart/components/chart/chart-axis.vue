@@ -1,7 +1,7 @@
 <!--
  * @Description: 图表轴
  * @Date: 2022-02-22 19:20:19
- * @LastEditTime: 2022-02-28 18:17:22
+ * @LastEditTime: 2022-03-01 16:18:20
 -->
 <template>
   <div class="axis-box">
@@ -135,26 +135,28 @@ export default {
   watch: {
     'chartInfo.data'(value) {
       const { dataJson } = value
-      const data = JSON.parse(dataJson)
+      if (dataJson) {
+        const data = JSON.parse(dataJson)
 
-      this.columnList = data.columnListVO.map(item => {
-        const type = this.getType(item.dateType)
-        const setting = type === 'date' ? this.dateSetting : this.sortSetting
+        this.columnList = data.columnListVO.map(item => {
+          const type = this.getType(item.dateType)
+          const setting = type === 'date' ? this.dateSetting : this.sortSetting
 
-        return {
-          ...item,
-          setting
-        }
-      })
-      this.rowList = data.rowListVO.map(item => {
-        const type = this.getType(item.dateType)
-        const setting = type === 'date' ? this.dateSetting : this.sortSetting
+          return {
+            ...item,
+            setting
+          }
+        })
+        this.rowList = data.rowListVO.map(item => {
+          const type = this.getType(item.dateType)
+          const setting = type === 'date' ? this.dateSetting : this.sortSetting
 
-        return {
-          ...item,
-          setting
-        }
-      })
+          return {
+            ...item,
+            setting
+          }
+        })
+      }
     },
     columnList(value) {
       eventBus.$emit(eventBusType.WORKSPACE_PAYLOAD, 'column', value)

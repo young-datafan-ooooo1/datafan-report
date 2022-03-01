@@ -1,7 +1,7 @@
 <!--
  * @Description: 筛选器
  * @Date: 2022-02-21 14:45:04
- * @LastEditTime: 2022-02-23 17:40:37
+ * @LastEditTime: 2022-03-01 16:17:32
 -->
 <template>
   <div class="filter-box">
@@ -110,9 +110,11 @@ export default {
   watch: {
     'chartInfo.data'(value) {
       const { dataJson } = value
-      const data = JSON.parse(dataJson)
+      if (dataJson) {
+        const data = JSON.parse(dataJson)
 
-      this.filterList = data.filterListVO
+        this.filterList = data.filterListVO
+      }
     },
     filterList(value) {
       eventBus.$emit(eventBusType.WORKSPACE_PAYLOAD, 'filter', value)

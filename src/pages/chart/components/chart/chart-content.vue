@@ -1,20 +1,31 @@
 <!--
  * @Description: 图表内容
  * @Date: 2022-02-23 14:41:04
- * @LastEditTime: 2022-02-28 17:51:06
+ * @LastEditTime: 2022-03-01 16:44:26
 -->
 <template>
   <div class="chart-content">
     <a-spin :spinning="chartLoading" class="common-loading">
-      <div class="chart-handle flex-box-row-small">
+      <div class="chart-handle flex-box flex-box--between-justify flex-box--center-items flex-box-row-small">
         <div class="handle-box">
           <a-button
-            class="search-btn"
+            class="search-btn flex-box-col"
             type="primary"
             :disabled="isDisabledSearch"
             @click="onSearch"
           >查询</a-button>
+          <a-button
+            class="search-btn flex-box-col"
+            type="primary"
+            :disabled="isDisabledSearch"
+            @click="onSave"
+          >保存</a-button>
         </div>
+        <ModifyInput
+          v-model="reportInfo.reportTittle"
+          @on-change="onModifyReportName"
+        />
+        <a-icon type="download" />
       </div>
       <div class="chart-content-chart flex-box-row-small">
         <SenseTable
@@ -60,12 +71,14 @@ import { eventBus, eventBusType } from '@/utils/event-bus'
 import ChartApiServices from '@/services/chart'
 import { PivotTable } from '@click2buy/vue-pivot-table'
 import { CHART_OPTION } from '../../workspace.data'
+import { ModifyInput } from '@/components/common'
 
 export default {
   name: 'ChartContent',
 
   components: {
-    PivotTable
+    PivotTable,
+    ModifyInput
   },
 
   inject: ['chartInfo'],
@@ -78,7 +91,8 @@ export default {
       // 默认配色
       themeColors: ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c3', '#7f7f7f', '#bdbd22', '#17bdcf'],
       chartOption: CHART_OPTION,
-      chartConfig: {}
+      chartConfig: {},
+      reportInfo: ''
     }
   },
 
@@ -140,7 +154,11 @@ export default {
       return this.disabledList.includes(this.chartType)
     }
   },
-
+  watch: {
+    'chartInfo.data'(value) {
+      this.reportInfo = value
+    }
+  },
   mounted() {
     // 挂载eventbus
     eventBus.$on(eventBusType.WORKSPACE_PAYLOAD, this.getWorkSpacePayload)
@@ -164,10 +182,10 @@ export default {
       window.dispatchEvent(new Event('resize'))
 
       const {
-        index: characterListVOS,
-        filter: filterListVOS,
-        column: columnListVOS,
-        row: rowListVOS
+        index: characterListVOS = [],
+        filter: filterListVOS = [],
+        column: columnListVOS = [],
+        row: rowListVOS = []
       } = this.workspacePayload
       const { datasourceDTO, reportTable } = this.chartInfo.data
       const payload = {
@@ -261,6 +279,92 @@ export default {
      */
     getReducer(metrics) {
       return (sum, items) => items[metrics.columnChinsesName]
+    },
+
+    /**
+     * @description: 修改看板名称
+     * @param {string} value 值
+     */
+    onModifyReportName(value) {
+      this.reportInfo.reportTittle = value
+    },
+    onSave() {
+      if (!this.reportInfo.reportTittle) {
+        this.$message.warn('请输入名称')
+
+        return
+      }
+      if (this.reportInfo.reportId) {
+        this.$confirm({
+          title: '提示',
+          content: `是否覆盖之前信息 ?`,
+          okText: '确认',
+          onOk: () => {
+            const payload = this.getSavePayload()
+
+            return ChartApiServices.saveReports(payload).then(res => {
+              this.$message.success('保存成功')
+            }).catch(() => {
+              this.$message.error('保存失败')
+            })
+          }
+        })
+      } else {
+        const payload = this.getSavePayload()
+
+        ChartApiServices.saveReports(payload).then(res => {
+          this.$message.success('保存成功')
+        }).catch(() => {
+          this.$message.error('保存失败')
+        })
+      }
+    },
+    getSavePayload() {
+      const {
+        index: characts = [],
+        column: columnListVO = [],
+        filter: filterListVO = [],
+        row: rowListVO = []
+      } = this.workspacePayload
+      const {
+        chartId,
+        datasourceDTO: { datasourceId },
+        querySql,
+        reportId,
+        stepName,
+        stepProjectId,
+        reportTable: tableName,
+        reportTittle: tittle,
+        dimensionList,
+        mertricList
+      } = this.reportInfo
+      const dataObj = {
+        characts,
+        columnListVO,
+        filterListVO,
+        rowListVO
+      }
+      const dataJson = JSON.stringify(dataObj)
+
+      return {
+        characts,
+        columnListVO,
+        filterListVO,
+        rowListVO,
+        dimensionList,
+        mertricList,
+        reportVO: {
+          chartId,
+          dataJson,
+          datasourceId,
+          querySql,
+          reportId,
+          stepName,
+          stepProjectId,
+          tableName,
+          tittle
+        }
+      }
     }
   }
 }

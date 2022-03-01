@@ -1,7 +1,7 @@
 <!--
  * @Description: 筛选指标
  * @Date: 2022-02-21 14:45:04
- * @LastEditTime: 2022-02-23 17:38:21
+ * @LastEditTime: 2022-03-01 16:16:41
 -->
 <template>
   <Draggable
@@ -106,25 +106,27 @@ export default {
   watch: {
     'chartInfo.data'(value) {
       const { dataJson } = value
-      const data = JSON.parse(dataJson)
+      if (dataJson) {
+        const data = JSON.parse(dataJson)
 
-      this.indexList = data.characts.map(item => {
-        const { statisticsType, columnChinsesName: name, sort } = item
-        const type = this.getType(item.dateType)
-        const nameLabel = this.getNameLabel(statisticsType)
-        const sortIcon = {
-          'asc': ' | ↑ ',
-          'desc': ' | ↓ ',
-          '': '',
-          undefined: ''
-        }
+        this.indexList = data.characts.map(item => {
+          const { statisticsType, columnChinsesName: name, radio: sort } = item
+          const type = this.getType(item.dateType)
+          const nameLabel = this.getNameLabel(statisticsType)
+          const sortIcon = {
+            'asc': ' | ↑ ',
+            'desc': ' | ↓ ',
+            '': '',
+            undefined: ''
+          }
 
-        return {
-          ...item,
-          setting: this.indexInfo[type].setting,
-          showName: `${nameLabel}(${name}${sortIcon[sort]})`
-        }
-      })
+          return {
+            ...item,
+            setting: this.indexInfo[type].setting,
+            showName: `${nameLabel}(${name}${sortIcon[sort]})`
+          }
+        })
+      }
     },
     indexList(value) {
       eventBus.$emit(eventBusType.WORKSPACE_PAYLOAD, 'index', value)
@@ -162,9 +164,9 @@ export default {
       }
 
       this.$set(handleItem, 'setting', this.indexInfo[type].setting)
-      this.$set(handleItem, 'sort', '')
+      this.$set(handleItem, 'radio', '')
       this.$set(handleItem, 'statisticsType', statisticsType)
-      this.$set(handleItem, 'showName', `${nameLabel}(${handleItem.columnChinsesName}${sortIcon[handleItem.sort]})`)
+      this.$set(handleItem, 'showName', `${nameLabel}(${handleItem.columnChinsesName}${sortIcon[handleItem.radio]})`)
     },
     /**
      * @description: 删除标签
@@ -215,7 +217,7 @@ export default {
       }
 
       this.$set(item, 'statisticsType', value)
-      this.$set(item, 'sort', sort)
+      this.$set(item, 'radio', sort)
       this.$set(item, 'showName', `${nameLabel}(${item.columnChinsesName}${sortIcon[sort]})`)
     }
   }
