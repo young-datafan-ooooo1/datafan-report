@@ -1,7 +1,7 @@
 <!--
  * @Description: 图表工作台
  * @Date: 2022-02-18 16:47:33
- * @LastEditTime: 2022-02-28 18:30:22
+ * @LastEditTime: 2022-03-01 16:49:37
 -->
 <template>
   <div class="workspace flex-box flex-box--column">
@@ -9,17 +9,35 @@
       <div class="block-title">报表分析工具</div>
       <div class="chart-switch-box flex-box">
         <template v-for="item in chartOption">
-          <i
+          <a-popover
             :key="item.value"
-            :class="[
-              'chart-icon',
-              'flex-box-col-small',
-              `${item.className}_chart`,
-              { disabled: disabledList.includes(item.value) },
-              { actived: chartInfo.type === item.value }
-            ]"
-            @click="onChangeChartType(item.value)"
-          />
+            :title="item.name"
+          >
+            <template slot="content">
+              <div class="flex-box flex-box-row-small">
+                <span class="flex-box-col-small">{{ item.rowCountDes }}</span>
+                <span class="chart-tip row-tip flex-box-col-small">行</span>
+              </div>
+              <div class="flex-box flex-box-row-small">
+                <span class="flex-box-col-small">{{ item.columnCountDes }}</span>
+                <span class="chart-tip col-tip flex-box-col-small">列</span>
+              </div>
+              <div class="flex-box flex-box-row-small">
+                <span class="flex-box-col-small">{{ item.characterCountDes }}</span>
+                <span class="chart-tip index-tip flex-box-col-small">指标</span>
+              </div>
+            </template>
+            <i
+              :class="[
+                'chart-icon',
+                'flex-box-col-small',
+                `${item.className}_chart`,
+                { 'no-click': disabledList.includes(item.value) },
+                { actived: chartInfo.type === item.value }
+              ]"
+              @click="onChangeChartType(item.value)"
+            />
+          </a-popover>
         </template>
       </div>
     </div>
@@ -120,24 +138,55 @@ export default {
      * @description: 获取图表数据
      */
     getChartDetail() {
-      const payload = {
-        reportId: this.$route.query.id
+      if (this.$route.query.type === 'add') {
+        const payload = {
+          uninId: this.$route.query.reportCode
+        }
+        ChartApiServices.getChartDetailByDm(payload).then(res => {
+          const {
+            columnList: dimensionList = [],
+            mertricList,
+            datasourceVO: datasourceDTO,
+            projectId: stepProjectId,
+            stepName
+          } = res.data.content
+          const { tableName: reportTable } = datasourceDTO
+
+          this.chartInfo.data = {
+            chartId: 'twoDimensionalTable',
+            dimensionList,
+            mertricList,
+            datasourceDTO,
+            stepProjectId,
+            stepName,
+            reportTable,
+            reportTittle: ''
+          }
+          this.chartInfo.type = 'twoDimensionalTable'
+        })
+      } else if (this.$route.query.type === 'edit') {
+        const payload = {
+          reportId: this.$route.query.id
+        }
+
+        ChartApiServices.getChartDetail(payload).then(res => {
+          this.chartInfo.data = res.data.content
+          this.chartInfo.type = res.data.content.chartId
+
+          setTimeout(() => {
+            eventBus.$emit(eventBusType.WORKSPACE_CHANGE_CHART_TYPE)
+          }, 0)
+        })
       }
-
-      ChartApiServices.getChartDetail(payload).then(res => {
-        this.chartInfo.data = res.data.content
-        this.chartInfo.type = res.data.content.chartId
-
-        setTimeout(() => {
-          eventBus.$emit(eventBusType.WORKSPACE_CHANGE_CHART_TYPE)
-        }, 0)
-      })
     },
     /**
      * @description: 修改图表类型
      * @param {sting} type 图表类型
      */
     onChangeChartType(type) {
+      if (this.disabledList.includes(type)) {
+        return
+      }
       this.chartInfo.type = type
       // 修改类型时，触发其他组件查询事件
       eventBus.$emit(eventBusType.WORKSPACE_CHANGE_CHART_TYPE)
@@ -169,7 +218,7 @@ export default {
           height: 20px;
           background-size: 100% 100%;
           cursor: pointer;
-          &.disabled {
+          &.no-click {
             filter: grayscale(100%);
           }
           &.twoDimensionalTable_chart {
@@ -218,6 +267,20 @@ export default {
       border-radius: 6px;
       background-color: #fff;
       box-shadow: 0 23px 44px 0 rgb(176 183 195 / 14%);
+    }
+  }
+  .chart-tip {
+    padding: 0px 8px;
+    border-radius: 15px;
+    color: #fff;
+    &.row-tip {
+      background-color: #4996b2;
+    }
+    &.col-tip {
+      background-color: #009768;
+    }
+    &.index-tip {
+      background-color: #daa21b;
     }
   }
 </style>
