@@ -1,7 +1,7 @@
 <!--
  * @Description: 筛选指标
  * @Date: 2022-02-21 14:45:04
- * @LastEditTime: 2022-03-01 16:16:41
+ * @LastEditTime: 2022-03-02 17:20:35
 -->
 <template>
   <Draggable
@@ -167,6 +167,7 @@ export default {
       this.$set(handleItem, 'radio', '')
       this.$set(handleItem, 'statisticsType', statisticsType)
       this.$set(handleItem, 'showName', `${nameLabel}(${handleItem.columnChinsesName}${sortIcon[handleItem.radio]})`)
+      this.$set(handleItem, 'name', `${nameLabel}(${handleItem.columnChinsesName})`)
     },
     /**
      * @description: 删除标签
@@ -219,6 +220,7 @@ export default {
       this.$set(item, 'statisticsType', value)
       this.$set(item, 'radio', sort)
       this.$set(item, 'showName', `${nameLabel}(${item.columnChinsesName}${sortIcon[sort]})`)
+      this.$set(item, 'name', `${nameLabel}(${item.columnChinsesName})`)
     }
   }
 }

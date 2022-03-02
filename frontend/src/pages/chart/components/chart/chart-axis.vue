@@ -1,7 +1,7 @@
 <!--
  * @Description: 图表轴
  * @Date: 2022-02-22 19:20:19
- * @LastEditTime: 2022-03-01 16:18:20
+ * @LastEditTime: 2022-03-02 17:47:45
 -->
 <template>
   <div class="axis-box">
@@ -56,7 +56,7 @@
           <template slot="title">
             <div>行的功能</div>
             <div>1、在透视表中，将行的数据放在第一列，从上到下依次排开展示。</div>
-            <div>2、在其他图表中，行数据会吧图拆分多个图。</div>
+            <div>2、在其他图表中，行数据会把图拆分多个图。</div>
           </template>
           <a-icon type="question-circle" class="flex-box-col-small" />
         </a-tooltip>
