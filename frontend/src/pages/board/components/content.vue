@@ -1,7 +1,7 @@
 <!--
  * @Description: 内容
  * @Date: 2022-01-21 16:27:42
- * @LastEditTime: 2022-02-22 16:27:01
+ * @LastEditTime: 2022-03-02 16:08:45
 -->
 <template>
   <div :class="['content-container' , {full: isFull}]">
@@ -307,8 +307,8 @@ export default {
      * @param {Object} chart 表格信息
      */
     getTwoDimensionalTableConfig(chart) {
-      const { charact: metrics, column } = chart
-      const columnList = [... metrics, ...column]
+      const { charact: metrics = [], column = [], row = [] } = chart
+      const columnList = [... metrics, ...column, ...row]
       const columns = columnList.map(item => {
         const { columnChinsesName: title, columnChinsesName: field } = item
 

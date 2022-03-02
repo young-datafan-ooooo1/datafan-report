@@ -1,7 +1,7 @@
 <!--
  * @Description: 图表内容
  * @Date: 2022-02-23 14:41:04
- * @LastEditTime: 2022-03-01 16:44:26
+ * @LastEditTime: 2022-03-02 17:11:01
 -->
 <template>
   <div class="chart-content">
@@ -228,9 +228,9 @@ export default {
     onFormatChartConfig() {
       if (this.isTwoDimensionalTable) {
         const { index: metrics = [], column = [], row = [] } = this.workspacePayload
-        const columnList = [...column, ...row, ...metrics]
+        const columnList = [...metrics, ...column, ...row]
         const columns = columnList.map(item => {
-          const { columnChinsesName: title, name: field } = item
+          const { name: title, name: field } = item
 
           return {
             title,
@@ -327,7 +327,6 @@ export default {
         row: rowListVO = []
       } = this.workspacePayload
       const {
-        chartId,
         datasourceDTO: { datasourceId },
         querySql,
         reportId,
@@ -354,7 +353,7 @@ export default {
         dimensionList,
         mertricList,
         reportVO: {
-          chartId,
+          chartId: this.chartType,
           dataJson,
           datasourceId,
           querySql,
