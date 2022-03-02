@@ -3,8 +3,7 @@
   "version": "0.7.2",
   "private": true,
   "scripts": {
-    "preserve": "npx check-npm-client --yarn-only && node ./src/utils/checkUpdate.js",
-    "preinstall": "npx check-npm-client --yarn-only",
+    "preserve": "node ./src/utils/checkUpdate.js",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
