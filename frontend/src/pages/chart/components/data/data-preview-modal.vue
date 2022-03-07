@@ -1,7 +1,7 @@
 <!--
  * @Description: 数据预览弹窗
  * @Date: 2022-02-21 11:18:32
- * @LastEditTime: 2022-02-22 11:23:17
+ * @LastEditTime: 2022-03-07 18:25:19
 -->
 <template>
   <a-base-modal
@@ -84,7 +84,7 @@ export default {
     initPage() {
       this.tableLoading = true
       ChartApiServices.getChartData(this.config).then(res => {
-        this.tableData = res.data.content.groupByRowNames[0].list
+        this.tableData = res?.data?.content?.groupByRowNames[0].list
       }).finally(() => {
         this.tableLoading = false
       })

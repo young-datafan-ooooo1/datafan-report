@@ -1,7 +1,7 @@
 <!--
  * @Description: 内容
  * @Date: 2022-01-21 16:27:42
- * @LastEditTime: 2022-03-02 16:08:45
+ * @LastEditTime: 2022-03-07 18:09:35
 -->
 <template>
   <div :class="['content-container' , {full: isFull}]">
@@ -325,7 +325,7 @@ export default {
      * @param {Object} chart 表格信息
      */
     getMultiDimensionalTableConfig(chart) {
-      const { row, column } = chart
+      const { row = [], column = [] } = chart
       const rowFields = row.map(item => {
         const { columnChinsesName: label } = item
         return {
@@ -348,9 +348,9 @@ export default {
      * @param {Object} chart 表格信息
      */
     getVeChartConfig(chart) {
-      const { chartId: chartType, charact, column } = chart
+      const { chartId: chartType, charact = [], column = [], row = [] } = chart
       const metrics = charact.map(item => item.columnChinsesName)
-      const dimension = column.map(item => item.columnChinsesName)
+      const dimension = [...column, ...row].map(item => item.columnChinsesName)
 
       chart.config = {
         settings: {
@@ -383,9 +383,9 @@ export default {
      * @param {array} data 后端返回数据
      */
     formatChartData(chart, data) {
-      const { chartId: chartType, charact, column } = chart
+      const { chartId: chartType, charact = [], column = [], row = [] } = chart
       const metrics = charact.map(item => item.columnChinsesName)
-      const dimension = column.map(item => item.columnChinsesName)
+      const dimension = [...row, ...column].map(item => item.columnChinsesName)
       const isTable = ['twoDimensionalTable', 'Multidimensional'].includes(chartType)
       const isWaterfall = ['waterfall'].includes(chartType)
 
@@ -405,7 +405,7 @@ export default {
      * @return {Object} 参数
      */
     getChartPaylod(chart) {
-      const { charact: charater, datasourceId, querySql, row: rowList, column } = chart
+      const { charact: charater, datasourceId, querySql, row: rowList = [], column = [] } = chart
 
       return {
         charater,

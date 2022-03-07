@@ -1,7 +1,7 @@
 <!--
  * @Description: 图表内容
  * @Date: 2022-02-23 14:41:04
- * @LastEditTime: 2022-03-07 16:41:54
+ * @LastEditTime: 2022-03-07 18:25:06
 -->
 <template>
   <div class="chart-content">
@@ -119,9 +119,9 @@ export default {
     },
     // vechart图表数据
     veChartData() {
-      const { index = [], column = [] } = this.workspacePayload
+      const { index = [], column = [], row = [] } = this.workspacePayload
       const metrics = index.map(item => item.name)
-      const dimension = column.map(item => item.columnChinsesName)
+      const dimension = [...column, ...row].map(item => item.columnChinsesName)
 
       const isWaterfall = ['waterfall'].includes(this.chartType)
       return {
@@ -213,7 +213,7 @@ export default {
 
       this.chartLoading = true
       ChartApiServices.getChartData(payload).then(res => {
-        this.chartData = res.data.content.groupByRowNames.map(item => item.list).flat()
+        this.chartData = res?.data?.content?.groupByRowNames.map(item => item.list).flat()
         this.querySqlNoLimit = res.data.content.querySqlNoLimit
         this.isShowDownloadBtn = true
       }).finally(() => {
@@ -256,7 +256,7 @@ export default {
           columns
         }
       } else if (this.isMultidimensionalTable) {
-        const { row, column } = this.workspacePayload
+        const { row = [], column = [] } = this.workspacePayload
         const rowFields = row.map(item => {
           const { columnChinsesName: label } = item
           return {
@@ -275,9 +275,9 @@ export default {
         this.chartConfig = { rowFields, colFields }
       } else {
         const { chartType } = this
-        const { index = [], column = [] } = this.workspacePayload
+        const { index = [], column = [], row = [] } = this.workspacePayload
         const metrics = index.map(item => item.name)
-        const dimension = column.map(item => item.columnChinsesName)
+        const dimension = [...column, ...row].map(item => item.columnChinsesName)
 
         this.chartConfig = {
           settings: {
@@ -396,7 +396,7 @@ export default {
      * @description: 下载excel
      */
     onDownload() {
-      const { index, column, row } = this.workspacePayload
+      const { index = [], column = [], row = [] } = this.workspacePayload
       const stepFields = [...index, ...column, ...row].map(item => {
         const { name, statisticsType, columnName } = item
         return {
