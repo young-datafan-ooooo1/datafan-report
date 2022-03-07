@@ -1,7 +1,7 @@
 /*
  * @Description: 首页
  * @Date: 2021-12-08 18:18:17
- * @LastEditTime: 2022-03-01 15:54:09
+ * @LastEditTime: 2022-03-07 16:39:04
  */
 import { REPORT } from '@/services/api'
 import { request, METHOD } from '@sense70/common-component-vue'
@@ -49,11 +49,21 @@ const ChartApiServices = {
   getChartData(params) {
     return request(`${REPORT}/dpPortalReportRecord/querySql`, METHOD.POST, params)
   },
+  /**
+   * @description: 保存报表
+   * @param {*} params
+   */
   saveReports(params) {
     return request(`${REPORT}/dpPortalReportRecord/save/reports`, METHOD.POST, params)
   },
+  /**
+   * @description: 通过dm获取详情
+   * @param {Object} params 参数
+   */
   getChartDetailByDm(params) {
     return request(`${REPORT}/dpPortalReportRecord/get/dm`, METHOD.GET, { params })
-  }
+  },
+  // 下载url
+  downloadReportExcelUrl: `${REPORT}/dpPortalReportRecord/excelDownloadByNativeSql?access_token=`
 }
 export default ChartApiServices

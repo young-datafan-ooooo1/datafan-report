@@ -1,7 +1,7 @@
 <!--
  * @Description: 图表内容
  * @Date: 2022-02-23 14:41:04
- * @LastEditTime: 2022-03-02 17:11:01
+ * @LastEditTime: 2022-03-07 16:41:54
 -->
 <template>
   <div class="chart-content">
@@ -25,7 +25,13 @@
           v-model="reportInfo.reportTittle"
           @on-change="onModifyReportName"
         />
-        <a-icon type="download" />
+        <div class="down-btn">
+          <a-icon
+            v-if="isShowDownloadBtn"
+            type="download"
+            @click="onDownload"
+          />
+        </div>
       </div>
       <div class="chart-content-chart flex-box-row-small">
         <SenseTable
@@ -92,7 +98,9 @@ export default {
       themeColors: ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c3', '#7f7f7f', '#bdbd22', '#17bdcf'],
       chartOption: CHART_OPTION,
       chartConfig: {},
-      reportInfo: ''
+      reportInfo: '',
+      querySqlNoLimit: '',
+      isShowDownloadBtn: false
     }
   },
 
@@ -121,11 +129,13 @@ export default {
         rows: this.chartData
       }
     },
+    // 指标
     metricsList() {
       const { index = [] } = this.workspacePayload
 
       return index
     },
+    // 指标数
     metricsNumber() {
       return this.metricsList.length || 0
     },
@@ -156,6 +166,7 @@ export default {
   },
   watch: {
     'chartInfo.data'(value) {
+      this.isShowDownloadBtn = false
       this.reportInfo = value
     }
   },
@@ -203,6 +214,8 @@ export default {
       this.chartLoading = true
       ChartApiServices.getChartData(payload).then(res => {
         this.chartData = res.data.content.groupByRowNames.map(item => item.list).flat()
+        this.querySqlNoLimit = res.data.content.querySqlNoLimit
+        this.isShowDownloadBtn = true
       }).finally(() => {
         this.chartLoading = false
       })
@@ -213,6 +226,7 @@ export default {
      * @param {Object} value 值
      */
     getWorkSpacePayload(type, value) {
+      this.isShowDownloadBtn = false
       this.$set(this.workspacePayload, type, value)
     },
     /**
@@ -288,6 +302,9 @@ export default {
     onModifyReportName(value) {
       this.reportInfo.reportTittle = value
     },
+    /**
+     * @description: 保存
+     */
     onSave() {
       if (!this.reportInfo.reportTittle) {
         this.$message.warn('请输入名称')
@@ -300,25 +317,35 @@ export default {
           content: `是否覆盖之前信息 ?`,
           okText: '确认',
           onOk: () => {
+            this.chartLoading = true
             const payload = this.getSavePayload()
 
             return ChartApiServices.saveReports(payload).then(res => {
               this.$message.success('保存成功')
             }).catch(() => {
               this.$message.error('保存失败')
+            }).finally(() => {
+              this.chartLoading = false
             })
           }
         })
       } else {
         const payload = this.getSavePayload()
 
+        this.chartLoading = true
         ChartApiServices.saveReports(payload).then(res => {
           this.$message.success('保存成功')
         }).catch(() => {
           this.$message.error('保存失败')
+        }).finally(() => {
+          this.chartLoading = false
         })
       }
     },
+    /**
+     * @description: 获取保存时的参数
+     * @return {Object} 参数信息
+     */
     getSavePayload() {
       const {
         index: characts = [],
@@ -364,6 +391,40 @@ export default {
           tittle
         }
       }
+    },
+    /**
+     * @description: 下载excel
+     */
+    onDownload() {
+      const { index, column, row } = this.workspacePayload
+      const stepFields = [...index, ...column, ...row].map(item => {
+        const { name, statisticsType, columnName } = item
+        return {
+          filedCname: name,
+          filedName: `${statisticsType}(${columnName})`
+        }
+      })
+
+      const payload = {
+        datasourceId: this.reportInfo.datasourceDTO.datasourceId,
+        dataQuerySql: this.querySqlNoLimit,
+        fileName: '报表数据',
+        stepFields
+      }
+      this.chartLoading = true
+      var subfrom = document.createElement('form')
+      subfrom.style = 'display:none'
+      subfrom.method = 'post'
+      subfrom.action = ChartApiServices.downloadReportExcelUrl + localStorage.getItem('Authorization').replace('Bearer ', '')
+
+      var paramsJson = document.createElement('input')
+      paramsJson.type = 'text'
+      paramsJson.name = 'paramsJson'
+      paramsJson.value = JSON.stringify(payload)
+      subfrom.appendChild(paramsJson)
+      document.body.appendChild(subfrom)
+      subfrom.submit()
+      this.chartLoading = false
     }
   }
 }
@@ -391,6 +452,9 @@ export default {
           }
         }
       }
+    }
+    .down-btn {
+      width: 14px;
     }
   }
 </style>
