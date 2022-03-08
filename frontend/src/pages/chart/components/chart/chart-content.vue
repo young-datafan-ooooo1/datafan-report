@@ -1,7 +1,6 @@
 <!--
  * @Description: 图表内容
  * @Date: 2022-02-23 14:41:04
- * @LastEditTime: 2022-03-07 18:25:06
 -->
 <template>
   <div class="chart-content">
@@ -401,7 +400,7 @@ export default {
         const { name, statisticsType, columnName } = item
         return {
           filedCname: name,
-          filedName: `${statisticsType}(${columnName})`
+          filedName: statisticsType ? `${statisticsType}(${columnName})` : columnName
         }
       })
 
