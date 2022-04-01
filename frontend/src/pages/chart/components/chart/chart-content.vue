@@ -291,7 +291,7 @@ export default {
      * @description: 多维表配置
      */
     getReducer(metrics) {
-      return (sum, items) => items[metrics.columnChinsesName]
+      return (sum, items) => items[metrics.name]
     },
 
     /**
