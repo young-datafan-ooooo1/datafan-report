@@ -4,19 +4,18 @@
       :class="['admin-header__wide', layout, pageWidth]"
       class="flex items-center justify-between"
     >
-
-      <!-- 电脑头 -->
       <div class="inline-flex items-center">
+        <SNavigation />
         <div class="admin-heaer__logo">
           <router-link to="/home">
-            <img src="~@/assets/images/common/logo.png" style="height: 34px;width:30px">
+            <img :src="ASSETS_URL+ '/common/img/stella-logo.png'" style="height: 2rem;width:100px">
           </router-link>
         </div>
 
         <div
           class="admin-header__title"
         >
-          报表看板
+          {{ title }}
         </div>
         <div
           v-if="layout !== 'side' && !isMobile"
@@ -34,9 +33,6 @@
       </div>
 
       <div :class="['admin-header__right', headerTheme]">
-        <div class="header-right__info">
-          <a-icon class="header-right__btn" type="bell" />
-        </div>
         <header-avatar class="header-item header-right__avatar" />
         <a-dropdown placement="bottomCenter">
           <div class="header-right__more">
@@ -70,12 +66,8 @@ export default {
   data() {
     return {
       ASSETS_URL,
-      langList: [
-        { key: 'CN', name: '简体中文', alias: '简体' },
-        { key: 'HK', name: '繁體中文', alias: '繁體' },
-        { key: 'US', name: 'English', alias: 'English' }
-      ],
-      searchActive: false
+      searchActive: false,
+      title: ''
     }
   },
   computed: {
@@ -97,22 +89,28 @@ export default {
       }
       return this.theme.mode
     },
-    langAlias() {
-      const lang = this.langList.find(item => item.key === this.lang)
-      return lang.alias
-    },
     menuWidth() {
       const { layout, searchActive } = this
       const headWidth = layout === 'head' ? '100% - 188px' : '100%'
       const extraWidth = searchActive ? '600px' : '400px'
       return `calc(${headWidth} - ${extraWidth})`
-    }
+    },
+    ...mapState('components', ['menuNavigator'])
+  },
+  created() {
+    this.setHtmlTitle()
   },
   methods: {
+    setHtmlTitle() {
+      this.title =
+        this.menuNavigator?.find((i) => i.nodeEnName === 'dashboard')
+          ?.nodeName ?? ''
+    },
     onSelect(obj) {
       this.$emit('menuSelect', obj)
     },
     logout() {
+      this.$store.commit('model/setModel', '')
       logout()
     },
     ...mapMutations('setting', ['setLang'])
