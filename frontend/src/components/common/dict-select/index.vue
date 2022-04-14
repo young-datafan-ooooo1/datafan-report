@@ -1,8 +1,7 @@
 <!--
  * @Description: 公共字典选择框组件
  * @Date: 2021-06-17 10:17:44
- * @LastEditTime: 2021-09-10 11:25:18
--->
+ -->
 <template>
   <a-select v-model="itemData" class="dict-select" allow-clear :placeholder="placeholder" :loading="isLoading" @select="onSelect">
     <a-select-option

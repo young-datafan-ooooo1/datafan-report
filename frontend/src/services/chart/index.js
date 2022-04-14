@@ -1,8 +1,7 @@
 /*
  * @Description: 首页
  * @Date: 2021-12-08 18:18:17
- * @LastEditTime: 2022-03-07 16:39:04
- */
+  */
 import { REPORT } from '@/services/api'
 import { request, METHOD } from '@sense70/common-component-vue'
 

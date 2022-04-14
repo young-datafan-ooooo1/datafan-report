@@ -1,8 +1,7 @@
 <!--
  * @Description: 数据
  * @Date: 2022-02-18 17:42:32
- * @LastEditTime: 2022-02-22 18:22:19
--->
+ -->
 <template>
   <div class="data-view">
     <div class="dimension data-item">

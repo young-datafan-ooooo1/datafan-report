@@ -1,8 +1,7 @@
 <!--
  * @Description: 列表视图
  * @Date: 2022-01-18 17:46:02
- * @LastEditTime: 2022-01-19 15:41:20
--->
+ -->
 <template>
   <div class="list">
     <SenseTable

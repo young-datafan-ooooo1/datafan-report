@@ -1,8 +1,7 @@
 <!--
  * @Description: 筛选指标
  * @Date: 2022-02-21 14:45:04
- * @LastEditTime: 2022-03-02 17:20:35
--->
+ -->
 <template>
   <Draggable
     class="filter-index"

@@ -1,8 +1,7 @@
 <!--
  * @Description: 图表
  * @Date: 2022-01-21 15:00:14
- * @LastEditTime: 2022-02-15 14:14:55
--->
+ -->
 <template>
   <div class="dashborad-chart">
     <a-spin :spinning="loading" class="common-spin">

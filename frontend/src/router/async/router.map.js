@@ -1,8 +1,7 @@
 /*
  * @Description:
  * @Date: 2021-07-05 10:30:22
- * @LastEditTime: 2021-08-16 11:31:50
- */
+  */
 // 视图组件
 const view = {
   tabs: () => import('@/layouts/tabs'),

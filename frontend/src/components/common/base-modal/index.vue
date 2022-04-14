@@ -1,8 +1,7 @@
 <!--
  * @Description: 默认弹窗封装
  * @Date: 2021-11-18 14:19:25
- * @LastEditTime: 2021-11-18 14:50:42
--->
+ -->
 <template>
   <a-modal
     v-model="isModalShow"

@@ -1,8 +1,7 @@
 <!--
  * @Description: board
  * @Date: 2022-01-18 15:16:24
- * @LastEditTime: 2022-01-19 15:42:41
--->
+ -->
 <template>
   <div class="board page-container">
     <s-page-handle>

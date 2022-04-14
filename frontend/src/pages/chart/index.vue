@@ -1,8 +1,7 @@
 <!--
  * @Description: chart
  * @Date: 2022-01-18 15:16:24
- * @LastEditTime: 2022-02-18 17:05:06
--->
+ -->
 <template>
   <div class="chart page-container">
     <s-page-handle>

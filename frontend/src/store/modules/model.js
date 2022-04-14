@@ -1,8 +1,7 @@
 /*
  * @Description: 切换模块
  * @Date: 2021-09-10 09:06:58
- * @LastEditTime: 2021-09-10 09:57:31
- */
+  */
 export default {
   namespaced: true,
   state: {

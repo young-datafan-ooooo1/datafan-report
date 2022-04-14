@@ -1,8 +1,7 @@
 <!--
  * @Description: 数据为空提示图片/文字组件
  * @Date: 2021-09-01 18:58:43
- * @LastEditTime: 2021-09-02 17:53:48
--->
+ -->
 <template>
   <div :class="`empty empty--${size}`">
     <img class="empty__img" :src="emptyImg" :alt="text" draggable="false">

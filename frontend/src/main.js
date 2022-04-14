@@ -1,8 +1,7 @@
 /*
  * @Description: 主配置
  * @Date: 2022-01-21 14:48:10
- * @LastEditTime: 2022-02-24 10:40:27
- */
+  */
 import Vue from 'vue'
 import App from './App.vue'
 import Antd from 'ant-design-vue'

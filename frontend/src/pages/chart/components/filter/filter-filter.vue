@@ -1,8 +1,7 @@
 <!--
  * @Description: 筛选器
  * @Date: 2022-02-21 14:45:04
- * @LastEditTime: 2022-03-01 16:17:32
--->
+ -->
 <template>
   <div class="filter-box">
     <Draggable

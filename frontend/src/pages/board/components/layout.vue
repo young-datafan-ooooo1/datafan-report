@@ -1,8 +1,7 @@
 <!--
  * @Description: 新增/编辑看板布局
  * @Date: 2022-01-19 16:40:06
- * @LastEditTime: 2022-02-17 15:51:55
--->
+ -->
 <template>
   <div class="dashborad-layout">
     <div class="dashborad-grid flex-box-row">

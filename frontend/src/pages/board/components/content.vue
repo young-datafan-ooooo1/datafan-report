@@ -1,8 +1,7 @@
 <!--
  * @Description: 内容
  * @Date: 2022-01-21 16:27:42
- * @LastEditTime: 2022-03-07 18:09:35
--->
+ -->
 <template>
   <div :class="['content-container' , {full: isFull}]">
     <div class="title flex-box-row">

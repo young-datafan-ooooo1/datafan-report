@@ -1,8 +1,7 @@
 /*
  * @Description: 工作台数据
  * @Date: 2022-02-28 16:05:07
- * @LastEditTime: 2022-02-28 16:06:23
- */
+  */
 const CHART_OPTION = [
   {
     name: '二维表',

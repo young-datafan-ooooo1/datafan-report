@@ -1,8 +1,7 @@
 /*
  * @Description: 异常页面展示配置
  * @Date: 2021-08-28 15:12:08
- * @LastEditTime: 2021-08-31 09:21:59
- */
+  */
 import { ASSETS_URL } from '@/services/api'
 
 const config = {
