@@ -9,7 +9,6 @@
 import { enquireScreen } from './utils/util'
 import { mapState, mapMutations } from 'vuex'
 import themeUtil from '@/utils/themeUtil'
-import { getI18nKey } from '@/utils/routerUtil'
 export default {
   name: 'App',
   data() {
@@ -26,10 +25,6 @@ export default {
     },
     lang(val) {
       this.setLanguage(val)
-      this.setHtmlTitle()
-    },
-    $route() {
-      this.setHtmlTitle()
     },
     'theme.mode': function(val) {
       const closeMessage = this.$message.loading(
@@ -48,7 +43,6 @@ export default {
     }
   },
   created() {
-    this.setHtmlTitle()
     this.setLanguage(this.lang)
     enquireScreen(isMobile => this.setDevice(isMobile))
   },
@@ -78,15 +72,6 @@ export default {
           this.locale = require('ant-design-vue/es/locale-provider/en_US').default
           break
       }
-    },
-    setHtmlTitle() {
-      const route = this.$route
-      const key =
-        route.path === '/'
-          ? 'home.name'
-          : getI18nKey(route.matched[route.matched.length - 1].path)
-      console.log(key)
-      document.title = '报表看板'
     },
     popContainer() {
       return document.getElementById('popContainer')
