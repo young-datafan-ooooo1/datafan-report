@@ -1,8 +1,7 @@
 <!--
  * @Description: 筛选
  * @Date: 2022-02-18 17:43:01
- * @LastEditTime: 2022-02-28 14:34:08
--->
+ -->
 <template>
   <div class="filter-view">
     <div class="dimension filter-item">

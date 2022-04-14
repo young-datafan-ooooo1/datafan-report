@@ -1,8 +1,7 @@
 <!--
  * @Description: 图表轴
  * @Date: 2022-02-22 19:20:19
- * @LastEditTime: 2022-03-02 17:47:45
--->
+ -->
 <template>
   <div class="axis-box">
     <div class="column axis-item flex-box-row-small">

@@ -1,8 +1,7 @@
 <!--
  * @Description: 卡片
  * @Date: 2022-01-19 10:23:14
- * @LastEditTime: 2022-02-17 18:04:38
--->
+ -->
 <template>
   <div class="home-card">
     <a-spin :spinning="loading" class="common-spin">

@@ -1,8 +1,7 @@
 /*
  * @Description:
  * @Date: 2021-07-07 16:05:37
- * @LastEditTime: 2021-07-15 14:38:51
- */
+  */
 import { SYSTEM_MANAGER } from '@/services/api'
 import { request, METHOD } from '@sense70/common-component-vue'
 

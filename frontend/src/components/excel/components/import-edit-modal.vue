@@ -1,8 +1,7 @@
 <!--
  * @Description: 导入编辑
  * @Date: 2021-08-23 10:38:52
- * @LastEditTime: 2021-08-31 14:17:40
--->
+ -->
 <template>
   <a-form-model ref="form" :model="form" :rules="rules" :label-col="labelCol" :wrapper-col="wrapperCol">
     <a-form-model-item label="文件格式需按模板编写" style="padding-top: 10px">

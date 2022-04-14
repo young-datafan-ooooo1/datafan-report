@@ -1,8 +1,7 @@
 /*
  * @Description: 路由配置
  * @Date: 2021-11-10 10:28:08
- * @LastEditTime: 2022-03-01 16:59:35
- */
+  */
 import TabsView from '@/layouts/tabs/TabsView'
 import BlankView from '@/layouts/BlankView'
 // import {

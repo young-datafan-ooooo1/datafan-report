@@ -1,8 +1,7 @@
 /*
  * @Description: 正则验证
  * @Date: 2021-08-17 14:39:34
- * @LastEditTime: 2021-09-08 16:05:36
- */
+  */
 
 /**
  * @description: 统一校验

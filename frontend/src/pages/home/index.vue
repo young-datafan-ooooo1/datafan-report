@@ -1,8 +1,7 @@
 <!--
  * @Description: 首页
  * @Date: 2021-08-16 08:59:24
- * @LastEditTime: 2022-01-19 11:22:54
--->
+ -->
 <template>
   <div class="home">
     <div class="home-title flex-box-row">

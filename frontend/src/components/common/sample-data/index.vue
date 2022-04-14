@@ -1,8 +1,7 @@
 <!--
  * @Description:查看样例数据弹窗
  * @Date: 2021-11-25 14:16:16
- * @LastEditTime: 2021-12-22 16:26:38
--->
+ -->
 <template>
   <div>
     <a-base-modal

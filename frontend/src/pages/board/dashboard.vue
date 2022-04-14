@@ -1,8 +1,7 @@
 <!--
  * @Description: 新建编辑看板
  * @Date: 2022-01-19 15:21:06
- * @LastEditTime: 2022-02-17 17:30:39
--->
+ -->
 <template>
   <div class="dashboard">
     <div class="dashboard-nav">

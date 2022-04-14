@@ -1,8 +1,7 @@
 /*
  * @Description:
  * @Date: 2021-06-17 10:17:44
- * @LastEditTime: 2021-08-16 11:14:35
- */
+  */
 import Vue from 'vue'
 import Router from 'vue-router'
 import { formatRoutes } from '@/utils/routerUtil'

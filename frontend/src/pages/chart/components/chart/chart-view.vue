@@ -1,8 +1,7 @@
 <!--
  * @Description: 图表视图
  * @Date: 2022-02-18 17:43:33
- * @LastEditTime: 2022-02-23 14:43:07
--->
+ -->
 <template>
   <div class="chart-view flex-box flex-box--column">
     <ChartAxis class="flex-box-row-small" />

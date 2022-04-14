@@ -1,8 +1,7 @@
 /*
  * @Description:
  * @Date: 2021-06-17 10:17:44
- * @LastEditTime: 2022-01-18 18:13:37
- */
+  */
 // 跨域代理前缀
 // const API_PROXY_PREFIX='/api'
 // const BASE_URL = process.env.NODE_ENV === 'production' ? process.env.VUE_APP_API_BASE_URL : API_PROXY_PREFIX
