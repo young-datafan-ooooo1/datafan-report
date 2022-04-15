@@ -9,6 +9,12 @@ yarn-error.log*
 /test/e2e/reports/
 selenium-debug.log
 
+*/@young-datafan
+@young-datafan
+
+*/datafan-ui
+datafan-ui
+
 # Editor directories and files
 .idea
 .vscode

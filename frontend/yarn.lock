@@ -1174,10 +1174,10 @@
   resolved "http://mvn.senses-ai.com:8081/repository/npm-group/@nodelib/fs.stat/-/fs.stat-1.1.3.tgz"
   integrity sha1-K1o6s/kYzKSKjHVMCBaOPwPrphs=
 
-"@sense70/common-component-vue@~1.3.0":
-  version "1.3.211"
-  resolved "http://mvn.senses-ai.com:8081/repository/npm-group/@sense70/common-component-vue/-/common-component-vue-1.3.211.tgz#951347cb56f9c0889b647f5646b8fbb726258058"
-  integrity sha512-+c0RsHt0RdmgB5nq9zikCsSwUDt2S84eVsnLpvA01gPgAoYf1uG4NseoWtSqTTXpwDFos3CxptAlwCBpciGbVg==
+"@sense70/common-component-vue@~1.6.0":
+  version "1.6.102"
+  resolved "http://mvn.senses-ai.com:8081/repository/npm-group/@sense70/common-component-vue/-/common-component-vue-1.6.102.tgz#27f2d0066bebd5bbbc2f1181e3a5311288b14830"
+  integrity sha512-ckgS2t59WQyu/t9k48bwk19iYlPoxYwSLk0pD5HioTqdwA1GFMZtXmyo6LjUxfz497IiWcQA4uiBT2btRn4HEg==
   dependencies:
     axios "^0.19.2"
     clipboard "^2.0.6"
@@ -1187,10 +1187,10 @@
     vue "^2.6.12"
     vue-router "^3.3.4"
 
-"@sense70/common-sysmanage-vue@~1.2.0":
-  version "1.2.1006"
-  resolved "http://mvn.senses-ai.com:8081/repository/npm-group/@sense70/common-sysmanage-vue/-/common-sysmanage-vue-1.2.1006.tgz#498393358a5bbfd6f4257b1fcda6f14c0cf6ff4c"
-  integrity sha512-f4bDE8HU3bq7rfgt/++G43EFVi2CQd14hV7qlHM2AzeVg3Ytl7tzhKXExEGZRW1fds84APvbo47zcKdwMRo5BQ==
+"@sense70/common-sysmanage-vue@~1.6.0":
+  version "1.6.101"
+  resolved "http://mvn.senses-ai.com:8081/repository/npm-group/@sense70/common-sysmanage-vue/-/common-sysmanage-vue-1.6.101.tgz#5a567a4d8e9d4158c32b37401528f5e43d10f0b0"
+  integrity sha512-f7GvXzhbUoyzk5LqjPmwxLIaKkXL+XgELvUb6T96BUWxzlPSJDRsYuTeqD9GqDyU1vucRbZPji+5Xhkpw+vgng==
   dependencies:
     codemirror "^5.41.0"
 
@@ -1969,6 +1969,11 @@
   version "4.2.2"
   resolved "http://mvn.senses-ai.com:8081/repository/npm-group/@xtuc/long/-/long-4.2.2.tgz"
   integrity sha1-0pHGpOl5ibXGHZrPOWrk/hM6cY0=
+
+"@young-datafan/datafan-ui@~1.4.0":
+  version "1.4.13"
+  resolved "http://mvn.senses-ai.com:8081/repository/npm-group/@young-datafan/datafan-ui/-/datafan-ui-1.4.13.tgz#4602430662cddedde62cc2f871b123ccccac8487"
+  integrity sha512-CdfHflAMM6GxvmEEKgIvZt6gt0jjgYfqKXpBJ/gaLn4eg2VraJac7uMyZAEBPGs0SCFR8SwszUW5craDkLwrCQ==
 
 abbrev@1:
   version "1.1.1"

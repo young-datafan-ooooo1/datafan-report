@@ -29,7 +29,7 @@ module.exports = {
       }
     }
   },
-  transpileDependencies: ['sensesai-router', '@sense70/*'],
+  transpileDependencies: ['@sense70/*', '@young-datafan/*'],
   pluginOptions: {
     'style-resources-loader': {
       preProcessor: 'less',
