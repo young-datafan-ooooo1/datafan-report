@@ -5,7 +5,7 @@
       class="flex items-center justify-between"
     >
       <div class="inline-flex items-center">
-        <SNavigation />
+        <DNavigationComp />
         <div class="admin-heaer__logo">
           <router-link to="/home">
             <img :src="ASSETS_URL+ '/common/img/stella-logo.png'" style="height: 2rem;width:100px">

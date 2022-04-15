@@ -11,7 +11,7 @@
     :footer="null"
     @cancel="onCancel"
   >
-    <SenseTable
+    <DTable
       class="a-base-modal"
       :columns="columns"
       :data="tableData"

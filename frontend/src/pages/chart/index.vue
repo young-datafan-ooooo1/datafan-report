@@ -4,12 +4,12 @@
  -->
 <template>
   <div class="chart page-container">
-    <s-page-handle>
+    <DPageHandle>
       <div slot="filters">
-        <s-page-handle-item>
+        <DPageHandleItem>
           <a-input v-model="filter.name" allow-clear placeholder="请输入图表名称" />
-        </s-page-handle-item>
-        <s-page-handle-item>
+        </DPageHandleItem>
+        <DPageHandleItem>
           <a-select v-model="filter.type" allow-clear placeholder="请选择图表类型">
             <a-select-option
               v-for="item in chartTypeOption"
@@ -17,19 +17,19 @@
               :value="item.value"
             >{{ item.name }}</a-select-option>
           </a-select>
-        </s-page-handle-item>
-        <s-page-handle-item>
+        </DPageHandleItem>
+        <DPageHandleItem>
           <a-button
             class="search-btn"
             type="primary"
             @click="onGetChartData()"
           >查询</a-button>
-        </s-page-handle-item>
+        </DPageHandleItem>
       </div>
-    </s-page-handle>
+    </DPageHandle>
 
     <div class="table-container">
-      <SenseTable
+      <DTable
         :columns="columns"
         :data="tableData"
         :pager-config="pagerConfig"
@@ -53,7 +53,7 @@
             />
           </a-tooltip>
         </template>
-      </SenseTable>
+      </DTable>
     </div>
   </div>
 </template>

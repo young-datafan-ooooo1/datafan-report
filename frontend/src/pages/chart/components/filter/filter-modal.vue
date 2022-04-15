@@ -21,7 +21,7 @@
           @click="onAddFilter"
         >新增</a-button>
       </div>
-      <SenseTable
+      <DTable
         class="flex-box-row-small"
         :columns="columns"
         :data="filterInfo.filters"
@@ -74,7 +74,7 @@
             <a-icon class="icon-btn" type="delete" @click="onDelete(rowIndex)" />
           </a-tooltip>
         </template>
-      </SenseTable>
+      </DTable>
     </div>
   </a-base-modal>
 </template>

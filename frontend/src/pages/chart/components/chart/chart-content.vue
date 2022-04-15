@@ -33,7 +33,7 @@
         </div>
       </div>
       <div class="chart-content-chart flex-box-row-small">
-        <SenseTable
+        <DTable
           v-if="isTwoDimensionalTable"
           v-bind="{
             ...chartConfig

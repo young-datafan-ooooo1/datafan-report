@@ -22,14 +22,27 @@ import 'xe-utils'
 import VXETable from 'vxe-table'
 
 import SSComponent from '@young-datafan/datafan-ui'
+import DataFanUI from '@young-datafan/datafan-ui'
+
+// datafan-ui内置样式
+import '@young-datafan/datafan-ui/assets/style/index.less'
+// 滚动条样式
+import '@young-datafan/datafan-ui/assets/style/scrollbar.less'
+// 字体图标库
 import '@young-datafan/datafan-ui/assets/fonts/iconfont.css'
-import '@young-datafan/datafan-ui/assets/commonCss.less'
-import '@young-datafan/datafan-ui/assets/page-table.scss'
+import '@sense70/common-component-vue/assets/page-table.scss'
+
+// 内部组件库
+import SenseComponent from '@sense70/common-component-vue'
+// 全局组件注册
+Vue.use(SenseComponent)
+Vue.use(VXETable)
+
+Vue.use(DataFanUI)
 // 引入flex布局
 import '@/assets/css/flex-layout.css'
 import { ABaseModal } from './components/common'
 Vue.component('ABaseModal', ABaseModal)
-// Vue.component('SenseTable', SenseTable)
 const i18n = initI18n('CN', 'US')
 Vue.use(Antd)
 import vcolorpicker from 'vcolorpicker'
