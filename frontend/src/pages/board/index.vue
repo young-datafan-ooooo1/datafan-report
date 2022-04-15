@@ -4,30 +4,30 @@
  -->
 <template>
   <div class="board page-container">
-    <s-page-handle>
+    <DPageHandle>
       <div slot="filters">
-        <s-page-handle-item>
+        <DPageHandleItem>
           <a-input v-model="name" allow-clear placeholder="请输入看板名称" />
-        </s-page-handle-item>
-        <s-page-handle-item>
+        </DPageHandleItem>
+        <DPageHandleItem>
           <a-button
             class="search-btn"
             type="primary"
             @click="onGetBoardData()"
           >查询</a-button>
-        </s-page-handle-item>
+        </DPageHandleItem>
       </div>
       <div slot="actions">
-        <s-page-handle-item>
+        <DPageHandleItem>
           <a-button
             type="primary"
             ghost
             shape="round"
             @click="onAddBoard"
           >新增</a-button>
-        </s-page-handle-item>
+        </DPageHandleItem>
       </div>
-    </s-page-handle>
+    </DPageHandle>
 
     <div class="table-container">
       <HomeList ref="boardList" />

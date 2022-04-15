@@ -18,7 +18,7 @@
         </div>
         <!--列表-->
         <div class="table-container">
-          <SenseTable
+          <DTable
             v-bind="tableOptions"
             ref="senseTable"
             :columns="columns"

@@ -15,12 +15,12 @@
         >
           查询
         </a-button> -->
-      <s-page-handle>
+      <DPageHandle>
         <div slot="filters" class="page-handle">
-          <s-page-handle-item>
+          <DPageHandleItem>
             <a-input v-model="text" allow-clear placeholder="请输入名称" @keyup.enter="onClickSearch" />
-          </s-page-handle-item>
-          <s-page-handle-item>
+          </DPageHandleItem>
+          <DPageHandleItem>
             <a-button
               class="search-btn"
               type="primary"
@@ -28,9 +28,9 @@
             >
               查询
             </a-button>
-          </s-page-handle-item>
+          </DPageHandleItem>
         </div>
-      </s-page-handle>
+      </DPageHandle>
       <!-- </a-space> -->
     </div>
     <div class="history-body">

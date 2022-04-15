@@ -57,7 +57,7 @@
                           </div>
                         </div>
                         <div v-if="chartItem.chartId === 'twoDimensionalTable'" class="chart-view gride-table">
-                          <SenseTable
+                          <DTable
                             class="flex-box-row"
                             v-bind="{
                               ...chartItem.config

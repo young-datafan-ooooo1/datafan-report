@@ -4,7 +4,7 @@
  -->
 <template>
   <div class="list">
-    <SenseTable
+    <DTable
       :columns="columns"
       :data="tableData"
       :pager-config="pagerConfig"
@@ -35,7 +35,7 @@
           />
         </a-tooltip>
       </template>
-    </SenseTable>
+    </DTable>
   </div>
 </template>
 <script>
