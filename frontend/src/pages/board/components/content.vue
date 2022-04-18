@@ -485,7 +485,7 @@ export default {
     bottom: 0;
     left: 0;
     z-index: 100;
-    width: 100%;
+    width: 100%!important;
     height: 100%;
   }
   .title {

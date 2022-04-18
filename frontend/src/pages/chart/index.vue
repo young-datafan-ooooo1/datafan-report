@@ -4,6 +4,7 @@
  -->
 <template>
   <div class="chart page-container">
+    <DPageTitle title="图表管理" />
     <DPageHandle>
       <div slot="filters">
         <DPageHandleItem>
