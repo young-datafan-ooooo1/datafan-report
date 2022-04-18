@@ -422,7 +422,7 @@ export default {
      */
     onSaveDashboard() {
       const payload = this.getDashboardDetailPayload()
-      // 新增
+      // 新建
       if (this.isAddDashboard) {
         if (!payload.dashboardName) {
           this.$message.warn('请输入看板名称')

@@ -107,7 +107,7 @@ export default {
       this.isShowDataPreviewModal = true
     },
     /**
-     * @description: 获取新增数据--也就是探索平台本身
+     * @description: 获取新建数据--也就是探索平台本身
      */
     getAddData() {}
   }

@@ -4,46 +4,53 @@
  -->
 <template>
   <div class="workspace flex-box flex-box--column">
-    <div class="workspace-title workspace-block flex-box flex-box--center-items flex-box--between-justify flex-box-row-small">
-      <div class="block-title">报表分析工具</div>
-      <div class="chart-switch-box flex-box">
-        <template v-for="item in chartOption">
-          <a-popover
-            :key="item.value"
-            :title="item.name"
-          >
-            <template slot="content">
-              <div class="flex-box flex-box-row-small">
-                <span class="flex-box-col-small">{{ item.rowCountDes }}</span>
-                <span class="chart-tip row-tip flex-box-col-small">行</span>
-              </div>
-              <div class="flex-box flex-box-row-small">
-                <span class="flex-box-col-small">{{ item.columnCountDes }}</span>
-                <span class="chart-tip col-tip flex-box-col-small">列</span>
-              </div>
-              <div class="flex-box flex-box-row-small">
-                <span class="flex-box-col-small">{{ item.characterCountDes }}</span>
-                <span class="chart-tip index-tip flex-box-col-small">指标</span>
-              </div>
-            </template>
-            <i
-              :class="[
-                'chart-icon',
-                'flex-box-col-small',
-                `${item.className}_chart`,
-                { 'no-click': disabledList.includes(item.value) },
-                { actived: chartInfo.type === item.value }
-              ]"
-              @click="onChangeChartType(item.value)"
-            />
-          </a-popover>
-        </template>
-      </div>
-    </div>
+    <DBreadcrumb v-if="isEdit">
+      <template slot="title">
+        <DBreadcrumbItem to="/chart">图表管理</DBreadcrumbItem>
+        <DBreadcrumbItem>图表详情</DBreadcrumbItem>
+      </template>
+    </DBreadcrumb>
     <div class="workspace-content flex-box flex-box-row-small">
       <DataView class="workspace-content-data workspace-block flex-box-col-small" />
       <FilterView class="workspace-content-filter workspace-block flex-box-col-small" />
-      <ChartView class="workspace-content-chart flex-box-col-small" />
+      <ChartView class="workspace-content-chart flex-box-col-small">
+        <div class="workspace-title workspace-block flex-box flex-box--center-items flex-box--end-justify flex-box-row-small">
+          <div class="chart-switch-box flex-box">
+            <template v-for="item in chartOption">
+              <a-popover
+                :key="item.value"
+                :title="item.name"
+              >
+                <template slot="content">
+                  <div class="flex-box flex-box-row-small">
+                    <span class="flex-box-col-small">{{ item.rowCountDes }}</span>
+                    <span class="chart-tip row-tip flex-box-col-small">行</span>
+                  </div>
+                  <div class="flex-box flex-box-row-small">
+                    <span class="flex-box-col-small">{{ item.columnCountDes }}</span>
+                    <span class="chart-tip col-tip flex-box-col-small">列</span>
+                  </div>
+                  <div class="flex-box flex-box-row-small">
+                    <span class="flex-box-col-small">{{ item.characterCountDes }}</span>
+                    <span class="chart-tip index-tip flex-box-col-small">指标</span>
+                  </div>
+                </template>
+                <i
+                  :class="[
+                    'chart-icon',
+                    'flex-box-col-small',
+                    `${item.className}_chart`,
+                    { 'no-click': disabledList.includes(item.value) },
+                    { actived: chartInfo.type === item.value }
+                  ]"
+                  @click="onChangeChartType(item.value)"
+                />
+              </a-popover>
+            </template>
+            <div class="switch-msg">图表切换</div>
+          </div>
+        </div>
+      </ChartView>
     </div>
   </div>
 </template>
@@ -88,6 +95,9 @@ export default {
     }
   },
   computed: {
+    isEdit() {
+      return ['edit'].includes(this.$route.query.type)
+    },
     // 指标个数
     metricsNumber() {
       return this.chartConfig?.index?.length || 0
@@ -247,6 +257,9 @@ export default {
           &.funnel_chart {
             background-image: url('~@/assets/svg/funnel.svg');
           }
+        }
+        .switch-msg {
+          margin-left: 10px;
         }
       }
     }

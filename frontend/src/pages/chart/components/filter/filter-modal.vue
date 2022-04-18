@@ -19,7 +19,7 @@
           ghost
           shape="round"
           @click="onAddFilter"
-        >新增</a-button>
+        >新建</a-button>
       </div>
       <DTable
         class="flex-box-row-small"

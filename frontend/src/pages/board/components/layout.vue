@@ -1,5 +1,5 @@
 <!--
- * @Description: 新增/编辑看板布局
+ * @Description: 新建/编辑看板布局
  * @Date: 2022-01-19 16:40:06
  -->
 <template>

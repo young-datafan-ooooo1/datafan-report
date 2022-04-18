@@ -19,7 +19,7 @@ const DashboardApiServices = {
     return request(`${REPORT}/dpPortalDashboard/updateDashboard`, METHOD.PUT, params)
   },
   /**
-   * @description: 新增看板
+   * @description: 新建看板
    */
   saveDashboard(params) {
     return request(`${REPORT}/dpPortalDashboard/saveDashboard`, METHOD.POST, params)
