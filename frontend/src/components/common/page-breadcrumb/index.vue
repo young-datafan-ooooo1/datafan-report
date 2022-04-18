@@ -12,7 +12,7 @@
         </a-breadcrumb-item>
       </a-breadcrumb>
     </div>
-    <!--新增按钮插槽-->
+    <!--新建按钮插槽-->
     <div class="page-operation">
       <slot />
     </div>
@@ -38,8 +38,8 @@ export default {
 <style lang="less" scoped>
 .page-title-container {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   height: 22px;
   font-weight: 400;
   font-size: 16px;
@@ -60,9 +60,9 @@ export default {
             }
     &::before {
       margin-right: 12px;
-      border-radius: 1px;
       width: 3px;
       height: 16px;
+      border-radius: 1px;
       background-color: #F36F4E;
       content:''
     }

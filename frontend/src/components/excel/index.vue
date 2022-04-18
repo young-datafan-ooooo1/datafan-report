@@ -83,7 +83,7 @@ export default {
     return {
       // tab绑定的key
       key: 0,
-      // 是否确认新增任务弹框loading
+      // 是否确认新建任务弹框loading
       isConfirmLoading: false,
       // 是否显示modal
       isModalShow: false,

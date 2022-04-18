@@ -311,7 +311,7 @@ export default {
 
         return
       }
-      // 探索新增之后会返回报表id，如果再次保存，那么调用更新接口
+      // 探索新建之后会返回报表id，如果再次保存，那么调用更新接口
       if (this.reportInfo.reportId || this.escatReportId) {
         this.$confirm({
           title: '提示',
@@ -320,7 +320,7 @@ export default {
           onOk: () => {
             this.chartLoading = true
             const payload = this.getSavePayload()
-            // 探索新增之后会返回报表id，如果再次保存，那么调用更新接口
+            // 探索新建之后会返回报表id，如果再次保存，那么调用更新接口
             payload.reportVO.reportId = payload.reportVO.reportId || this.escatReportId
 
             return ChartApiServices.saveReports(payload).then(res => {
@@ -338,7 +338,7 @@ export default {
         this.chartLoading = true
         ChartApiServices.saveReports(payload).then(res => {
           this.$message.success('保存成功')
-          // 探索新增之后会返回报表id，如果再次保存，那么调用更新接口
+          // 探索新建之后会返回报表id，如果再次保存，那么调用更新接口
           this.escatReportId = res.data.content
         }).catch(() => {
           this.$message.error('保存失败')

@@ -4,6 +4,7 @@
  -->
 <template>
   <div class="chart-view flex-box flex-box--column">
+    <slot />
     <ChartAxis class="flex-box-row-small" />
     <ChartContent class="chart-view-content flex-box-row-small" />
   </div>
