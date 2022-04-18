@@ -4,6 +4,13 @@
  -->
 <template>
   <div class="board page-container">
+    <DPageTitle title="看板管理">
+      <a-button
+        type="primary"
+        icon="plus"
+        @click="onAddBoard"
+      >新建看板</a-button>
+    </DPageTitle>
     <DPageHandle>
       <div slot="filters">
         <DPageHandleItem>
@@ -17,18 +24,7 @@
           >查询</a-button>
         </DPageHandleItem>
       </div>
-      <div slot="actions">
-        <DPageHandleItem>
-          <a-button
-            type="primary"
-            ghost
-            shape="round"
-            @click="onAddBoard"
-          >新增</a-button>
-        </DPageHandleItem>
-      </div>
     </DPageHandle>
-
     <div class="table-container">
       <HomeList ref="boardList" />
     </div>

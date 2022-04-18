@@ -25,7 +25,7 @@ export default {
 <style scoped lang="less">
   .blank-view {
     position: relative;
-    padding: 20px;
+    padding: 10px 20px 20px;
     height: 100% ;
     background-color: #f4f5f7;
     &.head.fixed{

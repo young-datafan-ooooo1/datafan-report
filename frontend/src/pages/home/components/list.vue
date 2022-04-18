@@ -13,13 +13,13 @@
       @page-change="changePage"
     >
       <template #action="{ row }">
-        <a-tooltip title="查看">
+        <!-- <a-tooltip title="查看">
           <a-icon
             class="icon-btn"
             type="file-search"
             @click="onViewBoard(row)"
           />
-        </a-tooltip>
+        </a-tooltip> -->
         <a-tooltip title="编辑">
           <a-icon
             class="icon-btn"
