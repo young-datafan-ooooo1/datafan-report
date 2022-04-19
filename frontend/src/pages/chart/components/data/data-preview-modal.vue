@@ -7,7 +7,7 @@
     v-model="isModalShow"
     class="data-preview-modal"
     :title="'数据预览'"
-    width="900px"
+    width="1200px"
     :footer="null"
     @cancel="onCancel"
   >
@@ -57,14 +57,33 @@ export default {
 
   computed: {
     columns() {
-      return this.config?.columnListVOS?.map(item => {
-        const { columnChinsesName: title, columnChinsesName: field } = item
+      if (this.config?.columnListVOS) {
+        const oneWorldLength = 14
+        const gap = 25
+        const tableWholeWidth = 1150
+        let columns = this.config.columnListVOS.map(item => {
+          const { columnChinsesName: title, columnChinsesName: field } = item
+          const width = title.length * oneWorldLength + gap
 
-        return {
-          title,
-          field
+          return {
+            title,
+            field,
+            width
+          }
+        })
+        const allWorldLength = columns?.reduce((x, y) => x + y.width, 0)
+
+        if (allWorldLength < tableWholeWidth) {
+          columns = columns.map(item => {
+            delete item.width
+            return item
+          })
         }
-      })
+
+        return columns
+      }
+
+      return []
     }
   },
 
