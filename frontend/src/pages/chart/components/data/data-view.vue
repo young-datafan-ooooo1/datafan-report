@@ -4,7 +4,13 @@
  -->
 <template>
   <div class="data-view">
-    <div class="dimension data-item">
+    <a-input
+      v-if="isSearch"
+      v-model="searchMsg"
+      class="flex-box-row-small"
+      placeholder="请输入搜索内容"
+    />
+    <div class="dimension data-item flex-box-row-small">
       <div class="dimension-title flex-box flex-box--between-justify">
         <div class="block-title">维度</div>
         <div>
@@ -12,15 +18,19 @@
             <template #title>数据预览</template>
             <a-icon type="file-search" @click="onDataPreview" />
           </a-tooltip>
+          <a-tooltip>
+            <template #title>搜索</template>
+            <a-icon type="search" :class="['dimension-search', { 'active': isSearch }]" @click="onSearchDataView" />
+          </a-tooltip>
         </div>
       </div>
       <Draggable
         class="data-content"
-        :list="dimension"
+        :list="dimensionFilted"
         :options="draggableOption"
         :clone="original => JSON.parse(JSON.stringify(original))"
       >
-        <div v-for="item in dimension" :key="item.id" class="flex-box-row-mini">
+        <div v-for="item in dimensionFilted" :key="item.id" class="flex-box-row-mini">
           <a-tag color="#5b90a5"><a-icon :type="getIncoType(item.dateType)" /> {{ item.columnChinsesName }}</a-tag>
         </div>
       </Draggable>
@@ -29,11 +39,11 @@
       <div class="block-title">度量</div>
       <Draggable
         class="data-content"
-        :list="mertric"
+        :list="mertricFilted"
         :options="draggableOption"
         :clone="original => JSON.parse(JSON.stringify(original))"
       >
-        <div v-for="item in mertric" :key="item.id" class="flex-box-row-mini">
+        <div v-for="item in mertricFilted" :key="item.id" class="flex-box-row-mini">
           <a-tag color="#54ac87"><a-icon type="number" /> {{ item.columnChinsesName }}</a-tag>
         </div>
       </Draggable>
@@ -66,13 +76,25 @@ export default {
       dimension: [],
       mertric: [],
       isShowDataPreviewModal: false,
-      dataPreviewConfig: {}
+      dataPreviewConfig: {},
+      isSearch: false,
+      searchMsg: ''
+    }
+  },
+
+  computed: {
+    dimensionFilted() {
+      return this.dimension.filter(item => item.columnChinsesName.includes(this.searchMsg))
+    },
+    mertricFilted() {
+      return this.mertric.filter(item => item.columnChinsesName.includes(this.searchMsg))
     }
   },
 
   watch: {
     // 监听图表数据
     'chartInfo.data'(value) {
+      console.log('watch')
       const { dimensionList: dimension, mertricList: mertric, datasourceDTO, reportTable } = value
 
       this.dimension = dimension
@@ -110,9 +132,16 @@ export default {
       this.isShowDataPreviewModal = true
     },
     /**
-     * @description: 获取新建数据--也就是探索平台本身
+     * @description: 搜索
      */
-    getAddData() {}
+    onSearchDataView() {
+      this.isSearch = !this.isSearch
+      this.$nextTick(() => {
+        if (!this.isSearch) {
+          this.searchMsg = ''
+        }
+      })
+    }
   }
 }
 </script>
@@ -121,6 +150,12 @@ export default {
   display: flex;
   flex-direction: column;
   .dimension {
+    &-search {
+      margin-left: 5px;
+      &.active {
+        color: #ff794a;
+      }
+    }
   }
   .data-item {
     display: flex;
