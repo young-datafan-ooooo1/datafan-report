@@ -8,7 +8,10 @@
       <div class="dimension-title flex-box flex-box--between-justify">
         <div class="block-title">维度</div>
         <div>
-          <a-icon type="file-search" @click="onDataPreview" />
+          <a-tooltip>
+            <template #title>数据预览</template>
+            <a-icon type="file-search" @click="onDataPreview" />
+          </a-tooltip>
         </div>
       </div>
       <Draggable
