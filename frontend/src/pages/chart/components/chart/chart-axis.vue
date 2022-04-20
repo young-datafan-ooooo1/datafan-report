@@ -304,6 +304,7 @@ export default {
       }
       .tip-icon {
         color: #ccc;
+        cursor: pointer;
       }
     }
     .axis-content {

@@ -31,9 +31,9 @@ const CHART_OPTION = [
     metrics: 4,
     dimension: 1,
     rowCount: 1,
-    rowCountDes: '1个',
-    columnCountDes: '1个',
-    characterCountDes: '1个或多个数值',
+    isMergeAxis: true,
+    axisDes: '1个',
+    characterCountDes: '1个或多个',
     className: 'line'
   },
   {
@@ -42,9 +42,9 @@ const CHART_OPTION = [
     metrics: 4,
     dimension: 1,
     rowCount: 1,
-    rowCountDes: '1个',
-    columnCountDes: '1个',
-    characterCountDes: '1个或多个数值',
+    isMergeAxis: true,
+    axisDes: '1个',
+    characterCountDes: '1个或多个',
     className: 'histogram'
   },
   {
@@ -53,19 +53,19 @@ const CHART_OPTION = [
     metrics: 1,
     dimension: 1,
     rowCount: 1,
-    rowCountDes: '1个',
-    columnCountDes: '1个',
-    characterCountDes: '1个或多个',
+    isMergeAxis: true,
+    axisDes: '1个',
+    characterCountDes: '1个',
     className: 'pie'
   },
   {
     name: '条形图',
     value: 'bar',
-    metrics: 2,
+    metrics: 4,
     dimension: 1,
     rowCount: 1,
-    rowCountDes: '1个',
-    columnCountDes: '1个',
+    isMergeAxis: true,
+    axisDes: '1个',
     characterCountDes: '1个或多个',
     className: 'bar'
   },
@@ -75,9 +75,9 @@ const CHART_OPTION = [
     metrics: 1,
     dimension: 1,
     rowCount: 1,
-    rowCountDes: '1个',
-    columnCountDes: '1个',
-    characterCountDes: '1个或多个',
+    isMergeAxis: true,
+    axisDes: '1个',
+    characterCountDes: '1个',
     className: 'ring'
   },
   {
@@ -86,20 +86,20 @@ const CHART_OPTION = [
     metrics: 1,
     dimension: 1,
     rowCount: 0,
-    rowCountDes: '0个',
-    columnCountDes: '1个',
-    characterCountDes: '1个或多个',
+    isMergeAxis: true,
+    axisDes: '1个',
+    characterCountDes: '1个',
     className: 'waterfall'
   },
   {
     name: '漏斗图',
     value: 'funnel',
-    metrics: 2,
+    metrics: 1,
     dimension: 1,
     rowCount: 1,
-    rowCountDes: '1个',
-    columnCountDes: '1个',
-    characterCountDes: '1个或多个',
+    isMergeAxis: true,
+    axisDes: '1个',
+    characterCountDes: '1个',
     className: 'funnel'
   }
 ]
