@@ -242,7 +242,7 @@ export default {
     onFormatChartConfig() {
       if (this.isTwoDimensionalTable) {
         const { index: metrics = [], column = [], row = [] } = this.workspacePayload
-        const columnList = [...metrics, ...column, ...row]
+        const columnList = [...column, ...row, ...metrics]
         const columns = columnList.map(item => {
           const { name: title, name: field } = item
 

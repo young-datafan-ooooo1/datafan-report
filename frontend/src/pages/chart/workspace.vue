@@ -20,16 +20,27 @@
               <a-popover
                 :key="item.value"
                 :title="item.name"
+                placement="bottom"
               >
                 <template slot="content">
-                  <div class="flex-box flex-box-row-small">
-                    <span class="flex-box-col-small">{{ item.rowCountDes }}</span>
-                    <span class="chart-tip row-tip flex-box-col-small">行</span>
-                  </div>
-                  <div class="flex-box flex-box-row-small">
-                    <span class="flex-box-col-small">{{ item.columnCountDes }}</span>
-                    <span class="chart-tip col-tip flex-box-col-small">列</span>
-                  </div>
+                  <template v-if="item.isMergeAxis">
+                    <div class="flex-box flex-box-row-small">
+                      <span class="flex-box-col-small">{{ item.axisDes }}</span>
+                      <span class="chart-tip row-tip flex-box-col-small">行</span>
+                      <span class="flex-box-col-small">或</span>
+                      <span class="chart-tip col-tip flex-box-col-small">列</span>
+                    </div>
+                  </template>
+                  <template v-else>
+                    <div class="flex-box flex-box-row-small">
+                      <span class="flex-box-col-small">{{ item.rowCountDes }}</span>
+                      <span class="chart-tip row-tip flex-box-col-small">行</span>
+                    </div>
+                    <div class="flex-box flex-box-row-small">
+                      <span class="flex-box-col-small">{{ item.columnCountDes }}</span>
+                      <span class="chart-tip col-tip flex-box-col-small">列</span>
+                    </div>
+                  </template>
                   <div class="flex-box flex-box-row-small">
                     <span class="flex-box-col-small">{{ item.characterCountDes }}</span>
                     <span class="chart-tip index-tip flex-box-col-small">指标</span>
