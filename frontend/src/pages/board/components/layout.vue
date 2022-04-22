@@ -166,7 +166,8 @@ export default {
       .grid-item {
         .dashborad-grid--full {
           height: 33px;
-          border: 1px solid #eee;
+          border: 1px solid #dcdcdc;
+          border-radius: 3px;
         }
       }
     }
