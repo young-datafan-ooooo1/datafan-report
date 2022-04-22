@@ -36,7 +36,7 @@
           <div class="delete-icon">
             <a-icon type="delete" @click="onDelectContent(contentIndex)" />
           </div>
-          <a-row class="flex-box__flex flex-box-row common-move">
+          <a-row class="flex-box__flex flex-box-row common-move content-row-box">
             <template v-for="gridItem in contentItem.items">
               <a-col :key="gridItem.id" :span="gridItem.width">
                 <!-- 当内容长度为1时，不能再更新 -->
@@ -521,12 +521,16 @@ export default {
     height: 0;
     .container-item {
       .delete-icon {
+        flex-shrink: 0;
         width: 20px;
         color: #869399;
         cursor: pointer;
         & > i {
           display: none;
         }
+      }
+      .content-row-box {
+        width: 0;
       }
       &:hover {
         .delete-icon {
@@ -539,8 +543,9 @@ export default {
         .dashborad-grid--full {
           padding: 10px;
           height: 420px;
-          border: dashed #eee;
+          border: solid #dcdcdc;
           border-width: 2px 1px;
+          border-radius: 6px;
           .chart-box {
             height: 100%;
             .chart-title {
