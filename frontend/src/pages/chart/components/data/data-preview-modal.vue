@@ -1,7 +1,6 @@
 <!--
  * @Description: 数据预览弹窗
  * @Date: 2022-02-21 11:18:32
- * @LastEditTime: 2022-03-07 18:25:19
 -->
 <template>
   <a-base-modal
@@ -82,8 +81,13 @@ export default {
      * @description: 初始化页面
      */
     initPage() {
+      const payload = {
+        ...this.config,
+        reportId: this.$route.query.id
+      }
+
       this.tableLoading = true
-      ChartApiServices.getChartData(this.config).then(res => {
+      ChartApiServices.getChartData(payload).then(res => {
         this.tableData = res?.data?.content?.groupByRowNames[0].list
       }).finally(() => {
         this.tableLoading = false

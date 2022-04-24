@@ -1,7 +1,6 @@
 <!--
  * @Description: 内容
  * @Date: 2022-01-21 16:27:42
- * @LastEditTime: 2022-03-07 18:09:35
 -->
 <template>
   <div :class="['content-container' , {full: isFull}]">
@@ -405,14 +404,15 @@ export default {
      * @return {Object} 参数
      */
     getChartPaylod(chart) {
-      const { charact: charater, datasourceId, querySql, row: rowList = [], column = [] } = chart
+      const { charact: charater, datasourceId, querySql, row: rowList = [], column = [], reportId } = chart
 
       return {
         charater,
         datasourceId,
         querySql,
         rowList,
-        column
+        column,
+        reportId
       }
     },
     getReducer(metrics) {
