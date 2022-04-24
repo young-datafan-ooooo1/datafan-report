@@ -404,14 +404,15 @@ export default {
      * @return {Object} 参数
      */
     getChartPaylod(chart) {
-      const { charact: charater, datasourceId, querySql, row: rowList = [], column = [] } = chart
+      const { charact: charater, datasourceId, querySql, row: rowList = [], column = [], reportId } = chart
 
       return {
         charater,
         datasourceId,
         querySql,
         rowList,
-        column
+        column,
+        reportId
       }
     },
     getReducer(metrics) {
