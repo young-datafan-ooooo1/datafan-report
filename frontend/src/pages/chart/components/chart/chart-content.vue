@@ -208,7 +208,8 @@ export default {
         datasourceVO: {
           ...datasourceDTO,
           tableName: reportTable
-        }
+        },
+        reportId: this.$route.query.id
       }
 
       this.chartLoading = true

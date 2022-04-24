@@ -94,7 +94,6 @@ export default {
   watch: {
     // 监听图表数据
     'chartInfo.data'(value) {
-      console.log('watch')
       const { dimensionList: dimension, mertricList: mertric, datasourceDTO, reportTable } = value
 
       this.dimension = dimension

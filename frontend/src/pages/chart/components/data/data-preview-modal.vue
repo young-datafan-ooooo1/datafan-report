@@ -100,8 +100,13 @@ export default {
      * @description: 初始化页面
      */
     initPage() {
+      const payload = {
+        ...this.config,
+        reportId: this.$route.query.id
+      }
+
       this.tableLoading = true
-      ChartApiServices.getChartData(this.config).then(res => {
+      ChartApiServices.getChartData(payload).then(res => {
         this.tableData = res?.data?.content?.groupByRowNames[0].list
       }).finally(() => {
         this.tableLoading = false
