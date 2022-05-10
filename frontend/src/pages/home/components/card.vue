@@ -15,6 +15,7 @@
             <div class="icon flex-box--end-self" />
             <div class="name">{{ card.dashboardName }}</div>
             <div class="time">创建时间：{{ card.createTime }}</div>
+            <div class="time">创建人：{{ card.createUser }}</div>
           </div>
         </template>
       </div>
@@ -27,6 +28,13 @@ import HomeApiServices from '@/services/home'
 
 export default {
   name: 'HomeCard',
+
+  props: {
+    dashboardName: {
+      type: String,
+      default: ''
+    }
+  },
 
   data() {
     return {
@@ -45,11 +53,19 @@ export default {
     initPage() {
       this.getHomeCardData()
     },
-
+    /**
+     * @description: 获取首页卡片数据
+     */
     getHomeCardData() {
+      const payload = {
+        pageSize: 20,
+        page: 1,
+        dashboardName: this.dashboardName
+      }
+
       this.loading = true
-      HomeApiServices.getHomeListInfo({ rows: 20, pageSize: 1 }).then(res => {
-        this.cardData = res.data.content.list || []
+      HomeApiServices.getHomeListInfo(payload).then(res => {
+        this.cardData = res.data.content.content || []
       }).finally(() => {
         this.loading = false
       })

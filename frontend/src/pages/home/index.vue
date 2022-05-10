@@ -14,16 +14,27 @@
       </div>
     </div>
     <div class="view-type flex-box-row flex-box flex-box--end-justify">
-      <a-radio-group v-model="viewType" button-style="solid">
+      <a-radio-group v-model="viewType" button-style="solid" @change="onChangeType">
         <a-radio-button value="card">卡片</a-radio-button>
         <a-radio-button value="list">列表</a-radio-button>
       </a-radio-group>
     </div>
     <div class="home-content flex-box-row flex-box flex-box--column">
-      <div class="block-title border flex-box-row">看板列表</div>
+      <DPageHandle>
+        <div slot="filters" class="page-handle">
+          <DPageHandleItem>
+            <a-input-search
+              v-model="dashboardName"
+              class="home-card-search flex-box-row"
+              placeholder="看板名称"
+              @search="onSearch"
+            />
+          </DPageHandleItem>
+        </div>
+      </DPageHandle>
       <div class="content flex-box-row">
-        <HomeList v-if="isListType" />
-        <HomeCard v-if="isCardType" />
+        <HomeList v-if="isListType" ref="homeList" :dashboard-name="dashboardName" />
+        <HomeCard v-if="isCardType" ref="homeCard" :dashboard-name="dashboardName" />
       </div>
     </div>
   </div>
@@ -43,7 +54,8 @@ export default {
 
   data() {
     return {
-      viewType: 'card'
+      viewType: 'card',
+      dashboardName: ''
     }
   },
 
@@ -65,27 +77,12 @@ export default {
     }
   },
 
-  mounted() {
-    this.initPage()
-  },
-
   methods: {
     /**
-     * @description: 初始化页面
+     * @description: 修改展示类型 搜索名字重置
      */
-    initPage() {
-      // this.getOverviewData()
-      // this.getEventList()
-    },
-    /**
-     * @description: 获取总览数据
-     */
-    getOverviewData() {
-    },
-    /**
-     * @description: 获取事件列表
-     */
-    getEventList() {
+    onChangeType() {
+      this.dashboardName = ''
     },
     /**
      * @description: 跳转到事件列表
@@ -98,6 +95,16 @@ export default {
      */
     onShowAddModal() {
       this.isAddModalShow = true
+    },
+    /**
+     * @description: 搜索触发
+     */
+    onSearch() {
+      if (this.isListType) {
+        this.$refs.homeList.getHomeListData(this.dashboardName)
+      } else if (this.isCardType) {
+        this.$refs.homeCard.getHomeCardData(this.dashboardName)
+      }
     }
   }
 }
@@ -152,7 +159,7 @@ export default {
   .home-content {
     // background-color: #f3f3f3;
     flex: 1;
-    padding: 15px 15px 0;
+    padding: 0 15px;
     padding-bottom: 10px;
     height: 0;
     border: 2px solid #fff;

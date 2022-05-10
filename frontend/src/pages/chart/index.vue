@@ -136,7 +136,7 @@ export default {
 
       this.tableLoading = true
       ChartApiServices.getChartList(payload).then(res => {
-        this.tableData = res.data.content.list
+        this.tableData = res.data.content.content
         this.pagerConfig.total = res.data.content.total
       }).finally(() => {
         this.tableLoading = false
@@ -148,12 +148,12 @@ export default {
      */
     getPayload() {
       const { type: chartType, name: reportTittle } = this.filter
-      const { pageSize: rows, currentPage: pageSize } = this.pagerConfig
+      const { pageSize, currentPage: page } = this.pagerConfig
 
       return {
         chartType,
         reportTittle,
-        rows,
+        page,
         pageSize
       }
     },
