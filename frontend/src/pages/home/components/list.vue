@@ -13,13 +13,6 @@
       @page-change="changePage"
     >
       <template #action="{ row }">
-        <!-- <a-tooltip title="查看">
-          <a-icon
-            class="icon-btn"
-            type="file-search"
-            @click="onViewBoard(row)"
-          />
-        </a-tooltip> -->
         <a-tooltip title="编辑">
           <a-icon
             class="icon-btn"
@@ -92,10 +85,6 @@ export default {
     }
   },
 
-  computed: {
-
-  },
-
   mounted() {
     this.initPage()
   },
@@ -136,15 +125,6 @@ export default {
       this.pagerConfig.currentPage = page.currentPage
       this.pagerConfig.pageSize = page.pageSize
       this.getHomeListData()
-    },
-    /**
-     * @description: 查看看板
-     * @param {Object} row 行信息
-     */
-    onViewBoard(row) {
-      const { dashboardId } = row
-
-      this.$router.push({ path: '/board/dashboard', query: { dashboardId, viewType: 'read' }})
     },
     /**
      * @description: 编辑看板
