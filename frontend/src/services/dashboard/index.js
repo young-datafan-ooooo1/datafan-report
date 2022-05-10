@@ -23,6 +23,12 @@ const DashboardApiServices = {
    */
   saveDashboard(params) {
     return request(`${REPORT}/dpPortalDashboard/saveDashboard`, METHOD.POST, params)
+  },
+  /**
+   * @description: 批量删除看板
+   */
+  batchDeleteDashboard(params) {
+    return request(`${REPORT}/dpPortalDashboard/batchDel`, METHOD.DELETE, { data: params })
   }
 }
 export default DashboardApiServices
