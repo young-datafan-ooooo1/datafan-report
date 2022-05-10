@@ -1224,9 +1224,9 @@
   integrity sha1-K1o6s/kYzKSKjHVMCBaOPwPrphs=
 
 "@sense70/common-component-vue@~1.6.0":
-  version "1.6.102"
-  resolved "http://mvn.senses-ai.com:8081/repository/npm-group/@sense70/common-component-vue/-/common-component-vue-1.6.102.tgz#27f2d0066bebd5bbbc2f1181e3a5311288b14830"
-  integrity sha512-ckgS2t59WQyu/t9k48bwk19iYlPoxYwSLk0pD5HioTqdwA1GFMZtXmyo6LjUxfz497IiWcQA4uiBT2btRn4HEg==
+  version "1.6.108"
+  resolved "http://mvn.senses-ai.com:8081/repository/npm-group/@sense70/common-component-vue/-/common-component-vue-1.6.108.tgz#766585f26d3279f51187ac3a7a8d3438fc9868f7"
+  integrity sha512-L4HaEXYUAmufR8AS4MlMTVTCvm2Qhi6pKiRi3wOc9OgLBbveVYCInLhgaO2nxAXDmLTGgAb3FdDeXtFtlDywvw==
   dependencies:
     axios "^0.19.2"
     clipboard "^2.0.6"
@@ -1237,9 +1237,9 @@
     vue-router "^3.3.4"
 
 "@sense70/common-sysmanage-vue@~1.6.0":
-  version "1.6.101"
-  resolved "http://mvn.senses-ai.com:8081/repository/npm-group/@sense70/common-sysmanage-vue/-/common-sysmanage-vue-1.6.101.tgz#5a567a4d8e9d4158c32b37401528f5e43d10f0b0"
-  integrity sha512-f7GvXzhbUoyzk5LqjPmwxLIaKkXL+XgELvUb6T96BUWxzlPSJDRsYuTeqD9GqDyU1vucRbZPji+5Xhkpw+vgng==
+  version "1.6.107"
+  resolved "http://mvn.senses-ai.com:8081/repository/npm-group/@sense70/common-sysmanage-vue/-/common-sysmanage-vue-1.6.107.tgz#d15670f52a8cf14adad821c987b421a264a38edb"
+  integrity sha512-DbkoGq3uT+D/djsXr1VtLc4XUnn0OBOdk0IOS7Z0zUxxwV9DqczmcK/4FODa+7SINJNIFiEa8I0VfA5G5xL+PA==
   dependencies:
     codemirror "^5.41.0"
 
@@ -2073,9 +2073,9 @@
     ant-design-vue "1.7.2"
 
 "@young-datafan/datafan-ui@~1.6.0":
-  version "1.6.107"
-  resolved "http://mvn.senses-ai.com:8081/repository/npm-group/@young-datafan/datafan-ui/-/datafan-ui-1.6.107.tgz#6440410440348e1051f5788791d74177ecddeb71"
-  integrity sha512-hJp5X3cCNe7/Ghp/d8vXS3rLk9hGg1+SWbeHUBigWWq2mLooNsBASoJMZNfwN1VqFByHxWUrnEzHrhzJyCs/Ig==
+  version "1.6.116"
+  resolved "http://mvn.senses-ai.com:8081/repository/npm-group/@young-datafan/datafan-ui/-/datafan-ui-1.6.116.tgz#8d20ec03402d3f5d3d667ba36f3ae10ede9d0882"
+  integrity sha512-HvSbbquaUe/D1EV9E6nEYKUGz93fa6VntCus38090FohGR4kIHJu6m95MRJ61owJ2EapPheCSK1thXHYZJ2Tpg==
   dependencies:
     "@young-datafan/datafan-ui" "~1.5.0"
     ant-design-vue "1.7.2"
@@ -3411,9 +3411,9 @@ code-point-at@^1.0.0:
   integrity sha1-DQcLTQQ6W+ozovGkDi7bPZpMz3c=
 
 codemirror@^5.41.0:
-  version "5.65.2"
-  resolved "http://mvn.senses-ai.com:8081/repository/npm-group/codemirror/-/codemirror-5.65.2.tgz#5799a70cb3d706e10f60e267245e3a75205d3dd9"
-  integrity sha512-SZM4Zq7XEC8Fhroqe3LxbEEX1zUPWH1wMr5zxiBuiUF64iYOUH/JI88v4tBag8MiBS8B8gRv8O1pPXGYXQ4ErA==
+  version "5.65.3"
+  resolved "http://mvn.senses-ai.com:8081/repository/npm-group/codemirror/-/codemirror-5.65.3.tgz#2d029930d5a293bc5fb96ceea64654803c0d4ac7"
+  integrity sha512-kCC0iwGZOVZXHEKW3NDTObvM7pTIyowjty4BUqeREROc/3I6bWbgZDA3fGDwlA+rbgRjvnRnfqs9SfXynel1AQ==
 
 collection-visit@^1.0.0:
   version "1.0.0"

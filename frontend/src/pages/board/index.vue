@@ -26,7 +26,7 @@
       </div>
     </DPageHandle>
     <div class="table-container">
-      <HomeList ref="boardList" />
+      <HomeList ref="boardList" :dashboard-name="name" />
     </div>
   </div>
 </template>
@@ -57,7 +57,7 @@ export default {
     },
 
     onGetBoardData() {
-      this.$refs.boardList.getHomeListData(this.name)
+      this.$refs.boardList.getHomeListData()
     },
 
     onAddBoard() {

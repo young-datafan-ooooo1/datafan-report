@@ -44,6 +44,13 @@ import HomeApiServices from '@/services/home'
 export default {
   name: 'HomeList',
 
+  props: {
+    dashboardName: {
+      type: String,
+      default: ''
+    }
+  },
+
   data() {
     return {
       // 表格数据
@@ -61,8 +68,8 @@ export default {
           field: 'dashboardName'
         },
         {
-          title: '创建者',
-          field: 'createUserId'
+          title: '创建人',
+          field: 'createUser'
         },
         {
           title: '创建时间',
@@ -104,16 +111,18 @@ export default {
      * @description: 获取列表信息
      * @param {*} name 看板调用次方法，会传
      */
-    getHomeListData(name) {
+    getHomeListData() {
+      const { pageSize, currentPage: page } = this.pagerConfig
+      const { dashboardName } = this
       const payload = {
-        rows: this.pagerConfig.pageSize,
-        pageSize: this.pagerConfig.currentPage,
-        name
+        page,
+        pageSize,
+        dashboardName
       }
 
       this.tableLoading = true
       HomeApiServices.getHomeListInfo(payload).then(res => {
-        this.tableData = res.data.content.list || []
+        this.tableData = res.data.content.content || []
         this.pagerConfig.total = res.data.content.total
       }).finally(() => {
         this.tableLoading = false
