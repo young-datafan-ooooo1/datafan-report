@@ -240,7 +240,7 @@ export default {
       const deleteIdList = this.checkedList.map(item => item.dashboardId)
       const deleteNameList = this.checkedList.map(item => item.dashboardName)
       const payload = {
-        dashboardIds: deleteIdList
+        ids: deleteIdList
       }
 
       this.$confirmList({
