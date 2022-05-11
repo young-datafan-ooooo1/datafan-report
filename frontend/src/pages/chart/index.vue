@@ -8,10 +8,10 @@
     <DPageHandle>
       <div slot="filters">
         <DPageHandleItem>
-          <a-input v-model="filter.name" allow-clear placeholder="请输入图表名称" />
+          <a-input v-model="filter.reportTittle" allow-clear placeholder="请输入图表名称" />
         </DPageHandleItem>
         <DPageHandleItem>
-          <a-select v-model="filter.type" allow-clear placeholder="请选择图表类型">
+          <a-select v-model="filter.chartType" allow-clear placeholder="请选择图表类型">
             <a-select-option
               v-for="item in chartTypeOption"
               :key="item.value"
@@ -20,11 +20,48 @@
           </a-select>
         </DPageHandleItem>
         <DPageHandleItem>
+          <DFiltersPopover>
+            <DFiltersPopoverItem label="来源平台">
+              <DDictSelect
+                v-model="filter.sourcePlatform"
+                placeholder="请选择来源平台"
+                dict-type="REPORTSOURCEPLATFORM"
+              />
+            </DFiltersPopoverItem>
+            <DFiltersPopoverItem label="来源项目">
+              <a-input v-model="filter.sourceProjectName" placeholder="来源项目" />
+            </DFiltersPopoverItem>
+            <DFiltersPopoverItem label="所属用户">
+              <a-input v-model="filter.sourceCreateUser" placeholder="来源项目所属用户" />
+            </DFiltersPopoverItem>
+            <DFiltersPopoverItem label="创建时间">
+              <a-range-picker
+                v-model="filter.timeRange"
+                allow-clear
+                format="YYYY-MM-DD"
+                :placeholder="['创建开始时间', '创建结束时间']"
+              />
+            </DFiltersPopoverItem>
+            <template slot="footer">
+              <a-button ghost type="primary" @click="onResetFilter">
+                重置
+              </a-button>
+            </template>
+          </DFiltersPopover>
+        </DPageHandleItem>
+        <DPageHandleItem>
           <a-button
             class="search-btn"
             type="primary"
             @click="onGetChartData()"
           >查询</a-button>
+        </DPageHandleItem>
+      </div>
+      <div slot="actions">
+        <DPageHandleItem>
+          <a-button type="primary" ghost :disabled="!hasChecked" @click="onBatchDelete">
+            批量删除
+          </a-button>
         </DPageHandleItem>
       </div>
     </DPageHandle>
@@ -37,6 +74,8 @@
         :loading="tableLoading"
         height="auto"
         @page-change="changePage"
+        @checkbox-all="onTableSelect"
+        @checkbox-change="onTableSelect"
       >
         <template #action="{ row }">
           <a-tooltip title="编辑">
@@ -60,6 +99,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 import ChartApiServices from '@/services/chart'
 
 export default {
@@ -68,8 +108,12 @@ export default {
   data() {
     return {
       filter: {
-        name: undefined,
-        type: undefined
+        reportTittle: undefined,
+        chartType: undefined,
+        sourcePlatform: undefined,
+        sourceProjectName: undefined,
+        sourceCreateUser: undefined,
+        timeRange: []
       },
       chartTypeOption: [
         { name: '二维表', value: 'twoDimensionalTable' },
@@ -84,12 +128,33 @@ export default {
       ],
       columns: [
         {
+          type: 'checkbox',
+          width: 60,
+          fixed: 'left'
+        },
+        {
           title: '图表名称',
           field: 'reportTittle'
         },
         {
           title: '图表类型',
           field: 'chartName'
+        },
+        {
+          title: '来源平台名称',
+          field: 'sourcePlatform'
+        },
+        {
+          title: '来源项目名称',
+          field: 'sourceProjectName'
+        },
+        {
+          title: '来源步骤名称',
+          field: 'stepName'
+        },
+        {
+          title: '来源项目所属用户',
+          field: 'projectCreateName'
         },
         {
           title: '创建人',
@@ -113,7 +178,14 @@ export default {
         pageSize: 10
       },
       tableLoading: false,
-      tableData: []
+      tableData: [],
+      checkedList: []
+    }
+  },
+
+  computed: {
+    hasChecked() {
+      return !!this.checkedList.length
     }
   },
 
@@ -147,12 +219,25 @@ export default {
      * @return {Object} 配置信息
      */
     getPayload() {
-      const { type: chartType, name: reportTittle } = this.filter
+      const { chartType, reportTittle, sourcePlatform, sourceProjectName, sourceCreateUser, timeRange } = this.filter
       const { pageSize, currentPage: page } = this.pagerConfig
+      let createStartTime
+      let createEndTime
+      const [start, end] = timeRange
+
+      if (start && end) {
+        createStartTime = moment(start).format('YYYY-MM-DD 00:00:00')
+        createEndTime = moment(end).format('YYYY-MM-DD 23:59:59')
+      }
 
       return {
         chartType,
         reportTittle,
+        sourcePlatform,
+        sourceProjectName,
+        sourceCreateUser,
+        createStartTime,
+        createEndTime,
         page,
         pageSize
       }
@@ -180,19 +265,61 @@ export default {
      * @param {Objcet} row 删除的行
      */
     onDeleteChart(row) {
-      const { reportId: id, reportTittle: name } = row
+      const { reportId, reportTittle } = row
 
       this.$confirm({
         title: '删除提示',
-        content: `是否删除 “${name}” ?`,
+        content: `是否删除 “${reportTittle}” ?`,
         okText: '确认',
         onOk: () => {
-          return ChartApiServices.deleteChart(id).then(res => {
+          return ChartApiServices.deleteChart(reportId).then(res => {
             if (res.data.content === true) {
               this.$message.success('删除成功')
               this.onGetChartData()
             }
           })
+        }
+      })
+    },
+    /**
+     * @description: 重置筛选条件
+     */
+    onResetFilter() {
+      this.filter.sourcePlatform = undefined
+      this.filter.sourceProjectName = undefined
+      this.filter.timeRange = []
+      this.filter.sourceCreateUser = undefined
+    },
+    /**
+     * @description: 表格选中事件
+     * @param {Object} checked 所有选中信息
+     */
+    onTableSelect(checked) {
+      this.checkedList = checked.records
+    },
+    /**
+     * @description: 批量删除
+     */
+    onBatchDelete() {
+      const deleteIdList = this.checkedList.map(item => item.reportId)
+      const deleteNameList = this.checkedList.map(item => item.reportTittle)
+      const payload = {
+        ids: deleteIdList
+      }
+
+      this.$confirmList({
+        title: `注意：是否删除以下内容（${deleteIdList.length}）项？`,
+        content: deleteNameList,
+        onOk: () => {
+          return ChartApiServices.batchDeleteChart(payload)
+            .then((res) => {
+              if (res.data.content === true) {
+                this.$message.success('删除成功')
+                this.onGetChartData()
+              } else {
+                this.$message.warn('删除失败')
+              }
+            })
         }
       })
     }

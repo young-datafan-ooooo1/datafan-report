@@ -35,6 +35,13 @@ const ChartApiServices = {
     return request(`${REPORT}/dpPortalReportRecord/${chartId}`, METHOD.DELETE)
   },
   /**
+   * @description: 删除图表
+   * @param {number} chartId 图表id
+   */
+  batchDeleteChart(params) {
+    return request(`${REPORT}/dpPortalReportRecord/batchDel`, METHOD.DELETE, { data: params })
+  },
+  /**
    * @description: 获取图表详情
    * @param {Object} params 参数
    */
