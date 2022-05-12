@@ -355,7 +355,8 @@ export default {
         settings: {
           type: chartType,
           metrics: [...metrics],
-          dimension: [...dimension]
+          dimension: [...dimension],
+          useDefaultOrder: chartType === 'funnel' ? true : undefined
         }
       }
     },
