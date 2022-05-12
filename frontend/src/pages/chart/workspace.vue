@@ -168,7 +168,9 @@ export default {
             mertricList,
             datasourceVO: datasourceDTO,
             projectId: stepProjectId,
-            stepName
+            stepName,
+            sourcePlatform,
+            sourceProjectCreateId
           } = res.data.content
           const { tableName: reportTable } = datasourceDTO
 
@@ -180,7 +182,9 @@ export default {
             stepProjectId,
             stepName,
             reportTable,
-            reportTittle: ''
+            reportTittle: '',
+            sourcePlatform,
+            sourceProjectCreateId
           }
           this.chartInfo.type = 'twoDimensionalTable'
         })

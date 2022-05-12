@@ -4,8 +4,10 @@
   */
 import ABaseModal from './base-modal'
 import ModifyInput from './modify-input'
+import ChartTheme from './chart-theme'
 
 export {
   ABaseModal,
-  ModifyInput
+  ModifyInput,
+  ChartTheme
 }
