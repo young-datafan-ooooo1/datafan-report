@@ -58,7 +58,7 @@
         </div>
         <div v-else class="chart-view chart">
           <ve-chart
-            :colors="themeColors"
+            :colors="colorList"
             :data="veChartData"
             v-bind="{
               ...chartConfig
@@ -94,7 +94,8 @@ export default {
       chartData: [],
       chartLoading: false,
       // 默认配色
-      themeColors: ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c3', '#7f7f7f', '#bdbd22', '#17bdcf'],
+      colorList: ['#A05400', '#CC6B00', '#FF8905', '#FEA23C', '#FFC27E', '#FFDBB3', '#FFE9D0', '#FFF0E0'],
+      colorValue: '16',
       chartOption: CHART_OPTION,
       chartConfig: {},
       reportInfo: '',
@@ -234,8 +235,9 @@ export default {
      * @description: 修改颜色列表
      * @param {array} colorList 颜色列表
      */
-    getWorkspaceTheme(colorList) {
-      this.themeColors = colorList
+    getWorkspaceTheme({ colorValue, colorList }) {
+      this.colorValue = colorValue
+      this.colorList = colorList
     },
     /**
      * @description: 整合不同类型图表的配置
@@ -284,7 +286,8 @@ export default {
           settings: {
             type: chartType,
             metrics: [...metrics],
-            dimension: [...dimension]
+            dimension: [...dimension],
+            useDefaultOrder: chartType === 'funnel' ? true : undefined
           }
         }
       }
@@ -368,13 +371,20 @@ export default {
         reportTable: tableName,
         reportTittle: tittle,
         dimensionList,
-        mertricList
+        mertricList,
+        sourcePlatform: sourcePlatform = undefined,
+        sourceProjectCreateId: sourceProjectCreateId = undefined
       } = this.reportInfo
+      const { colorValue, colorList } = this
       const dataObj = {
         characts,
         columnListVO,
         filterListVO,
-        rowListVO
+        rowListVO,
+        setting: {
+          colorValue,
+          colorList
+        }
       }
       const dataJson = JSON.stringify(dataObj)
 
@@ -394,7 +404,9 @@ export default {
           stepName,
           stepProjectId,
           tableName,
-          tittle
+          tittle,
+          sourcePlatform,
+          sourceProjectCreateId
         }
       }
     },
