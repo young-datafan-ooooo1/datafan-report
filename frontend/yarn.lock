@@ -1237,9 +1237,9 @@
     vue-router "^3.3.4"
 
 "@sense70/common-sysmanage-vue@~1.6.0":
-  version "1.6.107"
-  resolved "http://mvn.senses-ai.com:8081/repository/npm-group/@sense70/common-sysmanage-vue/-/common-sysmanage-vue-1.6.107.tgz#d15670f52a8cf14adad821c987b421a264a38edb"
-  integrity sha512-DbkoGq3uT+D/djsXr1VtLc4XUnn0OBOdk0IOS7Z0zUxxwV9DqczmcK/4FODa+7SINJNIFiEa8I0VfA5G5xL+PA==
+  version "1.6.108"
+  resolved "http://mvn.senses-ai.com:8081/repository/npm-group/@sense70/common-sysmanage-vue/-/common-sysmanage-vue-1.6.108.tgz#164fcbaae3af31dc71be5ce049ab94cee9f46db5"
+  integrity sha512-pXih6TXNFSLTzh0zcRfmktbf7MnmO93TMq/zh13w0TshJKJu5YBn9OEfNAs8Nl4vorhgixybCX7bQN1yBX+3Hg==
   dependencies:
     codemirror "^5.41.0"
 
