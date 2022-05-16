@@ -45,7 +45,7 @@
     <div class="dashborad-color flex-box-row">
       <span class="block-title flex-box-row">配色方案</span>
       <ChartTheme
-        :color-value="colorType"
+        :color-value="colorValue"
         @on-change-color="onChangeColor"
       />
     </div>
@@ -62,6 +62,13 @@ export default {
   components: {
     Draggable,
     ChartTheme
+  },
+
+  props: {
+    colorValue: {
+      type: String,
+      default: '16'
+    }
   },
 
   data() {
@@ -112,8 +119,7 @@ export default {
           color: '#000',
           name: '新标题'
         }
-      ],
-      colorType: '16'
+      ]
     }
   },
 
@@ -128,8 +134,7 @@ export default {
       }
     },
     onChangeColor({ colorValue, colorList }) {
-      this.colorType = colorValue
-      this.$emit('onChangeColor', colorList)
+      this.$emit('onChangeColor', { colorValue, colorList })
     }
   }
 }

@@ -16,7 +16,7 @@
           <a-tab-pane key="layout">
             <span slot="tab"><a-icon type="layout" />布局</span>
             <div class="tab-content">
-              <Layout @onChangeColor="onColorChange" />
+              <Layout :color-list="colorList" :color-value="colorValue" @onChangeColor="onColorChange" />
             </div>
           </a-tab-pane>
           <a-tab-pane key="chart">
@@ -27,12 +27,16 @@
           </a-tab-pane>
         </a-tabs>
       </div>
-      <Content class="dashboard-content" :theme-colors="themeColors" />
+      <Content class="dashboard-content" :color-list="colorList" :color-value="colorValue" />
     </div>
   </div>
 </template>
 
 <script>
+import {
+  GET_COLOR_LIST
+} from '@/components/common/chart-theme/color.data'
+import DashboardApiServices from '@/services/dashboard'
 import { Layout, Chart, Content } from './components'
 
 export default {
@@ -47,15 +51,15 @@ export default {
   provide() {
     return {
       dashboardId: this.$route.query.dashboardId,
-      viewType: this.$route.query.viewType,
-      themeColors: this.themeColors
+      viewType: this.$route.query.viewType
     }
   },
 
   data() {
     return {
+      colorValue: '16',
       activeNavTab: 'layout',
-      themeColors: ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c3', '#7f7f7f', '#bdbd22', '#17bdcf']
+      colorList: ['#A05400', '#CC6B00', '#FF8905', '#FEA23C', '#FFC27E', '#FFDBB3', '#FFE9D0', '#FFF0E0']
     }
   },
 
@@ -68,11 +72,42 @@ export default {
   },
 
   mounted() {
+    this.getDashboardDetail()
   },
 
   methods: {
-    onColorChange(themeColors) {
-      this.themeColors = [...themeColors]
+    onColorChange({ colorValue, colorList }) {
+      this.colorValue = colorValue
+      this.colorList = [...colorList]
+    },
+    getDashboardDetail() {
+      const payload = {
+        dashboardId: this.$route.query.dashboardId
+      }
+
+      DashboardApiServices.getDashboardDetailInfo(payload).then(res => {
+        const { setting } = res.data.content
+        if (setting) {
+          const settingObj = JSON.parse(setting)
+          this.colorValue = settingObj?.colorValue || '16'
+          this.colorList = GET_COLOR_LIST(this.colorValue)
+        }
+        this.contentData = JSON.parse(res.data.content.queryData)
+
+        this.$nextTick(() => {
+          if (this.contentData.length) {
+            this.contentData.forEach(item => {
+              if (item.type === 'grid') {
+                item.items.forEach(gridItem => {
+                  if (gridItem.chartContent.length) {
+                    this.drawChart(gridItem)
+                  }
+                })
+              }
+            })
+          }
+        })
+      })
     }
   }
 }

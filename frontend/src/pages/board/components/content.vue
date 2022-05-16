@@ -83,7 +83,7 @@
                         </div>
                         <div v-else class="chart-view chart">
                           <ve-chart
-                            :colors="themeColors"
+                            :colors="colorList"
                             :data="chartItem.chartData"
                             v-bind="{
                               ...chartItem.config
@@ -147,9 +147,13 @@ export default {
   inject: ['dashboardId', 'viewType'],
 
   props: {
-    themeColors: {
+    colorList: {
       type: Array,
       default: () => []
+    },
+    colorValue: {
+      type: String,
+      default: '16'
     }
   },
 
@@ -463,12 +467,16 @@ export default {
     getDashboardDetailPayload() {
       const { dashboardId, contentData } = this
       const { dashboardName } = this.dashboardInfo
+      const setting = {
+        colorValue: this.colorValue
+      }
       const queryData = JSON.stringify(contentData)
 
       return {
         dashboardId,
         dashboardName,
-        queryData
+        queryData,
+        setting: JSON.stringify(setting)
       }
     }
   }
