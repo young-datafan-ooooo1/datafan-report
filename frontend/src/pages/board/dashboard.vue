@@ -50,8 +50,7 @@ export default {
 
   provide() {
     return {
-      dashboardId: this.$route.query.dashboardId,
-      viewType: this.$route.query.viewType
+      dashboard: this.dashboard
     }
   },
 
@@ -59,7 +58,17 @@ export default {
     return {
       colorValue: '16',
       activeNavTab: 'layout',
-      colorList: ['#A05400', '#CC6B00', '#FF8905', '#FEA23C', '#FFC27E', '#FFDBB3', '#FFE9D0', '#FFF0E0']
+      colorList: ['#A05400', '#CC6B00', '#FF8905', '#FEA23C', '#FFC27E', '#FFDBB3', '#FFE9D0', '#FFF0E0'],
+      dashboardInfo: {
+        dashboardName: undefined
+      },
+      dashboard: {
+        dashboardId: '',
+        viewType: '',
+        dashboardInfo: {
+          dashboardName: undefined
+        }
+      }
     }
   },
 
@@ -72,7 +81,12 @@ export default {
   },
 
   mounted() {
-    this.getDashboardDetail()
+    const { dashboardId, viewType } = this.$route.query
+    if (dashboardId) {
+      this.dashboard.dashboardId = dashboardId
+      this.dashboard.viewType = viewType
+      this.getDashboardDetail()
+    }
   },
 
   methods: {
@@ -87,26 +101,13 @@ export default {
 
       DashboardApiServices.getDashboardDetailInfo(payload).then(res => {
         const { setting } = res.data.content
+
+        this.dashboard.dashboardInfo = res.data.content
         if (setting) {
           const settingObj = JSON.parse(setting)
           this.colorValue = settingObj?.colorValue || '16'
           this.colorList = GET_COLOR_LIST(this.colorValue)
         }
-        this.contentData = JSON.parse(res.data.content.queryData)
-
-        this.$nextTick(() => {
-          if (this.contentData.length) {
-            this.contentData.forEach(item => {
-              if (item.type === 'grid') {
-                item.items.forEach(gridItem => {
-                  if (gridItem.chartContent.length) {
-                    this.drawChart(gridItem)
-                  }
-                })
-              }
-            })
-          }
-        })
       })
     }
   }

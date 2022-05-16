@@ -144,7 +144,7 @@ export default {
     ModifyInput
   },
 
-  inject: ['dashboardId', 'viewType'],
+  inject: ['dashboard'],
 
   props: {
     colorList: {
@@ -164,17 +164,30 @@ export default {
       dashboardInfo: {
         dashboardName: undefined
       },
-      isFull: this.$route.query.viewType === 'read'
+      // isFull: this.$route.query.viewType === 'read'
+      isFull: false
     }
   },
   computed: {
+    dashboardId() {
+      return this.dashboard?.dashboardId
+    },
     isAddDashboard() {
       return !this.dashboardId
     }
   },
 
-  mounted() {
-    this.initPage()
+  watch: {
+    dashboard: {
+      handler(value) {
+        const { dashboardInfo } = value
+        this.dashboardInfo = dashboardInfo
+        if (dashboardInfo?.queryData) {
+          this.contentData = JSON.parse(dashboardInfo.queryData)
+        }
+      },
+      deep: true
+    }
   },
 
   methods: {
@@ -206,42 +219,6 @@ export default {
      */
     onModifyDashboardName(value) {
       this.dashboardInfo.dashboardName = value
-    },
-    /**
-     * @description: 初始化页面
-     */
-    initPage() {
-      this.dashboardId && this.getDashboardDetail()
-    },
-    /**
-     * @description: 获取详情
-     */
-    getDashboardDetail() {
-      const payload = {
-        dashboardId: this.dashboardId
-      }
-
-      this.loading = true
-      DashboardApiServices.getDashboardDetailInfo(payload).then(res => {
-        this.dashboardInfo = res.data.content
-        this.contentData = JSON.parse(res.data.content.queryData)
-
-        this.$nextTick(() => {
-          if (this.contentData.length) {
-            this.contentData.forEach(item => {
-              if (item.type === 'grid') {
-                item.items.forEach(gridItem => {
-                  if (gridItem.chartContent.length) {
-                    this.drawChart(gridItem)
-                  }
-                })
-              }
-            })
-          }
-        })
-      }).finally(() => {
-        this.loading = false
-      })
     },
     /**
      * @description: 删除内容
