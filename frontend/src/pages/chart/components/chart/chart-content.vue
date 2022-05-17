@@ -310,46 +310,48 @@ export default {
      * @description: 保存
      */
     onSave() {
-      if (!this.reportInfo.reportTittle) {
-        this.$message.warn('请输入名称')
+      setTimeout(() => {
+        if (!this.reportInfo.reportTittle) {
+          this.$message.warn('请输入名称')
 
-        return
-      }
-      // 探索新建之后会返回报表id，如果再次保存，那么调用更新接口
-      if (this.reportInfo.reportId || this.escatReportId) {
-        this.$confirm({
-          title: '提示',
-          content: `是否覆盖之前信息 ?`,
-          okText: '确认',
-          onOk: () => {
-            this.chartLoading = true
-            const payload = this.getSavePayload()
+          return
+        }
+        // 探索新建之后会返回报表id，如果再次保存，那么调用更新接口
+        if (this.reportInfo.reportId || this.escatReportId) {
+          this.$confirm({
+            title: '提示',
+            content: `是否覆盖之前信息 ?`,
+            okText: '确认',
+            onOk: () => {
+              this.chartLoading = true
+              const payload = this.getSavePayload()
+              // 探索新建之后会返回报表id，如果再次保存，那么调用更新接口
+              payload.reportVO.reportId = payload.reportVO.reportId || this.escatReportId
+
+              return ChartApiServices.saveReports(payload).then(res => {
+                this.$message.success('保存成功')
+              }).catch(() => {
+                this.$message.error('保存失败')
+              }).finally(() => {
+                this.chartLoading = false
+              })
+            }
+          })
+        } else {
+          const payload = this.getSavePayload()
+
+          this.chartLoading = true
+          ChartApiServices.saveReports(payload).then(res => {
+            this.$message.success('保存成功')
             // 探索新建之后会返回报表id，如果再次保存，那么调用更新接口
-            payload.reportVO.reportId = payload.reportVO.reportId || this.escatReportId
-
-            return ChartApiServices.saveReports(payload).then(res => {
-              this.$message.success('保存成功')
-            }).catch(() => {
-              this.$message.error('保存失败')
-            }).finally(() => {
-              this.chartLoading = false
-            })
-          }
-        })
-      } else {
-        const payload = this.getSavePayload()
-
-        this.chartLoading = true
-        ChartApiServices.saveReports(payload).then(res => {
-          this.$message.success('保存成功')
-          // 探索新建之后会返回报表id，如果再次保存，那么调用更新接口
-          this.escatReportId = res.data.content
-        }).catch(() => {
-          this.$message.error('保存失败')
-        }).finally(() => {
-          this.chartLoading = false
-        })
-      }
+            this.escatReportId = res.data.content
+          }).catch(() => {
+            this.$message.error('保存失败')
+          }).finally(() => {
+            this.chartLoading = false
+          })
+        }
+      }, 0)
     },
     /**
      * @description: 获取保存时的参数

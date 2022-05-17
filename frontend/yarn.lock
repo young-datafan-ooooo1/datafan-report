@@ -1224,9 +1224,9 @@
   integrity sha1-K1o6s/kYzKSKjHVMCBaOPwPrphs=
 
 "@sense70/common-component-vue@~1.6.0":
-  version "1.6.108"
-  resolved "http://mvn.senses-ai.com:8081/repository/npm-group/@sense70/common-component-vue/-/common-component-vue-1.6.108.tgz#766585f26d3279f51187ac3a7a8d3438fc9868f7"
-  integrity sha512-L4HaEXYUAmufR8AS4MlMTVTCvm2Qhi6pKiRi3wOc9OgLBbveVYCInLhgaO2nxAXDmLTGgAb3FdDeXtFtlDywvw==
+  version "1.6.109"
+  resolved "http://mvn.senses-ai.com:8081/repository/npm-group/@sense70/common-component-vue/-/common-component-vue-1.6.109.tgz#6d3eff56c6749fa0ecf3fd050a16f2ea01de2621"
+  integrity sha512-u8Jomy/orlb7G4fH9dxW5gqPSBDGRq9CPwOF88eEfw2elI6AZdFkd6/Nysyi/5OMomTEAAjzlrw6JYBNdo7Bjg==
   dependencies:
     axios "^0.19.2"
     clipboard "^2.0.6"
@@ -1237,9 +1237,9 @@
     vue-router "^3.3.4"
 
 "@sense70/common-sysmanage-vue@~1.6.0":
-  version "1.6.108"
-  resolved "http://mvn.senses-ai.com:8081/repository/npm-group/@sense70/common-sysmanage-vue/-/common-sysmanage-vue-1.6.108.tgz#164fcbaae3af31dc71be5ce049ab94cee9f46db5"
-  integrity sha512-pXih6TXNFSLTzh0zcRfmktbf7MnmO93TMq/zh13w0TshJKJu5YBn9OEfNAs8Nl4vorhgixybCX7bQN1yBX+3Hg==
+  version "1.6.110"
+  resolved "http://mvn.senses-ai.com:8081/repository/npm-group/@sense70/common-sysmanage-vue/-/common-sysmanage-vue-1.6.110.tgz#a11bb15b52bbc2e9fd14146bd44994c023954aa3"
+  integrity sha512-qevYCBN19kWNMqsYcltQdjZCbfYn38NfJm/nA7nrTYmeDIchkLwa78/kc2UavhpsoMz0gGYrDx9mkQIwI83ztg==
   dependencies:
     codemirror "^5.41.0"
 
