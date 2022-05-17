@@ -404,38 +404,40 @@ export default {
      * @description: 保存
      */
     onSaveDashboard() {
-      const payload = this.getDashboardDetailPayload()
-      // 新建
-      if (this.isAddDashboard) {
-        if (!payload.dashboardName) {
-          this.$message.warn('请输入看板名称')
+      setTimeout(() => {
+        const payload = this.getDashboardDetailPayload()
+        // 新建
+        if (this.isAddDashboard) {
+          if (!payload.dashboardName) {
+            this.$message.warn('请输入看板名称')
 
-          return
+            return
+          }
+          this.loading = true
+          DashboardApiServices.saveDashboard(payload).then(res => {
+            this.$message.success('新增成功')
+            const { data: { content: { dashboardId }}} = res
+            this.$router.push({ path: '/board/dashboard', query: { dashboardId, viewType: 'edit' }})
+            setTimeout(() => {
+              location.reload()
+            }, 100)
+          }).catch(() => {
+            this.$message.error('新增失败')
+          }).finally(() => {
+            this.loading = false
+          })
+        } else {
+          // 修改
+          this.loading = true
+          DashboardApiServices.updateDashboard(payload).then(res => {
+            this.$message.success('修改成功')
+          }).catch(() => {
+            this.$message.error('修改失败')
+          }).finally(() => {
+            this.loading = false
+          })
         }
-        this.loading = true
-        DashboardApiServices.saveDashboard(payload).then(res => {
-          this.$message.success('新增成功')
-          const { data: { content: { dashboardId }}} = res
-          this.$router.push({ path: '/board/dashboard', query: { dashboardId, viewType: 'edit' }})
-          setTimeout(() => {
-            location.reload()
-          }, 100)
-        }).catch(() => {
-          this.$message.error('新增失败')
-        }).finally(() => {
-          this.loading = false
-        })
-      } else {
-        // 修改
-        this.loading = true
-        DashboardApiServices.updateDashboard(payload).then(res => {
-          this.$message.success('修改成功')
-        }).catch(() => {
-          this.$message.error('修改失败')
-        }).finally(() => {
-          this.loading = false
-        })
-      }
+      }, 0)
     },
     /**
      * @description: 获取看板参数
