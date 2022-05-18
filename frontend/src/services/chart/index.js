@@ -70,6 +70,9 @@ const ChartApiServices = {
     return request(`${REPORT}/dpPortalReportRecord/get/dm`, METHOD.GET, { params })
   },
   // 下载url
-  downloadReportExcelUrl: `${REPORT}/dpPortalReportRecord/excelDownloadByNativeSql?access_token=`
+  downloadReportExcelUrl: `${REPORT}/dpPortalReportRecord/excelDownloadByNativeSql?access_token=`,
+  onDownloadReportExcelByHtml(payload) {
+    return request(`${REPORT}/dpPortalReportRecord/excelDownloadByHtml`, METHOD.POST, payload, { responseType: 'blob' })
+  }
 }
 export default ChartApiServices
