@@ -44,7 +44,7 @@
           hide-pager
           height="auto"
         />
-        <div v-else-if="chartType === 'Multidimensional'" class="chart-view multi-table pivot-table-contain">
+        <div v-else-if="chartType === 'Multidimensional'" ref="PivotTable" class="chart-view multi-table pivot-table-contain">
           <template v-for="(metrics, metricsIndex) in metricsList">
             <PivotTable
               :key="metricsIndex"
@@ -416,35 +416,81 @@ export default {
      * @description: 下载excel
      */
     onDownload() {
-      const { index = [], column = [], row = [] } = this.workspacePayload
-      const stepFields = [...index, ...column, ...row].map(item => {
-        const { name, statisticsType, columnName } = item
-        return {
-          filedCname: name,
-          filedName: statisticsType ? `${statisticsType}(${columnName})` : columnName
-        }
-      })
+      const { reportTittle } = this.reportInfo
+      const payload = this.getDownloadPayload()
+      if (this.isMultidimensionalTable) {
+        ChartApiServices.onDownloadReportExcelByHtml(payload).then(res => {
+          const win = window.URL || window.webkitURL || window.moxURL
+          const url = window.URL.createObjectURL(new Blob([res.data]))
+          const link = document.createElement('a')
+          link.href = url
+          link.setAttribute('download', 'ceshi')
+          document.body.appendChild(link)
+          link.click()
+          document.body.removeChild(link)
+          win.revokeObjectURL(url)
+        }).catch(res => {
+          const win = window.URL || window.webkitURL || window.moxURL
+          const url = window.URL.createObjectURL(new Blob([res.data]))
+          const link = document.createElement('a')
+          link.href = url
+          link.setAttribute('download', `${reportTittle}.xlsx`)
+          document.body.appendChild(link)
+          link.click()
+          document.body.removeChild(link)
+          win.revokeObjectURL(url)
+        })
+      } else {
+        this.chartLoading = true
+        var subfrom = document.createElement('form')
+        subfrom.style = 'display:none'
+        subfrom.method = 'post'
+        subfrom.action = ChartApiServices.downloadReportExcelUrl + localStorage.getItem('Authorization').replace('Bearer ', '')
 
-      const payload = {
-        datasourceId: this.reportInfo.datasourceDTO.datasourceId,
-        dataQuerySql: this.querySqlNoLimit,
-        fileName: '报表数据',
-        stepFields
+        var paramsJson = document.createElement('input')
+        paramsJson.type = 'text'
+        paramsJson.name = 'paramsJson'
+        paramsJson.value = JSON.stringify(payload)
+        subfrom.appendChild(paramsJson)
+        document.body.appendChild(subfrom)
+        subfrom.submit()
+        this.chartLoading = false
       }
-      this.chartLoading = true
-      var subfrom = document.createElement('form')
-      subfrom.style = 'display:none'
-      subfrom.method = 'post'
-      subfrom.action = ChartApiServices.downloadReportExcelUrl + localStorage.getItem('Authorization').replace('Bearer ', '')
+    },
 
-      var paramsJson = document.createElement('input')
-      paramsJson.type = 'text'
-      paramsJson.name = 'paramsJson'
-      paramsJson.value = JSON.stringify(payload)
-      subfrom.appendChild(paramsJson)
-      document.body.appendChild(subfrom)
-      subfrom.submit()
-      this.chartLoading = false
+    getDownloadPayload() {
+      const { reportTittle } = this.reportInfo
+
+      if (this.isMultidimensionalTable) {
+        const { index = [] } = this.workspacePayload
+        const childNodes = this.$refs.PivotTable.childNodes
+        const excelHtmlInfo = index.map((item, index) => {
+          return {
+            characts: item.showName,
+            htmlTable: encodeURI(`${childNodes[index].innerHTML}`)
+          }
+        })
+        return {
+          chartName: reportTittle,
+          excelHtmlInfo
+        }
+      } else {
+        const { index = [], column = [], row = [] } = this.workspacePayload
+        const stepFields = [...index, ...column, ...row].map(item => {
+          const { name, statisticsType, columnName } = item
+          return {
+            filedCname: name,
+            filedName: statisticsType ? `${statisticsType}(${columnName})` : columnName
+          }
+        })
+
+        return {
+          datasourceId: this.reportInfo.datasourceDTO.datasourceId,
+          dataQuerySql: this.querySqlNoLimit,
+          fileName: reportTittle,
+          stepFields
+        }
+      }
     }
   }
 }
