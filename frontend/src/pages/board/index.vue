@@ -109,7 +109,11 @@ export default {
           field: 'createTime'
         },
         {
-          title: '最后修改时间',
+          title: '修改人',
+          field: 'updateUser'
+        },
+        {
+          title: '修改时间',
           field: 'updateTime'
         },
         {

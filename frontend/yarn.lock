@@ -1224,9 +1224,9 @@
   integrity sha1-K1o6s/kYzKSKjHVMCBaOPwPrphs=
 
 "@sense70/common-component-vue@~1.6.0":
-  version "1.6.111"
-  resolved "http://mvn.senses-ai.com:8081/repository/npm-group/@sense70/common-component-vue/-/common-component-vue-1.6.111.tgz#8c86d21a8c015b5e6803fe176c54c4a3d6466ab7"
-  integrity sha512-HvhNszeecNCd2XZWhx6VP8CAjDqr6VIq9ZAO/YaLjWABRi+3kHqkhthsuMp1IyHDuY1+gguNy+e6UMoH9Pd6IQ==
+  version "1.6.112"
+  resolved "http://mvn.senses-ai.com:8081/repository/npm-group/@sense70/common-component-vue/-/common-component-vue-1.6.112.tgz#f8ab7d08df4c721a6038b403a35f6609c559a57e"
+  integrity sha512-yvIW5BpUJbn9ORlvsYkZO/S3DwHqipx4A2fvaISV1EKL61Bx8hZCwMlroqfZhdfs2l9gVEhLUTTGF8sxR2hE6A==
   dependencies:
     axios "^0.19.2"
     clipboard "^2.0.6"
