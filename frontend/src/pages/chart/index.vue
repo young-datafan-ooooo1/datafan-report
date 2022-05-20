@@ -134,35 +134,53 @@ export default {
         },
         {
           title: '图表名称',
+          minwidth: 150,
           field: 'reportTittle'
         },
         {
           title: '图表类型',
+          width: 120,
           field: 'chartName'
         },
         {
           title: '来源平台名称',
+          width: 120,
           field: 'sourcePlatform'
         },
         {
           title: '来源项目名称',
+          minwidth: 150,
           field: 'sourceProjectName'
         },
         {
           title: '来源步骤名称',
+          width: 120,
           field: 'stepName'
         },
         {
           title: '来源项目所属用户',
+          width: 150,
           field: 'projectCreateName'
         },
         {
           title: '创建人',
+          width: 120,
           field: 'createUserId'
         },
         {
           title: '创建时间',
+          width: 150,
           field: 'createTime'
+        },
+        {
+          title: '修改人',
+          width: 120,
+          field: 'updateUser'
+        },
+        {
+          title: '修改时间',
+          width: 150,
+          field: 'updateTime'
         },
         {
           width: 180,
