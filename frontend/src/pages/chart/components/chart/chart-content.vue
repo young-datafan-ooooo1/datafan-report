@@ -101,7 +101,8 @@ export default {
       reportInfo: '',
       querySqlNoLimit: '',
       isShowDownloadBtn: false,
-      escatReportId: ''
+      escatReportId: '',
+      stepFields: []
     }
   },
 
@@ -217,6 +218,7 @@ export default {
       ChartApiServices.getChartData(payload).then(res => {
         this.chartData = res?.data?.content?.groupByRowNames.map(item => item.list).flat()
         this.querySqlNoLimit = res?.data?.content?.querySqlNoLimit
+        this.stepFields = res?.data?.content?.stepFields || []
         this.isShowDownloadBtn = true
       }).finally(() => {
         this.chartLoading = false
@@ -475,14 +477,8 @@ export default {
           excelHtmlInfo
         }
       } else {
-        const { index = [], column = [], row = [] } = this.workspacePayload
-        const stepFields = [...index, ...column, ...row].map(item => {
-          const { name, statisticsType, columnName } = item
-          return {
-            filedCname: name,
-            filedName: statisticsType ? `${statisticsType}(${columnName})` : columnName
-          }
-        })
+        // 此处原逻辑是前端做的，由于不同数据库，由后端处理逻辑
+        const { stepFields = [] } = this
 
         return {
           datasourceId: this.reportInfo.datasourceDTO.datasourceId,
