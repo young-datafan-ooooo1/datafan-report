@@ -11,7 +11,9 @@
         <a-tooltip>
           <template slot="title">
             <div>列的功能：</div>
-            <div>{{ columnTip }}</div>
+            <div>1、透视表：表示透视表表格的列表头属性名。将选中列的数据打横置为列表头的属性名，从左到右依次展示。</div>
+            <div>2、二维表：依次按照列、行、指标的顺序，展示表格数据。</div>
+            <div>3、在其他图表中，支持1个行/列，将选中行/列的数据作为图表的维度。</div>
           </template>
           <a-icon type="question-circle" class="tip-icon flex-box-col-small" />
         </a-tooltip>
@@ -53,7 +55,9 @@
         <a-tooltip>
           <template slot="title">
             <div>行的功能</div>
-            <div>{{ rowTip }}</div>
+            <div>1、透视表：表示透视表表格的行表头属性名。将选中行的数据竖向置为行表头的属性名，从上到下依次展示。</div>
+            <div>2、二维表：依次按照列、行、指标的顺序，展示表格数据。</div>
+            <div>3、在其他图表中，支持1个行/列，将选中行/列的数据作为图表的维度。</div>
           </template>
           <a-icon type="question-circle" class="tip-icon flex-box-col-small" />
         </a-tooltip>
@@ -126,25 +130,6 @@ export default {
       ],
       columnList: [],
       rowList: []
-    }
-  },
-
-  computed: {
-    rowTip() {
-      const rowTip = {
-        twoDimensionalTable: '依次按照列、行、指标的顺序，展示表格数据。',
-        Multidimensional: '表示透视表表格的行表头属性名。将选中行的数据竖向置为行表头的属性名，从上到下依次展示。'
-      }
-
-      return rowTip[this.chartInfo.type] || '支持1个行/列，将选中行/列的数据作为图表的维度。'
-    },
-    columnTip() {
-      const columnTip = {
-        twoDimensionalTable: '依次按照列、行、指标的顺序，展示表格数据。',
-        Multidimensional: '表示透视表表格的列表头属性名。将选中列的数据打横置为列表头的属性名，从左到右依次展示。'
-      }
-
-      return columnTip[this.chartInfo.type] || '支持1个行/列，将选中行/列的数据作为图表的维度。'
     }
   },
 
