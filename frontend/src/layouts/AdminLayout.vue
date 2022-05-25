@@ -110,7 +110,6 @@ export default {
   },
 
   mounted() {
-    debugger
     this.dict.watermark &&
       watermark.set(
         localStorage.getItem('userName') + ' ' + localStorage.getItem('account')
