@@ -216,7 +216,7 @@ export default {
       this.chartLoading = true
       ChartApiServices.getChartData(payload).then(res => {
         this.chartData = res?.data?.content?.groupByRowNames.map(item => item.list).flat()
-        this.querySqlNoLimit = res.data.content.querySqlNoLimit
+        this.querySqlNoLimit = res?.data?.content?.querySqlNoLimit
         this.isShowDownloadBtn = true
       }).finally(() => {
         this.chartLoading = false

@@ -1,55 +1,34 @@
 <template>
   <a-layout :class="['admin-layout']">
     <a-layout-header>
-      <admin-header
-        :class="[
-          {
-            'fixed-tabs': fixedTabs,
-            'fixed-header': fixedHeader,
-            'multi-page': multiPage
-          }
-        ]"
-        :style="headerStyle"
+      <d-header
         :menu-data="headMenuData"
-        :collapsed="collapsed"
-      />
-      <a-layout-header
-        v-show="fixedHeader"
-        :class="[
-          'virtual-header',
-          {
-            'fixed-tabs': fixedTabs,
-            'fixed-header': fixedHeader,
-            'multi-page': multiPage
-          }
-        ]"
+        node-en-name="dashboard"
+        node-name="图表看板平台"
+        to-path="/home"
+        :logo-url="ASSETS_URL + '/common/img/stella-logo.png'"
       />
     </a-layout-header>
     <a-layout>
       <drawer v-if="isMobile" v-model="drawerOpen">
-        <side-menu
+        <d-menu
           :theme="theme.mode"
           :menu-data="menu"
           :collapsed="true"
           :collapsible="true"
-          @menuSelect="onMenuSelect"
+          @toggleCollapse="toggleCollapse"
         />
       </drawer>
-      <side-menu
+      <d-menu
         v-else-if="layout === 'side' || layout === 'mix'"
         :class="[fixedSideBar ? 'fixed-side' : '']"
         :theme="theme.mode"
-        :menu-data="sideMenuData"
+        :menu-data="menuAddMeta(menu)"
         :collapsed="collapsed"
+        :all-open-keys="allOpenKeys"
         :collapsible="true"
         @toggleCollapse="toggleCollapse"
       />
-
-      <!--      <a-layout-content class="beauty-scroll">-->
-      <!--        <div class="h-full">-->
-      <!--          <slot></slot>-->
-      <!--        </div>-->
-      <!--      </a-layout-content>-->
 
       <a-layout-content class="beauty-scroll">
         <div class="h-full">
@@ -61,44 +40,26 @@
 </template>
 
 <script>
-import AdminHeader from './header/AdminHeader'
-// import PageFooter from './footer/PageFooter'
 import Drawer from '../components/tool/Drawer'
-import SideMenu from '../components/menu/SideMenu'
 import { mapState, mapMutations, mapGetters } from 'vuex'
+import { watermark } from '@sense70/common-component-vue'
 
+import { ASSETS_URL } from '@/services/api'
 // const minHeight = window.innerHeight - 64 - 122
 
 export default {
   name: 'AdminLayout',
-  components: { AdminHeader, SideMenu, Drawer },
-  provide() {
-    return {
-      adminLayout: this
-    }
-  },
-  // components: {Setting, SideMenu, Drawer, PageFooter, AdminHeader},
+  components: { Drawer },
   data() {
     return {
       minHeight: window.innerHeight - 65,
       collapsed: false,
       showSetting: false,
-      drawerOpen: false
+      drawerOpen: false,
+      ASSETS_URL // 静态资源路径
     }
   },
-  watch: {
-    $route(val) {
-      this.setActivated(val)
-    },
-    layout() {
-      this.setActivated(this.$route)
-    },
-    isMobile(val) {
-      if (!val) {
-        this.drawerOpen = false
-      }
-    }
-  },
+
   computed: {
     ...mapState('setting', [
       'isMobile',
@@ -112,8 +73,8 @@ export default {
       'hideSetting',
       'multiPage'
     ]),
-    ...mapGetters('components', ['menu']),
-    ...mapGetters('setting', ['firstMenu', 'subMenu', 'menuData']),
+    ...mapGetters('setting', ['firstMenu', 'subMenu', 'menuData', 'newMenuData', 'allOpenKeys']),
+    ...mapGetters('components', ['menu', 'dict']),
     sideMenuWidth() {
       return this.collapsed ? '0' : '0'
     },
@@ -133,6 +94,26 @@ export default {
       const { layout, menu, subMenu } = this
       return layout === 'mix' ? subMenu : menu
     }
+  },
+  watch: {
+    $route(val) {
+      this.setActivated(val)
+    },
+    layout() {
+      this.setActivated(this.$route)
+    },
+    isMobile(val) {
+      if (!val) {
+        this.drawerOpen = false
+      }
+    }
+  },
+
+  mounted() {
+    this.dict.watermark &&
+      watermark.set(
+        localStorage.getItem('userName') + ' ' + localStorage.getItem('account')
+      )
   },
   methods: {
     ...mapMutations('setting', ['correctPageMinHeight', 'setActivatedFirst']),
@@ -155,6 +136,17 @@ export default {
           }
         }
       }
+    },
+    menuAddMeta(menus) {
+      // 添加meta属性，去除invisible
+      menus.forEach((menu) => {
+        menu.meta = {
+          icon: menu.icon,
+          invisible: menu.invisible
+        }
+        menu.children && this.menuAddMeta(menu.children)
+      })
+      return menus
     }
   },
   created() {
