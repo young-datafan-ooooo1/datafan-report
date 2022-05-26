@@ -404,15 +404,23 @@ export default {
      * @description: 保存
      */
     onSaveDashboard() {
-      setTimeout(() => {
-        const payload = this.getDashboardDetailPayload()
-        // 新建
-        if (this.isAddDashboard) {
-          if (!payload.dashboardName) {
-            this.$message.warn('请输入看板名称')
+      setTimeout(async() => {
+        const { dashboardName } = this.dashboardInfo
+        if (!dashboardName) {
+          this.$message.warn('请输入看板名称')
 
-            return
-          }
+          return
+        }
+        // 校验名称重复
+        const { data: { content: isReport = true }} = await this.onCheckBoardNameReport()
+        if (isReport) {
+          this.$message.warn('看板名称已存在')
+
+          return
+        }
+
+        const payload = this.getDashboardDetailPayload()
+        if (this.isAddDashboard) {
           this.loading = true
           DashboardApiServices.saveDashboard(payload).then(res => {
             this.$message.success('新增成功')
@@ -457,6 +465,19 @@ export default {
         queryData,
         setting: JSON.stringify(setting)
       }
+    },
+    /**
+     * @description: 名称验重
+     * @return {Promise}
+     */
+    async onCheckBoardNameReport() {
+      const { dashboardInfo: { dashboardName }, dashboardId } = this
+      const payload = {
+        dashboardId,
+        dashboardName
+      }
+
+      return DashboardApiServices.onCheckDashboardName(payload)
     }
   }
 }

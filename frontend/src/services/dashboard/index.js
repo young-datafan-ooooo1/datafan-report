@@ -29,6 +29,12 @@ const DashboardApiServices = {
    */
   batchDeleteDashboard(params) {
     return request(`${REPORT}/dpPortalDashboard/batchDel`, METHOD.DELETE, { data: params })
+  },
+  /**
+   * @description: 校验名称重复
+   */
+  onCheckDashboardName(params = {}) {
+    return request(`${REPORT}/dpPortalDashboard/isRepeat`, METHOD.GET, { params })
   }
 }
 export default DashboardApiServices
