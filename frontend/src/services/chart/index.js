@@ -73,6 +73,12 @@ const ChartApiServices = {
   downloadReportExcelUrl: `${REPORT}/dpPortalReportRecord/excelDownloadByNativeSql?access_token=`,
   onDownloadReportExcelByHtml(payload) {
     return request(`${REPORT}/dpPortalReportRecord/excelDownloadByHtml`, METHOD.POST, payload, { responseType: 'blob' })
+  },
+  /**
+   * @description: 校验名称重复
+   */
+  onCheckReportName(params = {}) {
+    return request(`${REPORT}/dpPortalReportRecord/isRepeat/`, METHOD.GET, { params })
   }
 }
 export default ChartApiServices

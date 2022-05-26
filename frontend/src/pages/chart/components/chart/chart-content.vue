@@ -326,9 +326,17 @@ export default {
      * @description: 保存
      */
     onSave() {
-      setTimeout(() => {
+      setTimeout(async() => {
         if (!this.reportInfo.reportTittle) {
           this.$message.warn('请输入名称')
+
+          return
+        }
+
+        // 校验名称重复
+        const { data: { content: isRepeat = true }} = await this.onCheckReportNameReport()
+        if (isRepeat) {
+          this.$message.warn('图表名称已存在')
 
           return
         }
@@ -501,6 +509,20 @@ export default {
           stepFields
         }
       }
+    },
+    /**
+     * @description: 名称验重
+     * @return {Promise}
+     */
+    async onCheckReportNameReport() {
+      const { reportTittle, reportId = undefined } = this.reportInfo
+      const { escatReportId = undefined } = this
+      const payload = {
+        reportId: reportId || escatReportId || undefined,
+        reportTittle
+      }
+
+      return ChartApiServices.onCheckReportName(payload)
     }
   }
 }

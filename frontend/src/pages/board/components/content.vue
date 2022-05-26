@@ -412,8 +412,8 @@ export default {
           return
         }
         // 校验名称重复
-        const { data: { content: isReport = true }} = await this.onCheckBoardNameReport()
-        if (isReport) {
+        const { data: { content: isRepeat = true }} = await this.onCheckBoardNameReport()
+        if (isRepeat) {
           this.$message.warn('看板名称已存在')
 
           return
