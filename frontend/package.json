@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "preserve": "node ./src/utils/checkUpdate.js",
-    "serve": "export NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service serve",
-    "build": "export NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service build",
-    "lint": "export NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service lint",
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
     "predeploy": "yarn build",
     "sense": "yarn upgrade @sense70/common-dsmanage-vue && yarn upgrade @sense70/common-component-vue && yarn upgrade @sense70/common-sysmanage-vue && yarn upgrade @young-datafan/datafan-ui"
   },
