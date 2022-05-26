@@ -9,7 +9,7 @@
     :options="{group:'workspace', disabled: false}"
     @add="onAddFilterIndex($event)"
   >
-    <div v-for="(item, index) in indexList" :key="`${item.id}-${index}`" class="flex-box-row-mini">
+    <div v-for="(item, index) in indexList" :key="item.momentId" class="flex-box-row-mini">
       <a-dropdown :trigger="['click']">
         <a-tag closable :color="getTagColorByType(item.type)" @close="onClose(index)">{{ item.showName || item.name }}</a-tag>
         <a-menu slot="overlay">
@@ -33,6 +33,7 @@
 <script>
 import Draggable from 'vuedraggable'
 import { eventBus, eventBusType } from '@/utils/event-bus'
+import moment from 'moment'
 
 export default {
   name: 'FilterIndex',
@@ -108,7 +109,7 @@ export default {
       if (dataJson) {
         const data = JSON.parse(dataJson)
 
-        this.indexList = data.characts.map(item => {
+        this.indexList = data.characts.map((item, index) => {
           const { statisticsType, columnChinsesName: name, radio: sort } = item
           const type = this.getType(item.dateType)
           const nameLabel = this.getNameLabel(statisticsType)
@@ -122,6 +123,7 @@ export default {
           return {
             ...item,
             setting: this.indexInfo[type].setting,
+            momentId: `${moment().format('x')}${index}`,
             showName: `${nameLabel}(${name}${sortIcon[sort]})`
           }
         })
@@ -167,6 +169,7 @@ export default {
       this.$set(handleItem, 'statisticsType', statisticsType)
       this.$set(handleItem, 'showName', `${nameLabel}(${handleItem.columnChinsesName}${sortIcon[handleItem.radio]})`)
       this.$set(handleItem, 'name', `${nameLabel}(${handleItem.columnChinsesName})`)
+      this.$set(handleItem, 'momentId', moment().format('x'))
     },
     /**
      * @description: 删除标签
