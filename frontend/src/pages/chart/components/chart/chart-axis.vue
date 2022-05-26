@@ -24,7 +24,7 @@
         :options="{group:'workspace', disabled: false}"
         @add="onAddaxis($event, 'column')"
       >
-        <div v-for="(item, index) in columnList" :key="`${item.id}-${index}`" class="axis-tag">
+        <div v-for="(item, index) in columnList" :key="item.momentId" class="axis-tag">
           <a-dropdown :trigger="['click']">
             <a-tag closable :color="getTagColorByType(item.type)" @close="onClose(index, 'column')">{{ item.showName || item.name }}</a-tag>
             <a-menu slot="overlay">
@@ -69,7 +69,7 @@
         :options="{group:'workspace', disabled: false}"
         @add="onAddaxis($event, 'row')"
       >
-        <div v-for="(item, index) in rowList" :key="`${item.id}-${index}`" class="axis-tag">
+        <div v-for="(item, index) in rowList" :key="item.momentId" class="axis-tag">
           <a-dropdown :trigger="['click']">
             <a-tag closable :color="getTagColorByType(item.type)" @close="onClose(index, 'row')">{{ item.showName || item.name }}</a-tag>
             <a-menu slot="overlay">
@@ -99,6 +99,7 @@
 <script>
 import Draggable from 'vuedraggable'
 import { eventBus, eventBusType } from '@/utils/event-bus'
+import moment from 'moment'
 
 export default {
   name: 'ChartAxis',
@@ -139,21 +140,23 @@ export default {
       if (dataJson) {
         const data = JSON.parse(dataJson)
 
-        this.columnList = data.columnListVO.map(item => {
+        this.columnList = data.columnListVO.map((item, index) => {
           const type = this.getType(item.dateType)
           const setting = type === 'date' ? this.dateSetting : this.sortSetting
 
           return {
             ...item,
+            momentId: `${moment().format('x')}${index}`,
             setting
           }
         })
-        this.rowList = data.rowListVO.map(item => {
+        this.rowList = data.rowListVO.map((item, index) => {
           const type = this.getType(item.dateType)
           const setting = type === 'date' ? this.dateSetting : this.sortSetting
 
           return {
             ...item,
+            momentId: `${moment().format('x')}${index}`,
             setting
           }
         })
@@ -225,6 +228,7 @@ export default {
       this.$set(handleItem, 'showName', showName)
 
       this.$set(handleItem, 'setting', setting)
+      this.$set(handleItem, 'momentId', moment().format('x'))
     },
 
     onClose(index, type) {

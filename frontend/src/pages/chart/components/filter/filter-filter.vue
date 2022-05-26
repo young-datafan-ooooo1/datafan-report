@@ -10,7 +10,7 @@
       :options="{group:'workspace', disabled: false}"
       @add="onAddFilter($event)"
     >
-      <div v-for="(item, index) in filterList" :key="`${item.id}-${index}`" class="flex-box-row-mini">
+      <div v-for="(item, index) in filterList" :key="item.momentId" class="flex-box-row-mini">
         <a-dropdown :trigger="['click']">
           <a-tag closable :color="getTagColorByType(item.type)" @close="onClose(index)">{{ item.name }}</a-tag>
           <a-menu slot="overlay">
@@ -36,6 +36,7 @@
 import Draggable from 'vuedraggable'
 import FilterModal from './filter-modal.vue'
 import { eventBus, eventBusType } from '@/utils/event-bus'
+import moment from 'moment'
 
 export default {
   name: 'FilterFilter',
@@ -112,7 +113,12 @@ export default {
       if (dataJson) {
         const data = JSON.parse(dataJson)
 
-        this.filterList = data.filterListVO
+        this.filterList = data.filterListVO.map((item, index) => {
+          return {
+            ...item,
+            momentId: `${moment().format('x')}${index}`
+          }
+        })
       }
     },
     filterList(value) {
@@ -141,6 +147,7 @@ export default {
     onAddFilter(event) {
       const handleIndex = event.newIndex
       const handleItem = this.filterList[handleIndex]
+      this.$set(handleItem, 'momentId', moment().format('x'))
 
       handleItem.filters = []
       this.$nextTick(() => {
