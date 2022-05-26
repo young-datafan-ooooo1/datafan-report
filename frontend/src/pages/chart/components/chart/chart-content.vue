@@ -35,6 +35,7 @@
       <div class="chart-content-chart flex-box-row-small">
         <DTable
           v-if="isTwoDimensionalTable"
+          ref="dtable"
           v-bind="{
             ...chartConfig
           }"
@@ -246,16 +247,29 @@ export default {
      */
     onFormatChartConfig() {
       if (this.isTwoDimensionalTable) {
+        const oneWorldLength = 14
+        const gap = 25
+        const tableWholeWidth = this.$refs.dtable?.$el?.offsetWidth || 500
+
         const { index: metrics = [], column = [], row = [] } = this.workspacePayload
         const columnList = [...column, ...row, ...metrics]
-        const columns = columnList.map(item => {
+        let columns = columnList.map(item => {
           const { name: title, name: field } = item
+          const width = title.length * oneWorldLength + gap
 
           return {
             title,
-            field
+            field,
+            width
           }
         })
+        const allWorldLength = columns?.reduce((x, y) => x + y.width, 0)
+        if (allWorldLength < tableWholeWidth) {
+          columns = columns.map(item => {
+            delete item.width
+            return item
+          })
+        }
 
         this.chartConfig = {
           columns
