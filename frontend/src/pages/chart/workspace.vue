@@ -133,12 +133,8 @@ export default {
     }
   },
   watch: {
-    '$route': {
-      handler() {
-        this.getChartDetail()
-      },
-      deep: true,
-      immediate: true
+    '$route'() {
+      this.getChartDetail()
     }
   },
 
