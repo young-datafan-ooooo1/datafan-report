@@ -132,6 +132,11 @@ export default {
       return list
     }
   },
+  watch: {
+    '$route.qurey.reportCode'() {
+      this.initPage()
+    }
+  },
 
   created() {
     this.initPage()
