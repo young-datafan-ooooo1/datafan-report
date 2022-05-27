@@ -133,8 +133,12 @@ export default {
     }
   },
   watch: {
-    '$route.qurey.reportCode'() {
-      this.initPage()
+    '$route': {
+      handler() {
+        this.getChartDetail()
+      },
+      deep: true,
+      immediate: true
     }
   },
 
