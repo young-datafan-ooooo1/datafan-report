@@ -183,7 +183,7 @@ export default {
         const { dashboardInfo } = value
         this.dashboardInfo = dashboardInfo
         if (dashboardInfo?.queryData) {
-          this.contentData = JSON.parse(dashboardInfo.queryData)
+          this.onGetDataForNewBoard(dashboardInfo.queryData)
         }
       },
       deep: true
@@ -288,7 +288,7 @@ export default {
      */
     getTwoDimensionalTableConfig(chart) {
       const { charact: metrics = [], column = [], row = [] } = chart
-      const columnList = [... metrics, ...column, ...row]
+      const columnList = [...column, ...row, ... metrics]
       const columns = columnList.map(item => {
         const { columnChinsesName: title, columnChinsesName: field } = item
 
@@ -478,6 +478,77 @@ export default {
       }
 
       return DashboardApiServices.onCheckDashboardName(payload)
+    },
+    onGetDataForNewBoard(queryData) {
+      // 老数据类型对应新数据的类型
+      const typeOption = {
+        layeOut: 'grid',
+        border: 'border',
+        header: 'title'
+      }
+      // 由于border都存在，不容一判断，先排除掉，在后续指定border再做逻辑判断
+      const newTypeList = ['grid', 'title']
+      const data = JSON.parse(queryData) || []
+
+      this.contentData = data.map(contentItem => {
+        const { type } = contentItem
+        const isNew = newTypeList.includes(type)
+        // 新的type就直接返回，不做兼容处理
+        if (isNew) {
+          return {
+            ...contentItem
+          }
+
+        // 老布局兼容，行列相关
+        } else if (type === 'layeOut') {
+          // todo
+          let { cols: items = [] } = contentItem
+          const { loading = false } = contentItem
+          items = items.map(itemsItem => {
+            const { value: width, chartContent, id } = itemsItem
+            const newItem = {
+              id,
+              width,
+              loading,
+              chartContent
+            }
+
+            this.drawChart(newItem)
+
+            return newItem
+          })
+
+          return {
+            items,
+            type: typeOption[contentItem.type]
+          }
+        } else if (type === 'header') {
+          // 老标题兼容
+          const { cols: { color, fontSize, fontWeight, headerTitle: name }} = contentItem
+          return {
+            color,
+            fontSize,
+            fontWeight,
+            name,
+            type: typeOption[contentItem.type]
+          }
+        } else if (type === 'border') {
+          const { value } = contentItem
+          // 如果有value说明是新的数据 不需要处理
+          if (value) {
+            return {
+              ...contentItem
+            }
+          } else {
+            // 否则拿到老的
+            const { cols: { borderType }} = contentItem
+            return {
+              type: typeOption[contentItem.type],
+              value: borderType
+            }
+          }
+        }
+      })
     }
   }
 }
