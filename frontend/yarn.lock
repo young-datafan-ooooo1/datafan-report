@@ -2073,9 +2073,9 @@
     ant-design-vue "1.7.2"
 
 "@young-datafan/datafan-ui@~1.6.0":
-  version "1.6.120"
-  resolved "http://mvn.senses-ai.com:8081/repository/npm-group/@young-datafan/datafan-ui/-/datafan-ui-1.6.120.tgz#fef03f811912301dc12268ec15e8751719b75065"
-  integrity sha512-pVjKLibRfU2RTRl8SxJzME9qtZYGNEBiFZr2YDFUovQHfbTShteVzr+dq4Q76pAphHRFYZitM6JNIiSmbWdmbA==
+  version "1.6.121"
+  resolved "http://mvn.senses-ai.com:8081/repository/npm-group/@young-datafan/datafan-ui/-/datafan-ui-1.6.121.tgz#fef8f4423305dc40249489dc29b00c109df1556f"
+  integrity sha512-mG958rTu1kYCXlvlsqYLQtuis/Nmq6JgV7+St/lgHdLLEIB/5RuPeKjcHUYCqo4D5ZU/6k/J3TqtLe5DiTIQkA==
   dependencies:
     "@young-datafan/datafan-ui" "~1.5.0"
     ant-design-vue "1.7.2"
