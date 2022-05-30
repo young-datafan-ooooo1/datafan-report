@@ -48,11 +48,13 @@
           <a-date-picker
             v-else-if="isDateFilter"
             v-model="row.fixedValue"
+            value-format="YYYY-MM-DD"
           />
           <a-date-picker
             v-else-if="isDateTimeFilter"
             v-model="row.fixedValue"
             format="YYYY-MM-DD HH:mm:ss"
+            value-format="YYYY-MM-DD"
           />
           <a-input
             v-else

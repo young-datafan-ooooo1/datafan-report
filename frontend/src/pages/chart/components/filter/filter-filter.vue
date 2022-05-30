@@ -121,8 +121,33 @@ export default {
         })
       }
     },
-    filterList(value) {
-      eventBus.$emit(eventBusType.WORKSPACE_PAYLOAD, 'filter', value)
+    filterList: {
+      handler(value) {
+        const filterInfo = value.map(item => {
+          const { dateType } = item
+          const lowerDateType = dateType?.toLowerCase()
+
+          if (['date', 'datetime'].includes(lowerDateType)) {
+            const filters = item.filters.map(filterItem => {
+              return {
+                ...filterItem,
+                fixedValue: moment(filterItem?.fixedValue).format('YYYY-MM-DD')
+              }
+            })
+
+            return {
+              ...item,
+              filters
+            }
+          } else {
+            return {
+              ...item
+            }
+          }
+        })
+        eventBus.$emit(eventBusType.WORKSPACE_PAYLOAD, 'filter', filterInfo)
+      },
+      deep: true
     }
   },
 
