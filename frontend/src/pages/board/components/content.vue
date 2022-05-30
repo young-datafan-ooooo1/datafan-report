@@ -294,7 +294,8 @@ export default {
 
         return {
           title,
-          field
+          field,
+          minWidth: 120
         }
       })
 

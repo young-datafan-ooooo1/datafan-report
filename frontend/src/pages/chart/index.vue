@@ -134,12 +134,12 @@ export default {
         },
         {
           title: '图表名称',
-          minwidth: 150,
+          width: 220,
           field: 'reportTittle'
         },
         {
           title: '图表类型',
-          width: 120,
+          width: 100,
           field: 'chartName'
         },
         {
@@ -149,7 +149,7 @@ export default {
         },
         {
           title: '来源项目名称',
-          minwidth: 150,
+          width: 220,
           field: 'sourceProjectName'
         },
         {
@@ -169,7 +169,7 @@ export default {
         },
         {
           title: '创建时间',
-          width: 150,
+          width: 180,
           field: 'createTime'
         },
         {
@@ -179,11 +179,11 @@ export default {
         },
         {
           title: '修改时间',
-          width: 150,
+          width: 180,
           field: 'updateTime'
         },
         {
-          width: 180,
+          width: 150,
           title: '操作',
           fixed: 'right',
           align: 'center',
