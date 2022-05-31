@@ -234,6 +234,7 @@ export default {
       const { data, index } = value
 
       this.filterList[index].filters = data
+      this.filterList.splice(0, 0)
     }
   }
 }
