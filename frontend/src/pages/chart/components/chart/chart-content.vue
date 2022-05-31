@@ -448,7 +448,7 @@ export default {
           const url = window.URL.createObjectURL(new Blob([res.data]))
           const link = document.createElement('a')
           link.href = url
-          link.setAttribute('download', 'ceshi')
+          link.setAttribute('download', `${reportTittle || '报表数据'}.xlsx`)
           document.body.appendChild(link)
           link.click()
           document.body.removeChild(link)
@@ -458,7 +458,7 @@ export default {
           const url = window.URL.createObjectURL(new Blob([res.data]))
           const link = document.createElement('a')
           link.href = url
-          link.setAttribute('download', `${reportTittle}.xlsx`)
+          link.setAttribute('download', `${reportTittle || '报表数据'}.xlsx`)
           document.body.appendChild(link)
           link.click()
           document.body.removeChild(link)
