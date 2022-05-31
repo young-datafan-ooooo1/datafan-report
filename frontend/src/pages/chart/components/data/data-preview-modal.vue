@@ -7,7 +7,7 @@
     v-model="isModalShow"
     class="data-preview-modal"
     :title="'数据预览'"
-    width="1200px"
+    width="1000px"
     :footer="null"
     @cancel="onCancel"
   >
@@ -60,7 +60,7 @@ export default {
       if (this.config?.columnListVOS) {
         const oneWorldLength = 14
         const gap = 25
-        const tableWholeWidth = 1150
+        const tableWholeWidth = 950
         let columns = this.config.columnListVOS.map(item => {
           const { columnChinsesName: title, columnChinsesName: field } = item
           const width = title.length * oneWorldLength + gap
