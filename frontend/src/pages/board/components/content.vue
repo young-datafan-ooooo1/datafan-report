@@ -412,6 +412,12 @@ export default {
 
           return
         }
+
+        if (dashboardName?.length > 50) {
+          this.$message.warn('看板名称不能大于50字符')
+
+          return
+        }
         // 校验名称重复
         const { data: { content: isRepeat = true }} = await this.onCheckBoardNameReport()
         if (isRepeat) {
