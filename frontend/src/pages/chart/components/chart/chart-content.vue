@@ -333,6 +333,12 @@ export default {
           return
         }
 
+        if (this.reportInfo.reportTittle?.length > 50) {
+          this.$message.warn('图表名称不能大于50字符')
+
+          return
+        }
+
         // 校验名称重复
         const { data: { content: isRepeat = true }} = await this.onCheckReportNameReport()
         if (isRepeat) {
