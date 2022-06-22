@@ -2066,16 +2066,16 @@
 
 "@young-datafan/datafan-ui@~1.5.0":
   version "1.5.106"
-  resolved "http://mvn.senses-ai.com:8081/repository/npm-group/@young-datafan/datafan-ui/-/datafan-ui-1.5.106.tgz#70a06a81c3adc9b3a528b9313971f6e99951b100"
+  resolved "https://registry.npmjs.org/@young-datafan/datafan-ui/-/datafan-ui-1.5.106.tgz#70a06a81c3adc9b3a528b9313971f6e99951b100"
   integrity sha512-ZraGw+Qn7VmONbXUuee5oPs8MRabNg6kPBqIwPVSEi8ud2B1EpxeprrjnUOtuHLInBGA/Gzrw+cE2buC/7VySw==
   dependencies:
     "@young-datafan/datafan-ui" "~1.5.0"
     ant-design-vue "1.7.2"
 
 "@young-datafan/datafan-ui@~1.6.0":
-  version "1.6.121"
-  resolved "http://mvn.senses-ai.com:8081/repository/npm-group/@young-datafan/datafan-ui/-/datafan-ui-1.6.121.tgz#fef8f4423305dc40249489dc29b00c109df1556f"
-  integrity sha512-mG958rTu1kYCXlvlsqYLQtuis/Nmq6JgV7+St/lgHdLLEIB/5RuPeKjcHUYCqo4D5ZU/6k/J3TqtLe5DiTIQkA==
+  version "1.6.122"
+  resolved "https://registry.npmjs.org/@young-datafan/datafan-ui/-/datafan-ui-1.6.122.tgz#a40b0d944a395559d0a7d239ba39a7a776204dfa"
+  integrity sha512-KACR+yFKNwlot0lEqkhI6naJKDzP0voWJPyoZAKPsC6OamFYDvZ676jWn8pE2BX3Aqtk2RVtj3mGuoankD2YEg==
   dependencies:
     "@young-datafan/datafan-ui" "~1.5.0"
     ant-design-vue "1.7.2"

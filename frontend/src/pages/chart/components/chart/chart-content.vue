@@ -19,6 +19,12 @@
             :disabled="isDisabledSearch"
             @click="onSave"
           >保存</a-button>
+          <a-button
+            class="search-btn flex-box-col"
+            type="primary"
+            :disabled="isDisabledSearch"
+            @click="onShowSaveAsModal"
+          >另存为</a-button>
         </div>
         <ModifyInput
           v-model="reportInfo.reportTittle"
@@ -69,6 +75,26 @@
         </div>
       </div>
     </a-spin>
+    <a-base-modal
+      v-model="isShowSaveAsModal"
+      class="save-as-modal"
+      title="另存为"
+      width="500px"
+      @cancel="onSaveAsCancel"
+      @ok="onSaveAsOk"
+    >
+      <a-form-model
+        ref="saveAsForm"
+        :model="saveAsForm"
+        :rules="saveAsRules"
+        :label-col="{ span: 4 }"
+        :wrapper-col="{ span: 18 }"
+      >
+        <a-form-model-item ref="name" label="图表名称" prop="name">
+          <a-input v-model="saveAsForm.name" />
+        </a-form-model-item>
+      </a-form-model>
+    </a-base-modal>
   </div>
 </template>
 
@@ -90,6 +116,22 @@ export default {
   inject: ['chartInfo'],
 
   data() {
+    const validateName = (rule, value, callback) => {
+      if (value) {
+        const payload = {
+          reportTittle: value
+        }
+        ChartApiServices.onCheckReportName(payload).then(res => {
+          if (res.data.content) {
+            callback(new Error('图表名称已存在'))
+          } else {
+            callback()
+          }
+        })
+      } else {
+        callback()
+      }
+    }
     return {
       workspacePayload: {},
       chartData: [],
@@ -103,11 +145,24 @@ export default {
       querySqlNoLimit: '',
       isShowDownloadBtn: false,
       escatReportId: '',
-      stepFields: []
+      stepFields: [],
+      isShowSaveAsModal: false,
+      saveAsForm: {
+        name: ''
+      },
+      saveAsRules: {
+        name: [
+          { required: true, message: '请输入图表名称', trigger: 'blur' },
+          { validator: validateName, trigger: 'blur' }
+        ]
+      }
     }
   },
 
   computed: {
+    isEdit() {
+      return ['edit'].includes(this.$route.query.type)
+    },
     // 图表类型
     chartType() {
       return this.chartInfo.type
@@ -383,6 +438,44 @@ export default {
         }
       }, 0)
     },
+    onShowSaveAsModal() {
+      if (this.reportInfo.reportTittle) {
+        this.saveAsForm.name = `${this.reportInfo.reportTittle}（副本）`
+      }
+      this.isShowSaveAsModal = true
+    },
+    onSaveAsCancel() {
+      this.$refs.saveAsForm.resetFields()
+
+      this.isShowSaveAsModal = false
+    },
+    onSaveAsOk() {
+      this.$refs.saveAsForm.validate(valid => {
+        if (valid) {
+          const saveAsName = this.saveAsForm.name
+          const payload = this.getSavePayload()
+          payload.reportVO.tittle = saveAsName
+          payload.reportVO.reportId = undefined
+
+          this.chartLoading = true
+          ChartApiServices.saveReports(payload).then(res => {
+            const { data: { content: id }} = res
+            this.$message.success('另存成功')
+            this.onSaveAsCancel()
+            if (this.isEdit) {
+              this.$router.push({ path: '/chart/workspace', query: { id, type: 'edit' }})
+            } else {
+              this.escatReportId = id
+              this.reportInfo.reportTittle = saveAsName
+            }
+          }).catch(() => {
+            this.$message.error('另存失败')
+          }).finally(() => {
+            this.chartLoading = false
+          })
+        }
+      })
+    },
     /**
      * @description: 获取保存时的参数
      * @return {Object} 参数信息
@@ -559,6 +652,11 @@ export default {
     }
     .down-btn {
       width: 14px;
+    }
+  }
+  .save-as-modal {
+    /deep/.ant-modal-body {
+      height: 120px;
     }
   }
 </style>
