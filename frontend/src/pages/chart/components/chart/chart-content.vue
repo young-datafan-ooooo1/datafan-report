@@ -309,7 +309,7 @@ export default {
         const { index: metrics = [], column = [], row = [] } = this.workspacePayload
         const columnList = [...column, ...row, ...metrics]
         let columns = columnList.map(item => {
-          const { name: title, name: field } = item
+          const { showName: title, showName: field } = item
           const width = title.length * oneWorldLength + gap
 
           return {

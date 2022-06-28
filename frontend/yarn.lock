@@ -2073,9 +2073,9 @@
     ant-design-vue "1.7.2"
 
 "@young-datafan/datafan-ui@~1.6.0":
-  version "1.6.122"
-  resolved "https://registry.npmjs.org/@young-datafan/datafan-ui/-/datafan-ui-1.6.122.tgz#a40b0d944a395559d0a7d239ba39a7a776204dfa"
-  integrity sha512-KACR+yFKNwlot0lEqkhI6naJKDzP0voWJPyoZAKPsC6OamFYDvZ676jWn8pE2BX3Aqtk2RVtj3mGuoankD2YEg==
+  version "1.6.123"
+  resolved "https://registry.npmjs.org/@young-datafan/datafan-ui/-/datafan-ui-1.6.123.tgz#e486faaecfd6b10b4a185991ce330cb629762c90"
+  integrity sha512-xm/YMc3nThzzR8u/wuB4w150NGjBGmTN6ucaPXgeoPfH3Bsd7OakECnQtGn0FBuLd5fa9ZLET+r2Rb3GfzjL0A==
   dependencies:
     "@young-datafan/datafan-ui" "~1.5.0"
     ant-design-vue "1.7.2"
@@ -11373,10 +11373,10 @@ vuex@^3.4.0:
   resolved "http://mvn.senses-ai.com:8081/repository/npm-group/vuex/-/vuex-3.6.2.tgz"
   integrity sha1-I2vAhqhww655lG8QfxbeWdWJXnE=
 
-vxe-table@^3.3.10:
-  version "3.5.4"
-  resolved "http://mvn.senses-ai.com:8081/repository/npm-group/vxe-table/-/vxe-table-3.5.4.tgz"
-  integrity sha512-P5zrj3yciuYT+lGaWzi6LvDd3t6ZHbwJ2Rict7GvFmo+6pDo4NXNJujBQEXaY2ndgDofD415fawPzhJqWg8ivQ==
+vxe-table@3.5.8:
+  version "3.5.8"
+  resolved "https://registry.npmjs.org/vxe-table/-/vxe-table-3.5.8.tgz#eeac1f103f2bddc27085d98454f236a817ec8cda"
+  integrity sha512-oozFUylUKUFXm7u2aWz5+rJaBRxgqFqKxc2C8Gw3qOTsU7g0qBj1K5cKB4b0rgHxxtAkMz0HL8cq3rmZbtS81w==
 
 warning@^4.0.0:
   version "4.0.3"
