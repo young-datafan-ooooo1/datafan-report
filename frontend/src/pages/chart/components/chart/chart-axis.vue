@@ -226,6 +226,8 @@ export default {
       }
 
       this.$set(handleItem, 'showName', showName)
+      this.$set(handleItem, 'name', showName)
+      this.$set(handleItem, 'statisticsType', undefined)
 
       this.$set(handleItem, 'setting', setting)
       this.$set(handleItem, 'momentId', moment().format('x'))
