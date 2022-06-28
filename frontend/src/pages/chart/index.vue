@@ -134,7 +134,7 @@ export default {
         },
         {
           title: '图表名称',
-          width: 220,
+          minWidth: 220,
           field: 'reportTittle'
         },
         {
