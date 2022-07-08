@@ -217,6 +217,9 @@ export default {
         '': '',
         undefined: ''
       }
+      // 需要先置空statisticsType 否则显示名称逻辑会根据它生成无效字符串
+      this.$set(handleItem, 'statisticsType', undefined)
+      this.$set(handleItem, 'sort', undefined)
       const nameInfo = this.dateSetting.find(settingItem => settingItem.value === handleItem.statisticsType)
       let showName = ''
       if (nameInfo) {
@@ -226,8 +229,7 @@ export default {
       }
 
       this.$set(handleItem, 'showName', showName)
-      this.$set(handleItem, 'name', showName)
-      this.$set(handleItem, 'statisticsType', undefined)
+      this.$set(handleItem, 'name', `${handleItem.columnChinsesName}`)
 
       this.$set(handleItem, 'setting', setting)
       this.$set(handleItem, 'momentId', moment().format('x'))
@@ -258,6 +260,7 @@ export default {
       this.$set(item, 'statisticsType', value)
       this.$set(item, 'sort', sort)
       this.$set(item, 'showName', `${nameLabel}(${item.columnChinsesName}${sortIcon[sort]})`)
+      this.$set(item, 'name', `${nameLabel}(${item.columnChinsesName})`)
     },
     onJustChangeSort(item, sort) {
       const sortIcon = {
