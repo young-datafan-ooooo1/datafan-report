@@ -259,6 +259,7 @@ export default {
 
       this.$set(item, 'statisticsType', value)
       this.$set(item, 'sort', sort)
+      this.$set(item, 'radio', sort)
       this.$set(item, 'showName', `${nameLabel}(${item.columnChinsesName}${sortIcon[sort]})`)
       this.$set(item, 'name', `${nameLabel}(${item.columnChinsesName})`)
     },
@@ -270,6 +271,7 @@ export default {
       }
 
       this.$set(item, 'sort', sort)
+      this.$set(item, 'radio', sort)
       this.$set(item, 'showName', `${item.columnChinsesName}${sortIcon[sort]}`)
     }
   }
