@@ -166,6 +166,7 @@ export default {
 
       this.$set(handleItem, 'setting', this.indexInfo[type].setting)
       this.$set(handleItem, 'radio', '')
+      this.$set(handleItem, 'sort', '')
       this.$set(handleItem, 'statisticsType', statisticsType)
       this.$set(handleItem, 'showName', `${nameLabel}(${handleItem.columnChinsesName}${sortIcon[handleItem.radio]})`)
       this.$set(handleItem, 'name', `${nameLabel}(${handleItem.columnChinsesName})`)
@@ -221,6 +222,7 @@ export default {
 
       this.$set(item, 'statisticsType', value)
       this.$set(item, 'radio', sort)
+      this.$set(item, 'sort', sort)
       this.$set(item, 'showName', `${nameLabel}(${item.columnChinsesName}${sortIcon[sort]})`)
       this.$set(item, 'name', `${nameLabel}(${item.columnChinsesName})`)
     }
