@@ -220,6 +220,7 @@ export default {
       // 需要先置空statisticsType 否则显示名称逻辑会根据它生成无效字符串
       this.$set(handleItem, 'statisticsType', undefined)
       this.$set(handleItem, 'sort', undefined)
+      this.$set(handleItem, 'radio', undefined)
       const nameInfo = this.dateSetting.find(settingItem => settingItem.value === handleItem.statisticsType)
       let showName = ''
       if (nameInfo) {
