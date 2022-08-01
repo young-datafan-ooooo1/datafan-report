@@ -179,7 +179,7 @@ export default {
     veChartData() {
       const { index = [], column = [], row = [] } = this.workspacePayload
       const metrics = index.map(item => item.name)
-      const dimension = [...column, ...row].map(item => item.columnChinsesName)
+      const dimension = [...column, ...row].map(item => item.name)
 
       const isWaterfall = ['waterfall'].includes(this.chartType)
       return {
@@ -332,14 +332,14 @@ export default {
       } else if (this.isMultidimensionalTable) {
         const { row = [], column = [] } = this.workspacePayload
         const rowFields = row.map(item => {
-          const { columnChinsesName: label } = item
+          const { name: label } = item
           return {
             label,
             getter: item => item[label]
           }
         })
         const colFields = column.map(item => {
-          const { columnChinsesName: label } = item
+          const { name: label } = item
           return {
             label,
             getter: item => item[label]
@@ -351,7 +351,7 @@ export default {
         const { chartType } = this
         const { index = [], column = [], row = [] } = this.workspacePayload
         const metrics = index.map(item => item.name)
-        const dimension = [...column, ...row].map(item => item.columnChinsesName)
+        const dimension = [...column, ...row].map(item => item.name)
 
         this.chartConfig = {
           settings: {
