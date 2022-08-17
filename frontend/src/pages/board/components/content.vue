@@ -22,108 +22,110 @@
         >导出pdf</a-button>
       </div>
     </div>
-    <Draggable
-      v-model="contentData"
-      class="container flex-box-row"
-      :options="{group:'layout', disabled: false}"
-    >
-      <div
-        v-for="(contentItem, contentIndex) in contentData"
-        :key="contentIndex"
-        class="container-item flex-box-row"
+    <div class="container flex-box-row">
+      <Draggable
+        v-model="contentData"
+        class="container-draggable"
+        :options="{group:'layout', disabled: false}"
       >
-        <div v-if="contentItem.type === 'grid'" class="grid-box flex-box flex-box--center-items flex-box-row">
-          <div class="delete-icon">
-            <a-icon type="delete" @click="onDelectContent(contentIndex)" />
-          </div>
-          <a-row class="flex-box__flex flex-box-row common-move content-row-box">
-            <template v-for="gridItem in contentItem.items">
-              <a-col :key="gridItem.id" :span="gridItem.width">
-                <!-- 当内容长度为1时，不能再更新 -->
-                <Draggable
-                  :list="gridItem.chartContent"
-                  :options="{ group: { name: 'chart', put: gridItem.chartContent.length === 1 ? false : true }}"
-                  class="dashborad-grid--full"
-                  @add="drawChart(gridItem)"
-                >
-                  <template v-for="chartItem in gridItem.chartContent">
-                    <div :key="chartItem.reportId" class="chart-box flex-box flex-box--column">
-                      <a-spin :spinning="gridItem.loading" class="common-loading">
-                        <div class="chart-title flex-box flex-box--between-justify">
-                          <div class="title-msg"> {{ chartItem.reportTitle }}</div>
-                          <div class="title-handle">
-                            <a-icon class="flex-box-col-small" type="sync" @click="onRefresh(gridItem)" />
-                            <a-icon class="flex-box-col-small" type="delete" @click="onDelectChart(gridItem)" />
+        <div
+          v-for="(contentItem, contentIndex) in contentData"
+          :key="contentIndex"
+          class="container-item flex-box-row"
+        >
+          <div v-if="contentItem.type === 'grid'" class="grid-box flex-box flex-box--center-items flex-box-row">
+            <div class="delete-icon">
+              <a-icon type="delete" @click="onDelectContent(contentIndex)" />
+            </div>
+            <a-row class="flex-box__flex flex-box-row common-move content-row-box">
+              <template v-for="gridItem in contentItem.items">
+                <a-col :key="gridItem.id" :span="gridItem.width">
+                  <!-- 当内容长度为1时，不能再更新 -->
+                  <Draggable
+                    :list="gridItem.chartContent"
+                    :options="{ group: { name: 'chart', put: gridItem.chartContent.length === 1 ? false : true }}"
+                    class="dashborad-grid--full"
+                    @add="drawChart(gridItem)"
+                  >
+                    <template v-for="chartItem in gridItem.chartContent">
+                      <div :key="chartItem.reportId" class="chart-box flex-box flex-box--column">
+                        <a-spin :spinning="gridItem.loading" class="common-loading">
+                          <div class="chart-title flex-box flex-box--between-justify">
+                            <div class="title-msg"> {{ chartItem.reportTitle }}</div>
+                            <div class="title-handle">
+                              <a-icon class="flex-box-col-small" type="sync" @click="onRefresh(gridItem)" />
+                              <a-icon class="flex-box-col-small" type="delete" @click="onDelectChart(gridItem)" />
+                            </div>
                           </div>
-                        </div>
-                        <div v-if="chartItem.chartId === 'twoDimensionalTable'" class="chart-view gride-table">
-                          <DTable
-                            class="flex-box-row"
-                            v-bind="{
-                              ...chartItem.config
-                            }"
-                            :data="chartItem.chartData"
-                            border
-                            size="small"
-                            hide-pager
-                            height="auto"
-                          />
-                        </div>
-                        <div v-else-if="chartItem.chartId === 'Multidimensional'" class="chart-view multi-table pivot-table-contain">
-                          <template v-for="(metrics, metricsIndex) in chartItem.charact">
-                            <PivotTable
-                              :key="metricsIndex"
+                          <div v-if="chartItem.chartId === 'twoDimensionalTable'" class="chart-view gride-table">
+                            <DTable
+                              class="flex-box-row"
+                              v-bind="{
+                                ...chartItem.config
+                              }"
+                              :data="chartItem.chartData"
+                              border
+                              size="small"
+                              hide-pager
+                              height="auto"
+                            />
+                          </div>
+                          <div v-else-if="chartItem.chartId === 'Multidimensional'" class="chart-view multi-table pivot-table-contain">
+                            <template v-for="(metrics, metricsIndex) in chartItem.charact">
+                              <PivotTable
+                                :key="metricsIndex"
+                                :data="chartItem.chartData"
+                                v-bind="{
+                                  ...chartItem.config
+                                }"
+                                :reducer="getReducer(metrics)"
+                              />
+                            </template>
+                          </div>
+                          <div v-else class="chart-view chart">
+                            <ve-chart
+                              :colors="colorList"
                               :data="chartItem.chartData"
                               v-bind="{
                                 ...chartItem.config
                               }"
-                              :reducer="getReducer(metrics)"
                             />
-                          </template>
-                        </div>
-                        <div v-else class="chart-view chart">
-                          <ve-chart
-                            :colors="colorList"
-                            :data="chartItem.chartData"
-                            v-bind="{
-                              ...chartItem.config
-                            }"
-                          />
-                        </div>
-                      </a-spin>
-                    </div>
-                  </template>
-                </Draggable>
-              </a-col>
-            </template>
-          </a-row>
-        </div>
+                          </div>
+                        </a-spin>
+                      </div>
+                    </template>
+                  </Draggable>
+                </a-col>
+              </template>
+            </a-row>
+          </div>
 
-        <div v-if="contentItem.type === 'border'" class="border-box flex-box flex-box--center-items flex-box-row">
-          <div class="delete-icon">
-            <a-icon type="delete" @click="onDelectContent(contentIndex)" />
+          <div v-if="contentItem.type === 'border'" class="border-box flex-box flex-box--center-items flex-box-row">
+            <div class="delete-icon">
+              <a-icon type="delete" @click="onDelectContent(contentIndex)" />
+            </div>
+            <div :class="['border-item', 'common-move', `${contentItem.value}-type`]" />
           </div>
-          <div :class="['border-item', 'common-move', `${contentItem.value}-type`]" />
-        </div>
 
-        <div v-if="contentItem.type === 'title'" class="title-box flex-box flex-box--center-items flex-box-row">
-          <div class="delete-icon">
-            <a-icon type="delete" @click="onDelectContent(contentIndex)" />
-          </div>
-          <div class="title-content">
-            <ModifyInput
-              v-if="contentItem.name"
-              v-model="contentItem.name"
-              class="msg flex-box-col-small"
-              :style="getTitleStyle(contentItem)"
-              @on-change="onChangeTitle($event, contentItem)"
-            />
-            <colorPicker v-model="contentItem.color" class="color flex-box-col-small" />
-            <a-input-number v-model="contentItem.fontSize" class="size flex-box-col-small" />
+          <div v-if="contentItem.type === 'title'" class="title-box flex-box flex-box--center-items flex-box-row">
+            <div class="delete-icon">
+              <a-icon type="delete" @click="onDelectContent(contentIndex)" />
+            </div>
+            <div class="title-content">
+              <ModifyInput
+                v-if="contentItem.name"
+                v-model="contentItem.name"
+                class="msg flex-box-col-small"
+                :style="getTitleStyle(contentItem)"
+                @on-change="onChangeTitle($event, contentItem)"
+              />
+              <colorPicker v-model="contentItem.color" class="color flex-box-col-small" />
+              <a-input-number v-model="contentItem.fontSize" class="size flex-box-col-small" />
+            </div>
           </div>
         </div>
-      </div>
-    </Draggable>
+      </Draggable>
+    </div>
   </div>
 </template>
 
@@ -203,7 +205,7 @@ export default {
      * @description: 导出pdf
      */
     onExportPdf() {
-      exportPdf('.content-container', this.dashboardInfo.dashboardName)
+      exportPdf('.container-draggable', this.dashboardInfo.dashboardName)
     },
     /**
      * @description: 修改标题
@@ -607,6 +609,9 @@ export default {
     flex: 1;
     width: 100%;
     height: 0;
+    .container-draggable {
+      min-height: 100%;
+    }
     .container-item {
       .delete-icon {
         flex-shrink: 0;
