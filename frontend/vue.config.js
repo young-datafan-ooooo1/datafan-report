@@ -29,7 +29,7 @@ module.exports = {
       }
     }
   },
-  transpileDependencies: ['@sense70/*', '@young-datafan/*'],
+  transpileDependencies: ['@datamp/*', '@young-datafan/*'],
   pluginOptions: {
     'style-resources-loader': {
       preProcessor: 'less',

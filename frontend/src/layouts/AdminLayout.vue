@@ -6,7 +6,7 @@
         node-en-name="dashboard"
         node-name="图表看板平台"
         to-path="/home"
-        :logo-url="ASSETS_URL + '/common/img/stella-logo.png'"
+        :logo-url="ASSETS_URL + '/common/img/datamp-logo.png'"
       />
     </a-layout-header>
     <a-layout>
@@ -42,7 +42,7 @@
 <script>
 import Drawer from '../components/tool/Drawer'
 import { mapState, mapMutations, mapGetters } from 'vuex'
-import { watermark } from '@sense70/common-component-vue'
+import { watermark } from '@datamp/common-component'
 
 import { ASSETS_URL } from '@/services/api'
 // const minHeight = window.innerHeight - 64 - 122

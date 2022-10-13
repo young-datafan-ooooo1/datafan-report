@@ -3,7 +3,7 @@
  * @Date: 2021-07-07 16:05:37
   */
 import { SYSTEM_MANAGER } from '@/services/api'
-import { request, METHOD } from '@sense70/common-component-vue'
+import { request, METHOD } from '@datamp/common-component'
 
 const BASE_URL = SYSTEM_MANAGER + '/permission'
 

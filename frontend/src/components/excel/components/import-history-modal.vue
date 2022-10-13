@@ -37,7 +37,7 @@
       <!-- 表格 -->
       <div class="table-container">
         <vxe-grid
-          ref="senseTable"
+          ref="datampTable"
           v-bind="gridOptions"
           :columns="columns"
           :data="table.list"
@@ -104,11 +104,11 @@ export default {
         resizable: true,
         autoResize: true,
         stripe: true,
-        class: 'sense-table',
-        headerCellClassName: 'sense-table-header-cell',
-        headerRowClassName: 'sense-table-header-row',
-        cellClassName: 'sense-table-cell',
-        rowClassName: 'sense-table-row',
+        class: 'datamp-table',
+        headerCellClassName: 'datamp-table-header-cell',
+        headerRowClassName: 'datamp-table-header-row',
+        cellClassName: 'datamp-table-cell',
+        rowClassName: 'datamp-table-row',
         emptyRender: { name: 'no-data', size: 'small' },
         sortConfig: {
           trigger: 'cell',

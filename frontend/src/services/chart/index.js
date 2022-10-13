@@ -3,7 +3,7 @@
  * @Date: 2021-12-08 18:18:17
   */
 import { REPORT } from '@/services/api'
-import { request, METHOD } from '@sense70/common-component-vue'
+import { request, METHOD } from '@datamp/common-component'
 
 const ChartApiServices = {
   /**

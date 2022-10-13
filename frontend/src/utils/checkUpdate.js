@@ -8,9 +8,9 @@ const path = require('path')
 
 const dependencies = packageInfo.dependencies
 const MODULES = [
-  '@sense70/common-component-vue',
-  '@sense70/common-dsmanage-vue',
-  '@sense70/common-sysmanage-vue',
+  '@datamp/common-component',
+  '@datamp/common-dsmanage',
+  '@datamp/common-sysmanage',
   '@young-datafan/datafan-ui'
 ].filter((i) => Object.keys(dependencies).includes(i))
 const NEED_UPDATE = []
@@ -23,7 +23,7 @@ MODULES.forEach((name) => {
       packageJson(name, {
         // 语义化版本标签
         version: packageInfo.dependencies[name],
-        registryUrl: 'http://mvn.senses-ai.com:8081/repository/npm-group/'
+        registryUrl: 'http://192.168.10.175:8081/repository/npm-group/'
       })
         .then((res) => {
           if (semver.lt(require(`${name}/package.json`).version, res.version)) {
@@ -32,7 +32,7 @@ MODULES.forEach((name) => {
             })
               .toString()
               .trim()
-            str.includes(name.replace('@sense70/', '').replace('@young-datafan/', ''))
+            str.includes(name.replace('@datamp/', '').replace('@young-datafan/', ''))
               ? NEED_PULL.push(name)
               : NEED_UPDATE.push(name)
           }

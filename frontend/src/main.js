@@ -12,7 +12,7 @@ import { initI18n } from '@/utils/i18n'
 import 'moment/locale/zh-cn'
 import { loginIgnore } from '@/router/index'
 import Cookie from 'js-cookie'
-import { bootstrap, initialRouter, patchComponent } from '@sense70/common-component-vue'
+import { bootstrap, initialRouter, patchComponent } from '@datamp/common-component'
 const router = initialRouter(require('@/router/config').default)
 import './static/css/utilities.min.css'
 import './theme/index.less'
@@ -30,12 +30,12 @@ import '@young-datafan/datafan-ui/assets/style/index.less'
 import '@young-datafan/datafan-ui/assets/style/scrollbar.less'
 // 字体图标库
 import '@young-datafan/datafan-ui/assets/fonts/iconfont.css'
-import '@sense70/common-component-vue/assets/page-table.scss'
+import '@datamp/common-component/assets/page-table.scss'
 
 // 内部组件库
-import SenseComponent from '@sense70/common-component-vue'
+import DatampComponent from '@datamp/common-component'
 // 全局组件注册
-Vue.use(SenseComponent)
+Vue.use(DatampComponent)
 Vue.use(VXETable)
 
 Vue.use(DataFanUI)

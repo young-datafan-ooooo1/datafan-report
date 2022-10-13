@@ -132,7 +132,7 @@ export default {
         })
         return vnodes
       }
-      return !icon || icon === 'none' ? null : h('i', { class: ['senses-icons ', icon], attrs: { style: 'margin-right:10px' }})
+      return !icon || icon === 'none' ? null : h('i', { class: ['datamp-icons ', icon], attrs: { style: 'margin-right:10px' }})
     },
     renderMenuItem: function(h, menu) {
       let tag = 'router-link'
@@ -142,7 +142,7 @@ export default {
         config = { attrs: { style: 'overflow:hidden;white-space:normal;text-overflow:clip;position:relative', href: menu.meta.link, target: '_blank' }}
       }
       const iconTag = menu.icon ? 'i' : 'span'
-      const iconClass = menu.icon ? ['senses-icons ', `senses-icons-${menu.icon}`] : 'dotted'
+      const iconClass = menu.icon ? ['datamp-icons ', `datamp-icons-${menu.icon}`] : 'dotted'
       const iconStyle = menu.icon ? { style: 'margin-right:10px' } : { style: 'vertical-align: middle' }
       return h(
         Item, { key: menu.fullPath },
@@ -174,7 +174,7 @@ export default {
       const this_ = this
       const subItem = [h('span', { slot: 'title', attrs: { style: 'overflow:hidden;white-space:normal;text-overflow:clip;' }},
         [
-          this.renderIcon(h, `senses-icons-${menu.icon}`, menu.fullPath),
+          this.renderIcon(h, `datamp-icons-${menu.icon}`, menu.fullPath),
           // this.$t(getI18nKey(menu.fullPath))
           menu.name
         ]

@@ -20,7 +20,7 @@
         <div class="table-container">
           <DTable
             v-bind="tableOptions"
-            ref="senseTable"
+            ref="datampTable"
             :columns="columns"
             @page-change="changePage"
           />

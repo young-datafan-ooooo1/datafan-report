@@ -1,5 +1,5 @@
 import { LOGIN, ROUTES } from '@/services/api'
-import { request, METHOD, removeAuthorization } from '@sense70/common-component-vue'
+import { request, METHOD, removeAuthorization } from '@datamp/common-component'
 
 /**
  * 登录服务
