@@ -11,7 +11,7 @@ import BlankView from '@/layouts/BlankView'
 //   UserManager,
 //   SysAccessLog,
 //   DeptManager
-// } from '@sense70/common-sysmanage-vue'
+// } from '@datamp/common-sysmanage'
 
 // 路由配置
 const options = {

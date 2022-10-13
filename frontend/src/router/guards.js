@@ -1,6 +1,6 @@
 import { hasAuthority } from '@/utils/authority-utils'
 import { loginIgnore } from '@/router/index'
-import { checkAuthorization } from '@sense70/common-component-vue'
+import { checkAuthorization } from '@datamp/common-component'
 import NProgress from 'nprogress'
 
 NProgress.configure({ showSpinner: false })

@@ -16,7 +16,7 @@
 <script>
 import { mapGetters } from 'vuex'
 // import { logout } from '@/services/user'
-import { logout } from '@sense70/common-component-vue'
+import { logout } from '@datamp/common-component'
 import { ASSETS_URL } from '@/services/api'
 
 export default {

@@ -1,7 +1,7 @@
 <template>
   <div class="common-layout">
     <div class="logo-title">
-      <img style="width: 100px" :src="ASSETS_URL+ '/common/img/stella-logo.png'">
+      <img style="width: 100px" :src="ASSETS_URL+ '/common/img/datamp-logo.png'">
     </div>
     <div class="logo-body" :style="`background: url(${ASSETS_URL}/common/img/login-back.png) no-repeat;`">
       <div class="login-back" :style="`background: url(${ASSETS_URL}/common/img/login-main.png) no-repeat;`" />
@@ -70,7 +70,7 @@
 
 <script>
 import { login } from '@/services/user'
-import { setAuthorization } from '@sense70/common-component-vue'
+import { setAuthorization } from '@datamp/common-component'
 import { mapMutations } from 'vuex'
 import Cookie from 'js-cookie'
 import { ASSETS_URL } from '@/services/api'
@@ -108,8 +108,8 @@ export default {
           const data = {
             username: username,
             password: password,
-            client_id: 'stella-client',
-            client_secret: 'stella-secret',
+            client_id: 'datamp-client',
+            client_secret: 'datamp-secret',
             grant_type: 'password'
           }
           login(data)

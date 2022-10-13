@@ -1,5 +1,5 @@
 import { loadRoutes, loadGuards, setAppOptions } from '@/utils/routerUtil'
-import { loadInterceptors } from '@sense70/common-component-vue'
+import { loadInterceptors } from '@datamp/common-component'
 import guards from '@/router/guards'
 import interceptors from '@/utils/axios-interceptors'
 
