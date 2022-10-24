@@ -11,7 +11,7 @@ let BASE = location.origin + '/api'
 let ASSETS_URL = location.origin + '/static'
 if (process.env.NODE_ENV === 'development') {
   BASE = BASE_URL
-  ASSETS_URL = 'http://192.168.10.241:18180/static'
+  ASSETS_URL = 'http://192.168.10.155:18180/static'
 }
 module.exports = {
   ASSETS_URL,
