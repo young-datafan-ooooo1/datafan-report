@@ -1,12 +1,18 @@
 <template>
   <a-layout :class="['admin-layout']">
     <a-layout-header>
-      <d-header
+      <!-- <d-header
         :menu-data="headMenuData"
         node-en-name="dashboard"
         node-name="图表看板平台"
         to-path="/home"
         :logo-url="ASSETS_URL + '/common/img/datamp-logo.png'"
+      /> -->
+      <admin-header
+        node-en-name="ceres-assets"
+        :menu-data="headMenuData"
+        node-name="图标看板平台"
+        to-path="/homePage"
       />
     </a-layout-header>
     <a-layout>
@@ -40,6 +46,7 @@
 </template>
 
 <script>
+import AdminHeader from './header/AdminHeader'
 import Drawer from '../components/tool/Drawer'
 import { mapState, mapMutations, mapGetters } from 'vuex'
 import { watermark } from '@datamp/common-component'
@@ -49,7 +56,7 @@ import { ASSETS_URL } from '@/services/api'
 
 export default {
   name: 'AdminLayout',
-  components: { Drawer },
+  components: { AdminHeader, Drawer },
   data() {
     return {
       minHeight: window.innerHeight - 65,
