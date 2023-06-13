@@ -32,11 +32,11 @@
       </div>
 
       <div :class="['admin-header__right', headerTheme]">
-        <div class="header-right__info">
+        <!-- <div class="header-right__info">
           <a-tooltip title="帮助" placement="bottom">
             <a-icon type="question-circle-o" @click="open_help" />
           </a-tooltip>
-        </div>
+        </div> -->
         <header-avatar class="header-item header-right__avatar" />
         <a-dropdown placement="bottomCenter">
           <div class="header-right__more">
