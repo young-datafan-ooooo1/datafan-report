@@ -1,5 +1,5 @@
 import { LOGIN, ROUTES } from '@/services/api'
-import { request, METHOD, removeAuthorization } from '@datamp/common-component'
+import { request, METHOD, removeAuthorization } from '@datamp/common-component-hrui'
 
 /**
  * 登录服务

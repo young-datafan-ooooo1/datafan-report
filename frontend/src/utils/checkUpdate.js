@@ -8,9 +8,9 @@ const path = require('path')
 
 const dependencies = packageInfo.dependencies
 const MODULES = [
-  '@datamp/common-component',
+  '@datamp/common-component-hrui',
   '@datamp/common-dsmanage',
-  '@datamp/common-sysmanage',
+  '@datamp/common-sysmanage-hrui',
   '@young-datafan/datafan-ui'
 ].filter((i) => Object.keys(dependencies).includes(i))
 const NEED_UPDATE = []
