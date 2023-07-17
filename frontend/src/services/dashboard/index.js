@@ -3,7 +3,7 @@
  * @Date: 2021-12-08 18:18:17
   */
 import { REPORT } from '@/services/api'
-import { request, METHOD } from '@datamp/common-component'
+import { request, METHOD } from '@datamp/common-component-hrui'
 
 const DashboardApiServices = {
   /**

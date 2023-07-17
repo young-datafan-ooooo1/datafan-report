@@ -3,7 +3,7 @@
  * @Date: 2021-07-12 15:21:01
   */
 import { SYSTEM_MANAGER } from '@/services/api'
-import { request, METHOD } from '@datamp/common-component'
+import { request, METHOD } from '@datamp/common-component-hrui'
 
 export async function getDictByType(params) {
   return request(`${SYSTEM_MANAGER}/dict/query`, METHOD.GET, {

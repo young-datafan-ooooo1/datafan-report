@@ -1,5 +1,5 @@
 import { loadRoutes, loadGuards, setAppOptions } from '@/utils/routerUtil'
-import { loadInterceptors } from '@datamp/common-component'
+import { loadInterceptors } from '@datamp/common-component-hrui'
 import guards from '@/router/guards'
 import interceptors from '@/utils/axios-interceptors'
 
