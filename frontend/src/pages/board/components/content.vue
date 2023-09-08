@@ -248,7 +248,7 @@ export default {
      * @description: 导出pdf
      */
     onExportPdf() {
-      exportPdf('.container-draggable', this.dashboardInfo)
+      exportPdf('.container-draggable', this.dashboardInfo.dashboardName)
     },
     /**
      * @description: 修改标题
