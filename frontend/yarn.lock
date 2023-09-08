@@ -441,7 +441,12 @@
     chalk "^2.0.0"
     js-tokens "^4.0.0"
 
-"@babel/parser@^7.18.4", "@babel/parser@^7.22.5", "@babel/parser@^7.7.0":
+"@babel/parser@^7.18.4":
+  version "7.22.16"
+  resolved "http://192.168.10.175:8081/repository/npm-group/@babel/parser/-/parser-7.22.16.tgz#180aead7f247305cce6551bea2720934e2fa2c95"
+  integrity sha512-+gPfKv8UWeKKeJTUxe59+OobVcrYHETCsORl61EmSkmgymguYk/X5bp7GuUIXaFsc6y++v8ZxPsLSSuujqDphA==
+
+"@babel/parser@^7.22.5", "@babel/parser@^7.7.0":
   version "7.22.5"
   resolved "http://192.168.10.175:8081/repository/npm-group/@babel/parser/-/parser-7.22.5.tgz#721fd042f3ce1896238cf1b341c77eb7dee7dbea"
   integrity sha512-DFZMC9LJUG9PLOclRC32G63UXwzqS2koQC8dkx+PLdmt1xSePYpbT/NbsrJy8Q/muXz7o/h/d4A7Fuyixm559Q==
@@ -1188,9 +1193,9 @@
     vuedraggable "^2.24.3"
 
 "@datamp/common-component@~1.6.0":
-  version "1.6.116"
-  resolved "http://192.168.10.175:8081/repository/npm-group/@datamp/common-component/-/common-component-1.6.116.tgz#4fe911ee3ae20446aefd859375c9f648c623cf25"
-  integrity sha512-EAdY0JatD4gsJgpEb+EXb2RgqtPxivPQXSeGVUzHeKPTivfdLw2whgn6GQ2am9VTLzWVnv6O4bwmzZgk6efZDQ==
+  version "1.6.121"
+  resolved "http://192.168.10.175:8081/repository/npm-group/@datamp/common-component/-/common-component-1.6.121.tgz#fa207a64af0e7eb46f6901c8bdffea7308629dec"
+  integrity sha512-MOW1z5nO51T3jXkk9nSzPV+rSxw70pABOg31FEq/mZi8GXLbVp1gN4WTIrd4lSt+SDWIFA75dECKQLQsHnD8Fg==
   dependencies:
     axios "^0.19.2"
     clipboard "^2.0.6"
@@ -9217,9 +9222,9 @@ postcss@^7.0.0, postcss@^7.0.1, postcss@^7.0.14, postcss@^7.0.26, postcss@^7.0.2
     source-map "^0.6.1"
 
 postcss@^8.4.14:
-  version "8.4.24"
-  resolved "http://192.168.10.175:8081/repository/npm-group/postcss/-/postcss-8.4.24.tgz#f714dba9b2284be3cc07dbd2fc57ee4dc972d2df"
-  integrity sha512-M0RzbcI0sO/XJNucsGjvWU9ERWxb/ytp1w6dKtxTKgixdtQDq4rmx/g8W1hnaheq9jgwL/oyEdH5Bc4WwJKMqg==
+  version "8.4.29"
+  resolved "http://192.168.10.175:8081/repository/npm-group/postcss/-/postcss-8.4.29.tgz#33bc121cf3b3688d4ddef50be869b2a54185a1dd"
+  integrity sha512-cbI+jaqIeu/VGqXEarWkRCCffhjgXc0qjBtXpqJhTBohMUjUQnbBr0xqX3vEKudc4iviTewcJo5ajcec5+wdJw==
   dependencies:
     nanoid "^3.3.6"
     picocolors "^1.0.0"

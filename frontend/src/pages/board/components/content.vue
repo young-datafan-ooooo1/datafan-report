@@ -9,6 +9,21 @@
       <ModifyInput ref="dashboardTitle" v-model="dashboardInfo.dashboardName" class="msg" placeholder="标题" @on-change="onModifyDashboardName" />
       <div class="content-handle">
         <a-button
+          v-if="dashboardInfo.createId === userId"
+          type="primary"
+          ghost
+          shape="round"
+          @click="onShare"
+        >分享</a-button>
+        <a-button
+          v-if="$route.query.viewType === 'shared'"
+          type="primary"
+          ghost
+          shape="round"
+          @click="onSaveDashboard"
+        >另存为</a-button>
+        <a-button
+          v-else
           type="primary"
           ghost
           shape="round"
@@ -126,6 +141,18 @@
         </div>
       </Draggable>
     </div>
+    <!-- 分享弹窗 -->
+    <DTransferModal
+      v-model="share.isShowShareModal"
+      title="分享"
+      :titles="share.titles"
+      :all-data="share.allUserData"
+      :key-data="share.sharedUserList"
+      :loading="share.loading"
+      :confirm-loading="share.confirmLoading"
+      @ok="onShareConfirm"
+      @cancel="onShareCancel"
+    />
   </div>
 </template>
 
@@ -136,6 +163,8 @@ import DashboardApiServices from '@/services/dashboard'
 import ChartApiServices from '@/services/chart'
 import { PivotTable } from '@click2buy/vue-pivot-table'
 import exportPdf from '@/utils/export-pdf'
+import { getCanShareUserListApi, shareReportApi } from '@/services/dashboard-share'
+import Cookies from 'js-cookie'
 
 export default {
   name: 'Content',
@@ -164,10 +193,20 @@ export default {
       loading: false,
       contentData: [],
       dashboardInfo: {
+        createId: undefined,
         dashboardName: undefined
       },
       // isFull: this.$route.query.viewType === 'read'
-      isFull: false
+      isFull: false,
+      share: {
+        titles: ['未分享用户列表', '已分享用户列表'],
+        isShowShareModal: false, // 是否展示分享弹窗
+        confirmLoading: false, // 提交loading状态
+        loading: false, // 列表loading状态
+        allUserData: [], // 所有用户数据
+        sharedUserList: [] // 已分享用户数据
+      },
+      userId: undefined
     }
   },
   computed: {
@@ -176,9 +215,11 @@ export default {
     },
     isAddDashboard() {
       return !this.dashboardId
+    },
+    isShared() {
+      return this.$route.query.viewType === 'shared'
     }
   },
-
   watch: {
     dashboard: {
       handler(value) {
@@ -191,7 +232,9 @@ export default {
       deep: true
     }
   },
-
+  mounted() {
+    this.userId = Number(Cookies.get('userId'))
+  },
   methods: {
     /**
      * @description: 切换全屏
@@ -427,9 +470,8 @@ export default {
 
           return
         }
-
         const payload = this.getDashboardDetailPayload()
-        if (this.isAddDashboard) {
+        if (this.isAddDashboard || this.isShared) {
           this.loading = true
           DashboardApiServices.saveDashboard(payload).then(res => {
             this.$message.success('新增成功')
@@ -481,11 +523,17 @@ export default {
      */
     async onCheckBoardNameReport() {
       const { dashboardInfo: { dashboardName }, dashboardId } = this
-      const payload = {
-        dashboardId,
-        dashboardName
+      let payload = {}
+      if (this.isShared) {
+        payload = {
+          dashboardName
+        }
+      } else {
+        payload = {
+          dashboardId,
+          dashboardName
+        }
       }
-
       return DashboardApiServices.onCheckDashboardName(payload)
     },
     onGetDataForNewBoard(queryData) {
@@ -558,6 +606,58 @@ export default {
           }
         }
       })
+    },
+    /**
+     * @description:分享
+     */
+    onShare() {
+      this.getUserList()
+      this.share.isShowShareModal = true
+    },
+
+    /**
+     * @description: 获取用户列表
+     */
+    getUserList() {
+      this.share.loading = true
+      const params = {
+        dashboardId: this.dashboardId
+      }
+      getCanShareUserListApi(params).then(res => {
+        const data = res.data.content
+        this.share.allUserData = data.map(item => {
+          return {
+            key: `${item.id}`,
+            title: item.userName
+          }
+        })
+      }).finally(() => {
+        this.share.loading = false
+      })
+    },
+
+    /**
+     * @description: 分享弹窗确认
+     */
+    onShareConfirm(shareUserList) {
+      this.share.confirmLoading = true
+      const params = {
+        dashboardId: this.dashboardId,
+        userIds: shareUserList.map(Number)
+      }
+      shareReportApi(params).then(res => {
+        this.$message.success('分享成功')
+        this.onShareCancel()
+      }).finally(() => {
+        this.share.confirmLoading = false
+      })
+    },
+
+    /**
+     * @description: 分享弹窗取消
+     */
+    onShareCancel() {
+      this.share.isShowShareModal = false
     }
   }
 }

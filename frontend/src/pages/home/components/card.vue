@@ -6,18 +6,16 @@
   <div class="home-card">
     <a-spin :spinning="loading" class="common-spin">
       <div class="card-list--box">
-        <div class="card-add" @click="onAddDashboard">
+        <div class="card-add" @click="onAddDashboard" v-if="reportType === 'myself'">
           <a-icon class="icon" type="plus" />
           <span>新增看板</span>
         </div>
-        <template v-for="card in cardData">
-          <div :key="card.dashboardId" class="card-item" @click="onViewBoard(card)">
-            <div class="icon flex-box--end-self" />
-            <div class="name">{{ card.dashboardName }}</div>
-            <div class="time">创建时间：{{ card.createTime }}</div>
-            <div class="time">创建人：{{ card.createUser }}</div>
-          </div>
-        </template>
+        <div v-for="card in cardData" :key="card.dashboardId" class="card-item" @click="onViewBoard(card)">
+          <div class="icon flex-box--end-self" />
+          <div class="name">{{ card.dashboardName }}</div>
+          <div class="time">创建时间：{{ card.createTime }}</div>
+          <div class="time">创建人：{{ card.createUser }}</div>
+        </div>
       </div>
     </a-spin>
   </div>
@@ -25,6 +23,7 @@
 
 <script>
 import HomeApiServices from '@/services/home'
+import { getSharedReportListByPage } from '@/services/dashboard-share'
 
 export default {
   name: 'HomeCard',
@@ -33,6 +32,10 @@ export default {
     dashboardName: {
       type: String,
       default: ''
+    },
+    reportType: {
+      type: String,
+      default: 'myself'
     }
   },
 
@@ -42,10 +45,19 @@ export default {
       cardData: []
     }
   },
+  computed: {
+    viewType() {
+      return this.reportType === 'shared' ? 'shared' : 'edit'
+    }
+  },
+  watch: {
+    reportType(newValue) {
+      this.getHomeCardData()
+    }
+  },
   mounted() {
     this.initPage()
   },
-
   methods: {
     /**
      * @description: 初始化页面
@@ -64,11 +76,19 @@ export default {
       }
 
       this.loading = true
-      HomeApiServices.getHomeListInfo(payload).then(res => {
-        this.cardData = res.data.content.content || []
-      }).finally(() => {
-        this.loading = false
-      })
+      if (this.reportType === 'shared') {
+        getSharedReportListByPage(payload).then(res => {
+          this.cardData = res.data.content.content || []
+        }).finally(() => {
+          this.loading = false
+        })
+      } else {
+        HomeApiServices.getHomeListInfo(payload).then(res => {
+          this.cardData = res.data.content.content || []
+        }).finally(() => {
+          this.loading = false
+        })
+      }
     },
 
     onAddDashboard() {
@@ -82,7 +102,7 @@ export default {
     onViewBoard(row) {
       const { dashboardId } = row
 
-      this.$router.push({ path: '/board/dashboard', query: { dashboardId, viewType: 'edit' }})
+      this.$router.push({ path: '/board/dashboard', query: { dashboardId, viewType: this.viewType }})
     }
   }
 }
