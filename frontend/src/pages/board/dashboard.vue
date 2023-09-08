@@ -60,12 +60,14 @@ export default {
       activeNavTab: 'layout',
       colorList: ['#A05400', '#CC6B00', '#FF8905', '#FEA23C', '#FFC27E', '#FFDBB3', '#FFE9D0', '#FFF0E0'],
       dashboardInfo: {
+        createId: undefined,
         dashboardName: undefined
       },
       dashboard: {
         dashboardId: '',
         viewType: '',
         dashboardInfo: {
+          createId: undefined,
           dashboardName: undefined
         }
       }

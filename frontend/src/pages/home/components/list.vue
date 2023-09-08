@@ -33,6 +33,7 @@
 </template>
 <script>
 import HomeApiServices from '@/services/home'
+import { getSharedReportListByPage } from '@/services/dashboard-share'
 
 export default {
   name: 'HomeList',
@@ -41,6 +42,10 @@ export default {
     dashboardName: {
       type: String,
       default: ''
+    },
+    reportType: {
+      type: String,
+      default: 'myself'
     }
   },
 
@@ -84,11 +89,14 @@ export default {
       tableLoading: false
     }
   },
-
+  watch: {
+    reportType(newValue) {
+      this.getHomeListData()
+    }
+  },
   mounted() {
     this.initPage()
   },
-
   methods: {
     /**
      * @description: 初始化页面
@@ -110,12 +118,22 @@ export default {
       }
 
       this.tableLoading = true
-      HomeApiServices.getHomeListInfo(payload).then(res => {
-        this.tableData = res.data.content.content || []
-        this.pagerConfig.total = res.data.content.total
-      }).finally(() => {
-        this.tableLoading = false
-      })
+
+      if (this.reportType === 'shared') {
+        getSharedReportListByPage(payload).then(res => {
+          this.tableData = res.data.content.content || []
+          this.pagerConfig.total = res.data.content.total
+        }).finally(() => {
+          this.tableLoading = false
+        })
+      } else {
+        HomeApiServices.getHomeListInfo(payload).then(res => {
+          this.tableData = res.data.content.content || []
+          this.pagerConfig.total = res.data.content.total
+        }).finally(() => {
+          this.tableLoading = false
+        })
+      }
     },
     /**
      * @description: 切换分页

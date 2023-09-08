@@ -13,12 +13,6 @@
         <div class="msg">我们是以all in one box的方式提供专业高效、安全可靠的一站式大数据智能云研发平台。同时能满足用户对数据治理的需求，赋予用户对外提供数据服务的能力。</div>
       </div>
     </div>
-    <div class="view-type flex-box-row flex-box flex-box--end-justify">
-      <a-radio-group v-model="viewType" button-style="solid" @change="onChangeType">
-        <a-radio-button value="card">卡片</a-radio-button>
-        <a-radio-button value="list">列表</a-radio-button>
-      </a-radio-group>
-    </div>
     <div class="home-content flex-box-row flex-box flex-box--column">
       <DPageHandle>
         <div slot="filters" class="page-handle">
@@ -31,10 +25,28 @@
             />
           </DPageHandleItem>
         </div>
+        <div slot="actions">
+          <DPageHandleItem>
+            <a-radio-group v-model="reportType" button-style="solid"  @change="onReportTypeChange">
+              <a-radio-button value="myself">
+                我的报表
+              </a-radio-button>
+              <a-radio-button value="shared">
+                他人报表
+              </a-radio-button>
+            </a-radio-group>
+          </DPageHandleItem>
+          <DPageHandleItem>
+            <a-radio-group v-model="viewType" button-style="solid" @change="onChangeType">
+              <a-radio-button value="card">卡片</a-radio-button>
+              <a-radio-button value="list">列表</a-radio-button>
+            </a-radio-group>
+          </DPageHandleItem>
+        </div>
       </DPageHandle>
       <div class="content flex-box-row">
-        <HomeList v-if="isListType" ref="homeList" :dashboard-name="dashboardName" />
-        <HomeCard v-if="isCardType" ref="homeCard" :dashboard-name="dashboardName" />
+        <HomeList v-if="isListType" ref="homeList" :dashboard-name="dashboardName" :report-type="reportType"/>
+        <HomeCard v-if="isCardType" ref="homeCard" :dashboard-name="dashboardName" :report-type="reportType"/>
       </div>
     </div>
   </div>
@@ -55,7 +67,8 @@ export default {
   data() {
     return {
       viewType: 'card',
-      dashboardName: ''
+      dashboardName: '',
+      reportType: 'myself'
     }
   },
 
@@ -83,6 +96,12 @@ export default {
      */
     onChangeType() {
       this.dashboardName = ''
+    },
+    /**
+     * @description: 修改报表展示类型 搜索名字重置
+     */
+    onReportTypeChange(e) {
+      this.reportType = e.target.value
     },
     /**
      * @description: 跳转到事件列表
