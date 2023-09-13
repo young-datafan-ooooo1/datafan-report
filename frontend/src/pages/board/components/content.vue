@@ -20,7 +20,7 @@
           type="primary"
           ghost
           shape="round"
-          @click="onSaveDashboard"
+          @click="isShowSaveAsModel = true"
         >另存为</a-button>
         <a-button
           v-else
@@ -153,6 +153,32 @@
       @ok="onShareConfirm"
       @cancel="onShareCancel"
     />
+    <!-- 另存为弹窗 -->
+    <a-modal
+      :width="560"
+      :visible="isShowSaveAsModel"
+      :confirm-loading="isSaveAsConfirmLoading"
+      destroy-on-close
+      title="另存为"
+      @cancel="onSaveAsCancel"
+      @ok="onSaveAsConfirm"
+    >
+      <a-form-model
+        :model="saveAsModel"
+        :label-col="{ span: 5 }"
+        :wrapper-col="{ span: 16 }"
+      >
+        <a-form-model-item
+          label="报表名称"
+          prop="name"
+        >
+          <a-input
+            v-model="saveAsModel.name"
+            placeholder="请输入报表名称"
+          />
+        </a-form-model-item>
+      </a-form-model>
+    </a-modal>
   </div>
 </template>
 
@@ -206,7 +232,12 @@ export default {
         allUserData: [], // 所有用户数据
         sharedUserList: [] // 已分享用户数据
       },
-      userId: undefined
+      userId: undefined,
+      isShowSaveAsModel: false,
+      isSaveAsConfirmLoading: false,
+      saveAsModel: {
+        name: ''
+      }
     }
   },
   computed: {
@@ -464,13 +495,13 @@ export default {
           return
         }
         // 校验名称重复
-        const { data: { content: isRepeat = true }} = await this.onCheckBoardNameReport()
+        const { data: { content: isRepeat = true }} = await this.onCheckBoardNameReport(dashboardName)
         if (isRepeat) {
           this.$message.warn('看板名称已存在')
 
           return
         }
-        const payload = this.getDashboardDetailPayload()
+        const payload = this.getDashboardDetailPayload(dashboardName)
         if (this.isAddDashboard || this.isShared) {
           this.loading = true
           DashboardApiServices.saveDashboard(payload).then(res => {
@@ -502,9 +533,9 @@ export default {
      * @description: 获取看板参数
      * @return {Object} 看板参数
      */
-    getDashboardDetailPayload() {
+    getDashboardDetailPayload(dashboardName) {
       const { dashboardId, contentData } = this
-      const { dashboardName } = this.dashboardInfo
+      // const { dashboardName } = this.dashboardInfo
       const setting = {
         colorValue: this.colorValue
       }
@@ -521,8 +552,9 @@ export default {
      * @description: 名称验重
      * @return {Promise}
      */
-    async onCheckBoardNameReport() {
-      const { dashboardInfo: { dashboardName }, dashboardId } = this
+    async onCheckBoardNameReport(dashboardName) {
+      // const { dashboardInfo: { dashboardName }, dashboardId } = this
+      const { dashboardId } = this
       let payload = {}
       if (this.isShared) {
         payload = {
@@ -658,7 +690,54 @@ export default {
      */
     onShareCancel() {
       this.share.isShowShareModal = false
+    },
+
+    /**
+     * @description: 另存为弹窗取消
+     */
+    onSaveAsCancel() {
+      this.isShowSaveAsModel = false
+      this.saveAsModel.name = undefined
+    },
+
+    /**
+     * @description: 另存为弹窗确认
+     */
+    onSaveAsConfirm() {
+      setTimeout(async() => {
+        const dashboardName = this.saveAsModel.name
+        if (!dashboardName) {
+          this.$message.warn('请输入看板名称')
+          return
+        }
+
+        if (dashboardName?.length > 50) {
+          this.$message.warn('看板名称不能大于50字符')
+          return
+        }
+        // 校验名称重复
+        const { data: { content: isRepeat = true }} = await this.onCheckBoardNameReport(dashboardName)
+        if (isRepeat) {
+          this.$message.warn('看板名称已存在')
+          return
+        }
+        const payload = this.getDashboardDetailPayload(dashboardName)
+        this.isSaveAsConfirmLoading = true
+        DashboardApiServices.saveDashboard(payload).then(res => {
+          this.$message.success('新增成功')
+          const { data: { content: { dashboardId }}} = res
+          this.$router.push({ path: '/board/dashboard', query: { dashboardId, viewType: 'edit' }})
+          setTimeout(() => {
+            location.reload()
+          }, 100)
+        }).catch(() => {
+          this.$message.error('新增失败')
+        }).finally(() => {
+          this.isSaveAsConfirmLoading = false
+        })
+      }, 0)
     }
+
   }
 }
 </script>
