@@ -189,7 +189,7 @@ import DashboardApiServices from '@/services/dashboard'
 import ChartApiServices from '@/services/chart'
 import { PivotTable } from '@click2buy/vue-pivot-table'
 import exportPdf from '@/utils/export-pdf'
-import { getCanShareUserListApi, shareReportApi } from '@/services/dashboard-share'
+import { getCanShareUserListApi, shareReportApi, getSharedUserApi } from '@/services/dashboard-share'
 import Cookies from 'js-cookie'
 
 export default {
@@ -643,8 +643,25 @@ export default {
      * @description:分享
      */
     onShare() {
+      this.getSharedUserList()
       this.getUserList()
       this.share.isShowShareModal = true
+    },
+
+    /**
+     * @description: 获取已分享用户
+     */
+    getSharedUserList() {
+      const params = {
+        dashboardId: this.dashboardId
+      }
+      getSharedUserApi(params).then((res) => {
+        const list = []
+        res.data.content.forEach(item => {
+          list.push((item.id).toString())
+        })
+        this.share.sharedUserList = list
+      })
     },
 
     /**

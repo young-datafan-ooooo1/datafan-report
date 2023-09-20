@@ -16,6 +16,13 @@ export function getCanShareUserListApi(params) {
 }
 
 /**
+ * @description: 获取已分享用户
+ */
+export function getSharedUserApi(params) {
+  return request(`${REPORT}/dpPortalDashboardShare/getSharedUser`, METHOD.GET, { params })
+}
+
+/**
  * @description: 分享报表
  */
 export function shareReportApi(params) {
