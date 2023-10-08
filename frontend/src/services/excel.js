@@ -4,7 +4,7 @@
  * @Date: 2021-08-23 17:27:42
   */
 import { KNOWLEDGE } from '@/services/api'
-import { request, METHOD } from '@datamp/common-component'
+import { request, METHOD } from '@datamp/common-component-sgm'
 import qs from 'qs'
 
 /**

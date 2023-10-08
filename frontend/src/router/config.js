@@ -11,7 +11,7 @@ import BlankView from '@/layouts/BlankView'
 //   UserManager,
 //   SysAccessLog,
 //   DeptManager
-// } from '@datamp/common-sysmanage'
+// } from '@datamp/common-sysmanage-sgm'
 
 // 路由配置
 const options = {
