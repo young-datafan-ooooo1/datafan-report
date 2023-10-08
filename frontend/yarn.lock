@@ -1192,9 +1192,9 @@
     vue "^2.6.11"
     vuedraggable "^2.24.3"
 
-"@datamp/common-component@~1.6.0":
+"@datamp/common-component-sgm@~1.6.0":
   version "1.6.121"
-  resolved "http://192.168.10.175:8081/repository/npm-group/@datamp/common-component/-/common-component-1.6.121.tgz#fa207a64af0e7eb46f6901c8bdffea7308629dec"
+  resolved "http://192.168.10.175:8081/repository/npm-group/@datamp/common-component-sgm/-/common-component-1.6.121.tgz#fa207a64af0e7eb46f6901c8bdffea7308629dec"
   integrity sha512-MOW1z5nO51T3jXkk9nSzPV+rSxw70pABOg31FEq/mZi8GXLbVp1gN4WTIrd4lSt+SDWIFA75dECKQLQsHnD8Fg==
   dependencies:
     axios "^0.19.2"

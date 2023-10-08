@@ -58,8 +58,8 @@
 import HeaderAvatar from './HeaderAvatar'
 import IMenu from '@/components/menu/menu'
 import { mapState, mapMutations } from 'vuex'
-// import { logout, ROUTE_URL } from '@datamp/common-component'
-// import { ROUTE_URL } from '@datamp/common-component'
+// import { logout, ROUTE_URL } from '@datamp/common-component-sgm'
+// import { ROUTE_URL } from '@datamp/common-component-sgm'
 import { ASSETS_URL } from '@/services/api'
 import { sgmLoginOut } from '@/services/user'
 

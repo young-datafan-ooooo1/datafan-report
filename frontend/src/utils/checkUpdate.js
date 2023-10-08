@@ -8,7 +8,7 @@ const path = require('path')
 
 const dependencies = packageInfo.dependencies
 const MODULES = [
-  '@datamp/common-component',
+  '@datamp/common-component-sgm',
   '@datamp/common-dsmanage',
   '@datamp/common-sysmanage',
   '@young-datafan/datafan-ui'

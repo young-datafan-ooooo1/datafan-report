@@ -70,7 +70,7 @@
 
 <script>
 import { login } from '@/services/user'
-import { setAuthorization } from '@datamp/common-component'
+import { setAuthorization } from '@datamp/common-component-sgm'
 import { mapMutations } from 'vuex'
 import Cookie from 'js-cookie'
 import { ASSETS_URL } from '@/services/api'

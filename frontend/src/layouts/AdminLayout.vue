@@ -49,7 +49,7 @@
 import AdminHeader from './header/AdminHeader'
 import Drawer from '../components/tool/Drawer'
 import { mapState, mapMutations, mapGetters } from 'vuex'
-import { watermark } from '@datamp/common-component'
+import { watermark } from '@datamp/common-component-sgm'
 
 import { ASSETS_URL } from '@/services/api'
 // const minHeight = window.innerHeight - 64 - 122

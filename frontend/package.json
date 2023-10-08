@@ -8,7 +8,7 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "predeploy": "yarn build",
-    "datamp": "yarn upgrade @datamp/common-dsmanage && yarn upgrade @datamp/common-component && yarn upgrade @datamp/common-sysmanage && yarn upgrade @young-datafan/datafan-ui"
+    "datamp": "yarn upgrade @datamp/common-dsmanage && yarn upgrade @datamp/common-component-sgm && yarn upgrade @datamp/common-sysmanage && yarn upgrade @young-datafan/datafan-ui"
   },
   "dependencies": {
     "@antv/data-set": "^0.11.4",

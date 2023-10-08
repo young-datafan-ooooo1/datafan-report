@@ -1,4 +1,4 @@
-import { request, METHOD } from '@datamp/common-component'
+import { request, METHOD } from '@datamp/common-component-sgm'
 import { REPORT } from '@/services/api'
 
 /**

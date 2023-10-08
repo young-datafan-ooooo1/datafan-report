@@ -3,7 +3,7 @@
  * @Date: 2021-07-07 16:05:37
   */
 import { SYSTEM_MANAGER } from '@/services/api'
-import { request, METHOD } from '@datamp/common-component'
+import { request, METHOD } from '@datamp/common-component-sgm'
 
 const BASE_URL = SYSTEM_MANAGER + '/permission'
 
