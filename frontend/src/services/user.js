@@ -1,4 +1,4 @@
-import { LOGIN, ROUTES } from '@/services/api'
+import { LOGIN, ROUTES, SYSTEM_MANAGER } from '@/services/api'
 import { request, METHOD, removeAuthorization } from '@datamp/common-component-sgm'
 
 /**
@@ -48,8 +48,17 @@ export function logout() {
   localStorage.removeItem(process.env.VUE_APP_ROLES_KEY)
   removeAuthorization()
 }
+
+/**
+ * @description: 统一认证退出登录
+ */
+export async function sgmLoginOut() {
+  return request(`${SYSTEM_MANAGER}/sgm/loginOut`, METHOD.GET)
+}
+
 export default {
   login,
   logout,
+  sgmLoginOut,
   getRoutesConfig
 }
