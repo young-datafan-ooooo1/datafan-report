@@ -30,13 +30,13 @@
           v-model="reportInfo.reportTittle"
           @on-change="onModifyReportName"
         />
-        <div class="down-btn">
+        <!-- <div class="down-btn">
           <a-icon
             v-if="isShowDownloadBtn"
             type="download"
             @click="onDownload"
           />
-        </div>
+        </div> -->
       </div>
       <div class="chart-content-chart flex-box-row-small">
         <DTable
